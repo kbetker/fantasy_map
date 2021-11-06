@@ -9,16 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       campaign_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Campaigns"},
+
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(50)
       },
       show_on_map: {
         type: Sequelize.BOOLEAN
       },
       vertex_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Vertices"},
+
       },
       image_url: {
         type: Sequelize.STRING

@@ -9,10 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       parent_location_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Locations"},
+
       },
       child_location_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Locations"},
+
       },
       createdAt: {
         allowNull: false,
