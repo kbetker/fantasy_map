@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {});
   Campaign.associate = function(models) {
-    // associations can be defined here
+    Campaign.belongsTo(models.User, { foreignKey: "owner_id" });
   };
   return Campaign;
 };
