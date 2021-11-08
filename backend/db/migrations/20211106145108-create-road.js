@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       location_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Locations"},
       },
       name: {
         type: Sequelize.STRING

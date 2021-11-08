@@ -5,7 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {});
   Road.associate = function(models) {
-    // associations can be defined here
+    Road.belongsTo(models.Location, { foreignKey: "location_id", onDelete: "CASCADE", hooks: "true"})
+    Road.hasMany(models)
   };
   return Road;
 };
