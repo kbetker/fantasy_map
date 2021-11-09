@@ -5,8 +5,19 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {});
   Road.associate = function(models) {
-    Road.belongsTo(models.Location, { foreignKey: "location_id", onDelete: "CASCADE", hooks: "true"})
-    Road.hasMany(models)
+
+
+    const columnMappingOne = {
+      through: 'Joined_Vertex',
+      otherKey: 'vertex_id',
+      foreignKey: 'road_id',
+      as: 'theRoad'
+    }
+
+    Road.belongsToMany(models.Vertex, columnMappingOne);
+
+    Road.belongsTo(models.Location, { foreignKey: "location_id"})
+
   };
   return Road;
 };

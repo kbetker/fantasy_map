@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     vertex_id: DataTypes.INTEGER
   }, {});
   Joined_Vertex.associate = function(models) {
-    // associations can be defined here
-  };
+    Joined_Vertex.belongsTo(models.Road, { foreignKey: "road_id" })
+    Joined_Vertex.belongsTo(models.Vertex, { foreignKey: "vertex_id" })  };
   return Joined_Vertex;
 };

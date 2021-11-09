@@ -25,12 +25,16 @@ module.exports = (sequelize, DataTypes) => {
       as: 'child'
     }
 
+    Location.belongsToMany(models.Location, columnMappingOne);
+    Location.belongsToMany(models.Location, columnMappingTwo);
 
     Location.belongsTo(models.Campaign, { foreignKey: "campaign_id" });
+    Location.belongsTo(models.Vertex, { foreignKey: "vertex_id" });
+
     Location.hasMany(models.Road, { foreignKey: 'location_id', onDelete: 'CASCADE', hooks: 'true' });
 
-    Pixel_User.belongsToMany(models.Pixel_User, columnMappingOne);
-    Pixel_User.belongsToMany(models.Pixel_User, columnMappingTwo);
+
+
 
   };
   return Location;
