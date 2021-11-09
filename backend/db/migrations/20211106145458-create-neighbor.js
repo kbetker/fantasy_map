@@ -9,10 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       prev_vertex_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Vertices"},
+
       },
       next_vertex_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Vertices"},
+
       },
       createdAt: {
         allowNull: false,

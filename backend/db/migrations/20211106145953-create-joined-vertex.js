@@ -9,10 +9,14 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       road_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Roads"},
+
       },
       vertex_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: "Vertices"},
+
       },
       createdAt: {
         allowNull: false,

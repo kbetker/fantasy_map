@@ -17,19 +17,19 @@ module.exports = (sequelize, DataTypes) => {
 
     const neighborMapOne = {
       through: 'Neighbors',
-      otherKey: 'child_vertex_id',
-      foreignKey: 'parent_vertex_id',
-      as: 'parent'
+      otherKey: 'next_vertex_id',
+      foreignKey: 'prev_vertex_id',
+      as: 'prev'
     }
     const neighborMapTwo = {
       through: 'Neighbors',
-      otherKey: 'parent_vertex_id',
-      foreignKey: 'child_vertex_id',
-      as: 'child'
+      otherKey: 'prev_vertex_id',
+      foreignKey: 'next_vertex_id',
+      as: 'next'
     }
 
-    Location.belongsToMany(models.Location, neighborMapOne);
-    Location.belongsToMany(models.Location, neighborMapTwo);
+    Vertex.belongsToMany(models.Vertex, neighborMapOne);
+    Vertex.belongsToMany(models.Vertex, neighborMapTwo);
 
 
     Vertex.hasOne(models.Location, { foreignKey: "vertex_id" });
