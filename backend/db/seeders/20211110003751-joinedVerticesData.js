@@ -4,12 +4,12 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Joined_Vertices', [
 
-      { raods_id: 1,  vertices_id: 1},
-      { raods_id: 1,  vertices_id: 2},
-      { raods_id: 1,  vertices_id: 3},
-      { raods_id: 2,  vertices_id: 4},
-      { raods_id: 2,  vertices_id: 5},
-      { raods_id: 2,  vertices_id: 6},
+      { road_id: 1,  vertex_id: 1, createdAt: new Date(), updatedAt: new Date()},
+      { road_id: 1,  vertex_id: 2, createdAt: new Date(), updatedAt: new Date()},
+      { road_id: 1,  vertex_id: 3, createdAt: new Date(), updatedAt: new Date()},
+      { road_id: 2,  vertex_id: 4, createdAt: new Date(), updatedAt: new Date()},
+      { road_id: 2,  vertex_id: 5, createdAt: new Date(), updatedAt: new Date()},
+      { road_id: 2,  vertex_id: 6, createdAt: new Date(), updatedAt: new Date()},
 
 
 

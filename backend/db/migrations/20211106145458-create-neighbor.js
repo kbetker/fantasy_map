@@ -18,6 +18,9 @@ module.exports = {
         references: {model: "Vertices"},
 
       },
+      distance: {
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
