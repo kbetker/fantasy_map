@@ -8,11 +8,11 @@ module.exports = (sequelize, DataTypes) => {
 
     const columnMappingOne = {
       through: 'Joined_Vertex',
-      foreignKey: 'vertex_id',  vertex_id,
+      foreignKey: 'vertex_id',
       otherKey: 'road_id',
       as: 'theVertex'
     }
-    Road.hasManyMany(models.Vertex, columnMappingOne);
+    Vertex.belongsToMany(models.Vertex, columnMappingOne);
 
 
     const neighborMapOne = {
