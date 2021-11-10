@@ -1,0 +1,9 @@
+seeder files order:
+Users
+Campaigns
+Vertices
+Locations
+Roads
+Joined Locations
+Joined Vertices
+Neighbors

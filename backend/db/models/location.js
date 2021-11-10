@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     show_on_map: DataTypes.BOOLEAN,
     vertex_id: DataTypes.INTEGER,
     image_url: DataTypes.STRING,
-    coord_x: DataTypes.INTEGER,
-    coord_y: DataTypes.INTEGER
+    // coord_x: DataTypes.INTEGER,
+    // coord_y: DataTypes.INTEGER
   }, {});
   Location.associate = function(models) {
 

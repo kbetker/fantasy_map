@@ -27,12 +27,12 @@ module.exports = {
       image_url: {
         type: Sequelize.STRING
       },
-      coord_x: {
-        type: Sequelize.INTEGER
-      },
-      coord_y: {
-        type: Sequelize.INTEGER
-      },
+      // coord_x: {
+      //   type: Sequelize.INTEGER
+      // },
+      // coord_y: {
+      //   type: Sequelize.INTEGER
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
