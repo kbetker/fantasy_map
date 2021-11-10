@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'Joined_Vertex',
       otherKey: 'vertex_id',
       foreignKey: 'road_id',
-      as: 'theRoad'
+      as: 'road_vertices'
     }
 
     Road.belongsToMany(models.Vertex, columnMappingOne);

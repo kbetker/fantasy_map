@@ -17,14 +17,16 @@ module.exports = (sequelize, DataTypes) => {
 
     const neighborMapOne = {
       through: 'Neighbors',
-      otherKey: 'next_vertex_id',
-      foreignKey: 'prev_vertex_id',
+      otherKey: 'prev_vertex_id',
+      foreignKey: 'next_vertex_id',
+      distance: 'distance',
       as: 'prev'
     }
     const neighborMapTwo = {
       through: 'Neighbors',
-      otherKey: 'prev_vertex_id',
-      foreignKey: 'next_vertex_id',
+      otherKey: 'next_vertex_id',
+      foreignKey: 'prev_vertex_id',
+      distance: 'distance',
       as: 'next'
     }
 

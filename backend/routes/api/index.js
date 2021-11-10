@@ -8,12 +8,12 @@ const { User } = require('../../db/models');
 
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
-const campaignsRouter = require('./campaigns.js');
+const map_dataRouter = require('./map_data.js');
 
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
-router.use('/campaigns', campaignsRouter);
+router.use('/map_data', map_dataRouter);
 
 
 router.post('/test', function(req, res) {

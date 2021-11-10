@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Campaign.associate = function(models) {
     Campaign.belongsTo(models.User, { foreignKey: "owner_id" });
-    Campaign.hasMany(models.Location, { foreignKey: 'location_id', onDelete: 'CASCADE', hooks: 'true' });
+    Campaign.hasMany(models.Location, { foreignKey: 'id', onDelete: 'CASCADE', hooks: 'true' });
 
   };
   return Campaign;

@@ -22,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'Joined_Locations',
       otherKey: 'child_location_id',
       foreignKey: 'parent_location_id',
-      as: 'child'
+      as: 'child_locations'
     }
 
     Location.belongsToMany(models.Location, columnMappingOne);
