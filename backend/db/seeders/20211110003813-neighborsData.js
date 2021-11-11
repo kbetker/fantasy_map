@@ -137,11 +137,6 @@ module.exports = {
       { curr_vertex_id: 44, neighbor_vertex_id: 43, createdAt: new Date(), updatedAt: new Date()},
       { curr_vertex_id: 44, neighbor_vertex_id: 18, createdAt: new Date(), updatedAt: new Date()},
 
-
-
-
-
-
   ], {});
   },
 
