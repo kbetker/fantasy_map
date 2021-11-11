@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
           { model: Location, as: "child_locations" },
           {
             model: Road, include:
-              { model: Vertex, as: "road_vertices", include: {model: Vertex, as: "next"}}
+              { model: Vertex, as: "road_vertices", include: {model: Vertex, as: "neighbors"}}
           }
         ]
   })

@@ -8,18 +8,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      prev_vertex_id: {
+      curr_vertex_id: {
         type: Sequelize.INTEGER,
         references: {model: "Vertices"},
 
       },
-      next_vertex_id: {
+      neighbor_vertex_id: {
         type: Sequelize.INTEGER,
         references: {model: "Vertices"},
 
-      },
-      distance: {
-        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
