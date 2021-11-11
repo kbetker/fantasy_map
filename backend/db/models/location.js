@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'Joined_Locations',
       otherKey: 'parent_location_id',
       foreignKey: 'child_location_id',
-      as: 'parent'
+      as: 'parent_locations'
     }
     const columnMappingTwo = {
       through: 'Joined_Locations',

@@ -24,7 +24,8 @@ router.get('/', async (req, res) => {
   const mapData = await Location.findAll({
     where: { id: 1 },
    include: [
-          { model: Location, as: "child_locations" },
+          { model: Location, as: "child_locations", include: {model: Vertex} },
+          { model: Location, as: "parent_locations"},
           {
             model: Road, include:
               { model: Vertex, as: "road_vertices", include: {model: Vertex, as: "neighbors"}}
