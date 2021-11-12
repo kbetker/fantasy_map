@@ -1,54 +1,83 @@
-const LOAD_ONE = 'session/LOAD_ONE';
 
+//========================= Loads Data by Location ======================\\
+const LOAD_MAP_DATA = 'mapdata/LOAD_MAP_DATA';
 
-export const loadEditSpot = (spot) => {
+export const loadMapData = (mapData) => {
     return {
-        type: EDIT_SPOT,
-        spot
+        type: LOAD_MAP_DATA,
+        mapData
     };
 };
 
-
-
-
-export const fetchSpotById = (id) => async (dispatch) => {
-    const response = await fetch(`/api/spot/${id}`);
+export const fetchMapData = (id) => async (dispatch) => {
+    const response = await fetch(`/api/map_data/location/${id}`);
     if (response.ok) {
-        const spot = await response.json();
-        dispatch(loadOneSpot(spot));
+        const mapData = await response.json();
+        dispatch(loadMapData(mapData));
+        return mapData
     };
 };
 
 
-// const initialState = {
-//     campaign: { id: null, owner_id: null, name: null },
-//     locations: { id: null, campaign_id: null, name: null, show_on_map: null, vertex_id: null, image_url: null },
-//     roads: { id: null, location_id, name: null },
-//     vertices: {},
-//     neigbors: {},
-// }
+//==================== Loads all locations by campaign id =====================\\
+const LOAD_ALL_LOCATIONS = 'mapdata/LOAD_ALL_LOCATIONS';
+
+export const loadAllLocations = (allLocations) => {
+    return {
+        type: LOAD_ALL_LOCATIONS,
+        allLocations
+    };
+};
+
+export const fetchAllLocations = (id) => async (dispatch) => {
+    const response = await fetch(`/api/map_data/all/${id}`);
+    if (response.ok) {
+        const allLocations = await response.json();
+        dispatch(loadAllLocations(allLocations));
+        return allLocations
+    };
+};
+
+
+
+
+
+
+
+
 
 
 const initialState = {
-    id: null,
+    allLocations: [],
+    Roads: [],
     campaign_id: null,
-    name: null,
-    show_on_map: null,
+    child_locations: [],
+    id: null,
+    image_url: "",
+    name: "",
+    parent_locations: [],
+    show_on_map: true,
     vertex_id: null,
-    image_url: null,
-    child_locations: {},
-    Roads: {},
 }
 
 
 
 
-const spotReducer = (state = initialState, action) => {
+const mapDataReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
-        case LOAD_ONE:
-            newState = Object.assign({}, state);
-            newState.spot = action.spot;
+        case LOAD_MAP_DATA:
+            newState = JSON.parse(JSON.stringify(state))
+            newState.Roads = action.mapData.Roads
+            newState.campaign_id = action.mapData.campaign_id
+            newState.child_locations = action.mapData.child_locations
+            newState.id = action.mapData.id
+            newState.image_url = action.mapData.image_url
+            newState.name = action.mapData.name
+            newState.parent_locations = action.mapData.parent_locations
+            newState.show_on_map = action.mapData.show_on_map
+            newState.vertex_id = action.mapData.vertex_id
+            return newState
 
         default:
             return state;
@@ -58,4 +87,4 @@ const spotReducer = (state = initialState, action) => {
 
 
 
-export default spotReducer
+export default mapDataReducer

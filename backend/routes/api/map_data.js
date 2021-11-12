@@ -18,11 +18,11 @@ const excludeTags = (key, value) => {
 }
 
 
-router.get('/', async (req, res) => {
-  // const tag = req.params.tag
+router.get('/location/:id', async (req, res) => {
+  const id = req.params.id
 
-  const mapData = await Location.findAll({
-    where: { id: 1 },
+  const mapData = await Location.findOne({
+    where: { id: id },
    include: [
           { model: Location, as: "child_locations", include: {model: Vertex} },
           { model: Location, as: "parent_locations"},
@@ -34,10 +34,17 @@ router.get('/', async (req, res) => {
   })
 
   res.type('json').send(JSON.stringify(mapData, excludeTags, 3) + '\n' );
-
-
 });
 
+
+
+router.get('/all/:id', async (req, res) => {
+  const id = req.params.id
+  const mapData = await Location.findAll({
+    where: { campaign_id: id },
+  })
+  res.type('json').send(JSON.stringify(mapData, excludeTags, 3) + '\n' );
+});
 
 
 module.exports = router;

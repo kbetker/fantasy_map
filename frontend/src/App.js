@@ -5,6 +5,7 @@ import LogInForm from "./components/LogInForm";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import Locations from "./components/Locations";
 
 
 function App() {
@@ -22,9 +23,15 @@ function App() {
         <Route path="/login">
           <LogInForm />
         </Route>
+
         <Route path="/signup">
           <SignupFormPage />
         </Route>
+
+        <Route path="/locations/:id">
+          <Locations />
+        </Route>
+
       </Switch>
     )}
   </>
