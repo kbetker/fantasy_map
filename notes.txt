@@ -1,3 +1,5 @@
+add to locations: name X & Y offset
+
 npm install bcryptjs
 npm install cookie-parser
 npm install cors

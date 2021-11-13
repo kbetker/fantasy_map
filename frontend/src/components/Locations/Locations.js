@@ -31,7 +31,7 @@ function Locations() {
 
 
     return (
-        <TransformWrapper limitToBounds={false} initialScale={0.2} maxScale={1} minScale={0.1} >
+        <TransformWrapper limitToBounds={false} initialScale={0.27} maxScale={1.5} minScale={0.1} >
             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                 <React.Fragment>
                     <div className="tools">

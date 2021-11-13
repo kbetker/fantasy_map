@@ -34,7 +34,6 @@ module.exports = {
       { road_id: 3,  vertex_id: 38, createdAt: new Date(), updatedAt: new Date()},
       { road_id: 3,  vertex_id: 39, createdAt: new Date(), updatedAt: new Date()},
       { road_id: 3,  vertex_id: 40, createdAt: new Date(), updatedAt: new Date()},
-      { road_id: 3,  vertex_id: 41, createdAt: new Date(), updatedAt: new Date()},
 
       { road_id: 4,  vertex_id: 10, createdAt: new Date(), updatedAt: new Date()}, // "Long Road"
       { road_id: 4,  vertex_id: 11, createdAt: new Date(), updatedAt: new Date()},

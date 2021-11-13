@@ -123,7 +123,7 @@ module.exports = {
       { curr_vertex_id: 39, neighbor_vertex_id: 40, createdAt: new Date(), updatedAt: new Date()},
 
       { curr_vertex_id: 40, neighbor_vertex_id: 39, createdAt: new Date(), updatedAt: new Date()},
-      { curr_vertex_id: 40, neighbor_vertex_id: 41, createdAt: new Date(), updatedAt: new Date()},
+      { curr_vertex_id: 40, neighbor_vertex_id: 25, createdAt: new Date(), updatedAt: new Date()},
 
       { curr_vertex_id: 41, neighbor_vertex_id: 35, createdAt: new Date(), updatedAt: new Date()},
       { curr_vertex_id: 41, neighbor_vertex_id: 42, createdAt: new Date(), updatedAt: new Date()},
