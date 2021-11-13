@@ -12,12 +12,12 @@ function Locations() {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     // const transformWrapper = useRef()
-    // const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
     const dispatch = useDispatch()
     const { id } = useParams()
 
     useEffect(() => {
-        dispatch(fetchMapData(id))
+        dispatch(fetchMapData(id)).then(()=> setIsLoaded(true))
 
         window.addEventListener("resize", (e) => {
             setWindowWidth(window.innerWidth)
@@ -25,13 +25,8 @@ function Locations() {
 
     }, [dispatch, id])
 
-    // function handleClick(e) {
-    //     console.log(e)
-    // }
-
-
     return (
-        <TransformWrapper limitToBounds={false} initialScale={0.27} maxScale={1.5} minScale={0.1} >
+        <TransformWrapper limitToBounds={false} initialScale={0.27} maxScale={1.5} minScale={0.25} >
             {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
                 <React.Fragment>
                     <div className="tools">
@@ -39,8 +34,8 @@ function Locations() {
                         <button onClick={() => zoomOut()}>-</button>
                         <button onClick={() => resetTransform()}>Reset View</button>
                     </div>
-                    <TransformComponent contentStyle={{ width: `${windowWidth - 30}px`, height: `80vh` }} wrapperStyle={{ backgroundColor: "black" }}>
-                        <Map />
+                    <TransformComponent contentStyle={{ width: `${windowWidth - 30}px`, height: `80vh` }} wrapperStyle={{ backgroundColor: "black", backgroundImage: "url(https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg)", backgroundSize: "cover" }}>
+                      {isLoaded &&  <Map />}
                     </TransformComponent>
                 </React.Fragment>
             )}
