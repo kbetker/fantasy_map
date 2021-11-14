@@ -3,3 +3,12 @@
     height: 600px;
     background-color: black;
 }
+
+.transformComponenttransformComponent{
+    background-image: url("https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg");
+    background-size: cover;
+
+}
+.wut{
+    display: flex;
+}
