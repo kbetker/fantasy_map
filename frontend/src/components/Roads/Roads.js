@@ -48,13 +48,13 @@ function Roads({props}){
 
             for (let i = 0; i < newObjarr.length; i++) {
                 if(i === newObjarr.length){
-                    ctx.lineTo(newObjarr[i].coord_x + 5, newObjarr[i].coord_y + 5)
+                    ctx.lineTo(newObjarr[i].coord_x, newObjarr[i].coord_y)
                 } else {
-                    let x1 = newObjarr[i].coord_x + 5
-                    let y1 = newObjarr[i].coord_y + 5
+                    let x1 = newObjarr[i].coord_x
+                    let y1 = newObjarr[i].coord_y
 
-                    let x2 = newObjarr[i + 1]?.coord_x + 5 || newObjarr[i].coord_x + 5
-                    let y2 = newObjarr[i + 1]?.coord_y + 5 || newObjarr[i].coord_y + 5
+                    let x2 = newObjarr[i + 1]?.coord_x || newObjarr[i].coord_x
+                    let y2 = newObjarr[i + 1]?.coord_y || newObjarr[i].coord_y
                     var xc = (x1 + x2) / 2;
                     var yc = (y1 + y2) / 2;
                     ctx.quadraticCurveTo(x1, y1, xc, yc);

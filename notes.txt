@@ -1,4 +1,25 @@
 add to locations: name X & Y offset
+zoom in to location - drop down list?
+
+
+
+
+preferences to add to db tables:
+        map:
+            zoomIn wheel speed
+        locations:
+            scale which they appear on map
+
+
+
+
+
+
+
+
+
+
+
 
 npm install bcryptjs
 npm install cookie-parser

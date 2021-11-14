@@ -6,9 +6,10 @@ import Roads from "../Roads/Roads"
 function Map() {
 
     const mapData = useSelector(state => state.map_data)
-    const mapImage = useRef()
     const [imageSize, setImageSize] = useState({ imageX: '3000px', imageY: '3000px' })
     const [isLoaded, setIsLoaded] = useState(false)
+    const mapImage = useRef()
+    const mapContainer = useRef()
 
 
     function handleClick(e) {
@@ -18,19 +19,31 @@ function Map() {
 
     useEffect(() => {
         mapImage.current.addEventListener("load", (e) => {
-            console.log(e.target)
             let mapX = mapImage.current?.clientWidth
             let mapY = mapImage.current?.clientHeight
             setImageSize({ imageX: mapX, imageY: mapY })
-
             setIsLoaded(true)
         })
+
+        window.addEventListener("keydown", (e) => {
+            if(e.code === "Space"){
+                mapContainer.current.classList.add("handCursor")
+                mapContainer.current.focus()
+            }
+        })
+
+        window.addEventListener("keyup", (e) => {
+            if(e.code === "Space"){
+                mapContainer.current.classList.remove("handCursor")
+            }
+        })
+
     }, [])
 
 
     return (
 
-        <div className="mapContainer">
+        <div className="mapContainer" ref={mapContainer}>
 
 
             {(mapData.Roads.length > 0 && isLoaded) && <>
@@ -47,14 +60,15 @@ function Map() {
                 <div className="locationContainer" key={`key-${location.id}`}>
                     <div
                         className="location"
+                        id={`loc-${location.id}`}
                         style={{ left: `${location.Vertex?.coord_x}px`, top: `${location.Vertex?.coord_y}px` }}>
                     </div>
                 </div>
             )}
 
 
-            {mapData.Roads.map(roads => <div key={`roadKey-${roads.id}`}>   <>
-                {roads.road_vertices.map((v, int) =>
+            {mapData.Roads.map(vertex => <div key={`roadKey-${vertex.id}`}>   <>
+                {vertex.road_vertices.map((v, int) =>
                     <div
                         key={`vertexKey-${v.id}`}
                         className="vertex" id={`${v.id}-v`}

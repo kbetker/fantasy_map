@@ -25,29 +25,54 @@ function Locations() {
 
     }, [dispatch, id])
 
+    function getEl(id) {
+        let node = document.getElementById(id)
+        node.classList.add("animMarker")
+
+        setTimeout(() => {
+            node.classList.remove("animMarker")
+        }, 1500);
+
+        return node
+    }
+    function zoomTest(e){
+        //toDo send scale to store
+        // console.log(e.state)
+    }
+
     return (
-        <TransformWrapper limitToBounds={false} initialScale={0.27} maxScale={1.5} minScale={0.25} >
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <TransformWrapper
+            limitToBounds={false}
+            initialScale={0.27}
+            maxScale={1.5}
+            minScale={0.25}
+            panning={{ activationKeys: [" "] }}
+            onZoom={(e) => zoomTest(e)}
+            wheel={{step: 0.05}}
+        >
+            {({ zoomIn, zoomOut, resetTransform, zoomToElement, ...rest }) => (
                 <React.Fragment>
-                    <div  className="wut">
-                    <div className="tools">
-                        <button onClick={() => zoomIn()}>+</button>
-                        <button onClick={() => zoomOut()}>-</button>
-                        <button onClick={() => resetTransform()}>Reset View</button>
-                    </div>
+                    <div className="wut">
+                        <div className="tools">
+                            <button onClick={() => zoomIn()}>+</button>
+                            <button onClick={() => zoomOut()}>-</button>
+                            <button onClick={() => resetTransform()}>Reset View</button>
+                            <button onClick={(e) => [zoomToElement(getEl('loc-4'), 0.25, 1000, "easeInOutQuad"), e.target.blur()]}>Luskan</button>
+                            <button onClick={() => zoomToElement(getEl('loc-8'), 1, 1000, "easeInOutQuad")}>Waterdeep</button>
+                        </div>
 
-                    <TransformComponent
-                        contentStyle={{ width: `${windowWidth - 30}px`, height: `88vh` }}
-                        wrapperClass="transformComp"
-                        wrapperStyle={{
-                            backgroundImage: "url(https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg)",
-                            backgroundSize: "cover"
-                        }}
-                     >
-                        { isLoaded && <Map /> }
-                    </TransformComponent>
+                        <TransformComponent
+                            contentStyle={{ width: `${windowWidth - 30}px`, height: `88vh` }}
+                            wrapperClass="transformComp"
+                            wrapperStyle={{
+                                backgroundImage: "url(https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg)",
+                                backgroundSize: "cover"
+                            }}
+                        >
+                            {isLoaded && <Map />}
+                        </TransformComponent>
 
-                    <MapNav />
+                        <MapNav />
 
                     </div>
                 </React.Fragment>
