@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router"
 import { useDispatch } from "react-redux"
 import { fetchMapData } from "../../store/map"
 import Map from "../Map"
+import MapNav from "../MapNav"
 import "./Location.css"
 
 // import PinchZoomPan from "react-image-zoom-pan";
@@ -11,13 +12,12 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 function Locations() {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-    // const transformWrapper = useRef()
     const [isLoaded, setIsLoaded] = useState(false)
     const dispatch = useDispatch()
     const { id } = useParams()
 
     useEffect(() => {
-        dispatch(fetchMapData(id)).then(()=> setIsLoaded(true))
+        dispatch(fetchMapData(id)).then(() => setIsLoaded(true))
 
         window.addEventListener("resize", (e) => {
             setWindowWidth(window.innerWidth)
@@ -25,18 +25,56 @@ function Locations() {
 
     }, [dispatch, id])
 
+    function getEl(id) {
+        let node = document.getElementById(id)
+        node.classList.add("animMarker")
+
+        setTimeout(() => {
+            node.classList.remove("animMarker")
+        }, 1500);
+
+        return node
+    }
+    function zoomTest(e){
+        //toDo send scale to store
+        // console.log(e.state)
+    }
+
     return (
-        <TransformWrapper limitToBounds={false} initialScale={0.27} maxScale={1.5} minScale={0.25} >
-            {({ zoomIn, zoomOut, resetTransform, ...rest }) => (
+        <TransformWrapper
+            limitToBounds={false}
+            initialScale={0.27}
+            maxScale={1.5}
+            minScale={0.25}
+            panning={{ activationKeys: [" "] }}
+            onZoom={(e) => zoomTest(e)}
+            wheel={{step: 0.05}}
+        >
+            {({ zoomIn, zoomOut, resetTransform, zoomToElement, ...rest }) => (
                 <React.Fragment>
-                    <div className="tools">
-                        <button onClick={() => zoomIn()}>+</button>
-                        <button onClick={() => zoomOut()}>-</button>
-                        <button onClick={() => resetTransform()}>Reset View</button>
+                    <div className="wut">
+                        <div className="tools">
+                            <button onClick={() => zoomIn()}>+</button>
+                            <button onClick={() => zoomOut()}>-</button>
+                            <button onClick={() => resetTransform()}>Reset View</button>
+                            <button onClick={(e) => [zoomToElement(getEl('loc-4'), 0.25, 1000, "easeInOutQuad"), e.target.blur()]}>Luskan</button>
+                            <button onClick={() => zoomToElement(getEl('loc-8'), 1, 1000, "easeInOutQuad")}>Waterdeep</button>
+                        </div>
+
+                        <TransformComponent
+                            contentStyle={{ width: `${windowWidth - 30}px`, height: `88vh` }}
+                            wrapperClass="transformComp"
+                            wrapperStyle={{
+                                backgroundImage: "url(https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg)",
+                                backgroundSize: "cover"
+                            }}
+                        >
+                            {isLoaded && <Map />}
+                        </TransformComponent>
+
+                        <MapNav />
+
                     </div>
-                    <TransformComponent contentStyle={{ width: `${windowWidth - 30}px`, height: `80vh` }} wrapperStyle={{ backgroundColor: "black", backgroundImage: "url(https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg)", backgroundSize: "cover" }}>
-                      {isLoaded &&  <Map />}
-                    </TransformComponent>
                 </React.Fragment>
             )}
         </TransformWrapper>
@@ -48,7 +86,3 @@ function Locations() {
 }
 
 export default Locations;
-
-            // <TransformComponent contentStyle={{ width: `${windowWidth - 30}px`, height: `85vh`}} wrapperStyle={{backgroundColor: "black"}}>
-            //     <Map/>
-            // </TransformComponent>
