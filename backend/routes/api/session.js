@@ -82,4 +82,4 @@ module.exports = router;
 //       "XSRF-TOKEN": `<value of XSRF-TOKEN cookie>`
 //     },
 //     body: JSON.stringify({ credential: 'demo user', password: 'password' })
-//   }).then(res => res.json()).then(data => console.log(data));
+//   }).then(res => res.json()).then(data => ;

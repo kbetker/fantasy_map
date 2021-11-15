@@ -47,18 +47,18 @@ function Roads({props}){
             ctx.moveTo(newObjarr[0]?.coord_x, newObjarr[0]?.coord_y);
 
             for (let i = 0; i < newObjarr.length; i++) {
-                if(i === newObjarr.length){
+                // if(i === newObjarr.length){
                     ctx.lineTo(newObjarr[i].coord_x, newObjarr[i].coord_y)
-                } else {
-                    let x1 = newObjarr[i].coord_x
-                    let y1 = newObjarr[i].coord_y
+                // } else {
+                //     let x1 = newObjarr[i].coord_x
+                //     let y1 = newObjarr[i].coord_y
 
-                    let x2 = newObjarr[i + 1]?.coord_x || newObjarr[i].coord_x
-                    let y2 = newObjarr[i + 1]?.coord_y || newObjarr[i].coord_y
-                    var xc = (x1 + x2) / 2;
-                    var yc = (y1 + y2) / 2;
-                    ctx.quadraticCurveTo(x1, y1, xc, yc);
-                }
+                //     let x2 = newObjarr[i + 1]?.coord_x || newObjarr[i].coord_x
+                //     let y2 = newObjarr[i + 1]?.coord_y || newObjarr[i].coord_y
+                //     var xc = (x1 + x2) / 2;
+                //     var yc = (y1 + y2) / 2;
+                //     ctx.quadraticCurveTo(x1, y1, xc, yc);
+                // }
 
             }
             ctx.stroke();

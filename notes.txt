@@ -5,10 +5,13 @@ zoom in to location - drop down list?
 
 
 preferences to add to db tables:
-        map:
+        map preference:
             zoomIn wheel speed
         locations:
-            scale which they appear on map
+            add: defined scale which they appear on map
+            add: name offsetX && offsetY
+        Roads:
+            add: show_on_map boolean
 
 
 
