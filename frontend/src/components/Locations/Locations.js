@@ -45,7 +45,7 @@ function Locations() {
         <TransformWrapper
             limitToBounds={false}
             initialScale={0.27}
-            maxScale={1.5}
+            maxScale={4 }
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
             onZoomStop={(e) => zoomTest(e)}
@@ -55,7 +55,7 @@ function Locations() {
             {({ zoomIn, zoomOut, resetTransform, zoomToElement, ...rest }) => (
                 <React.Fragment>
                     <div className="wut">
-                        <div className="tools">
+                        <div className="tools" style={{display: "none"}}>
                             <button onClick={() => zoomIn()}>+</button>
                             <button onClick={() => zoomOut()}>-</button>
                             <button onClick={() => resetTransform()}>Reset View</button>
