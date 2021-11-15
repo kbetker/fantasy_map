@@ -37,7 +37,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) scale(100%);
-    transition: all linear 0.2s ;
+    transition: all ease-in-out 1s ;
 }
 .locationOutLine{
     position: absolute;
@@ -47,7 +47,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%) scale(100%);
-    transition: all linear 0.2s ;
+    transition: all ease-in-out 1s ;
 }
 
 .locationName{
@@ -60,7 +60,7 @@
     /* -webkit-text-stroke-color: rgb(255, 255, 255); */
     font-weight: normal;
     /* text-shadow: 0 0 5px white; */
-    z-index: 3;
+    z-index: 5;
     left: 50%;
     top: 50%;
     /* transform: translate(-550%, -50%) scale(100%); */
@@ -75,6 +75,8 @@
      0    1px 0 #FFF,
     -1px  1px 0 #FFF,
     -1px  0   0 #FFF; */
+    transition: all ease-in-out 1s ;
+
 }
 
 .roadCanvas{

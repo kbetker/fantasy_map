@@ -19,6 +19,30 @@
     animation-iteration-count: 5;
 }
 
+.locationbutton,.loactionSelected{
+    background-color: grey;
+    padding: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+    margin: 5px 0;
+}
+
+.locationsList{
+    margin: 10px 5px;
+    background-color: rgb(85, 85, 85);
+    height: 250px;
+    overflow-y: auto;
+    box-shadow: 0 0 20px black inset;
+}
+
+.locationbutton:hover{
+    background-color: rgb(158, 158, 158);
+}
+.loactionSelected{
+    background-color: rgb(65, 65, 65);
+
+
+}
 
 
 @keyframes anim {

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { fetchMapData } from "../../store/map"
 import Map from "../Map"
 import MapNav from "../MapNav"
@@ -14,9 +14,12 @@ function Locations() {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [locationId, setLocationId] = useState('loc-4')
     const { id } = useParams()
     const dispatch = useDispatch()
     const transWrapper = useRef()
+    const childLocations = useSelector(state => state.map_data?.child_locations)
+    const [searchName, setSearchName] = useState('')
 
     useEffect(() => {
         dispatch(fetchMapData(id)).then(() => setIsLoaded(true))
@@ -28,6 +31,7 @@ function Locations() {
     }, [dispatch, id])
 
     function getEl(id) {
+        console.log(id)
         let node = document.getElementById(id)
         node?.classList.add("animMarker")
 
@@ -37,10 +41,13 @@ function Locations() {
 
         return node
     }
+
+
     function zoomTest(e) {
         //toDo send scale to store
         dispatch(sendMapControls(e.state))
     }
+
 
     function init(e) {
         dispatch(sendMapControls(e.state))
@@ -59,6 +66,13 @@ function Locations() {
     }
 
 
+    function searchByName(name) {
+        const upperCasedName = name.toLowerCase()
+        const searchWord = searchName.toLowerCase()
+        return upperCasedName.includes(searchWord)
+    }
+
+
     return (
         <TransformWrapper
             limitToBounds={false}
@@ -66,7 +80,7 @@ function Locations() {
             maxScale={1}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
-            onZoomStop={(e) => zoomTest(e)}
+            onZoom={(e) => zoomTest(e)}
             onPanningStop={(e) => zoomTest(e)}
             wheel={{ step: 0.05 }}
             onInit={(e) => init(e)}
@@ -75,12 +89,32 @@ function Locations() {
             {({ zoomIn, zoomOut, resetTransform, zoomToElement, ...rest }) => (
                 <React.Fragment>
                     <div className="wut">
-                        <div className="tools" style={{ display: "inherit" }}>
+                        <div className="tools" style={{ display: "initial" }}>
                             <button onClick={() => zoomIn()}>+</button>
                             <button onClick={() => zoomOut()}>-</button>
-                            <button onClick={() => [resetTransform(), setVertexResetScale()]}>Reset View</button>
-                            <button onClick={(e) => [zoomToElement(getEl('loc-4'), 1, 1000, "easeInOutQuad"), e.target.blur(), setVertexZoomScale()]}>Luskan</button>
-                            <button onClick={(e) => [zoomToElement(getEl('loc-8'), 1, 1000, "easeInOutQuad"), e.target.blur()]}>Waterdeep</button>
+                            <button onClick={() => [resetTransform(1000, "easeInOutQuad"), setVertexResetScale()]}>Reset View</button>
+
+                            <div className="locationsList">
+                                <>
+                                    <input
+                                        type="text"
+                                        value={searchName}
+                                        onChange={(e) => setSearchName(e.target.value)}
+                                    />
+                                    {childLocations?.map(loc =><>
+                                         {searchByName(loc.name) &&
+                                         <div
+                                         className={`${locationId === `loc-${loc.id}` ? "loactionSelected" : "locationbutton"} `}
+                                         onClick={()=> setLocationId(`loc-${loc.id}`)}
+                                         >{loc.name}
+                                         </div>}
+                                         </>
+                                    )}
+                                </>
+                            </div>
+
+                            <button onClick={(e) => [zoomToElement(getEl(locationId), 1, 1000, "easeInOutQuad"), e.target.blur(), setVertexZoomScale()]}>View Location on Map</button>
+
                         </div>
 
                         <TransformComponent

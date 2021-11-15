@@ -105,7 +105,6 @@ function Map() {
                             height:`${Math.ceil(15 / mapControl.scale)}px`,
                             maxWidth: "30px",
                             maxHeight: "30px",
-                            // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
                             }}>
                     </div>
 
@@ -121,7 +120,6 @@ function Map() {
                             height:`${Math.ceil((15 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
                             maxWidth: "34px",
                             maxHeight: "34px",
-                            // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
                             }}>
                     </div>
                 </div>
