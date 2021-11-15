@@ -62,6 +62,11 @@ function Roads({props}){
 
             }
             ctx.stroke();
+
+            if(road.name === "FireshearRoad"){
+                myCanvas.current.style.display = "none"
+            }
+
     }
 
 
@@ -79,7 +84,8 @@ function Roads({props}){
       className="roadCanvas"
       width = {`${props.imageSize.imageX}px`}
       height = {`${props.imageSize.imageY}px`}
-      ref={myCanvas}>
+      ref={myCanvas}
+      >
       Your browser does not support the HTML5 canvas tag.
        </canvas>
     </div>)
