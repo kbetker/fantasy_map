@@ -65,10 +65,64 @@ function Map() {
 
             {mapData.child_locations.map(location =>
                 <div className="locationContainer" key={`key-${location.id}`}>
+
+                    <div
+                    className="locationName"
+                    style={{
+                        left: `${location.Vertex?.coord_x}px`,
+                        top: `${location.Vertex?.coord_y}px` ,
+                        minWidth: "8px",
+                        minHeight: "8px",
+                        fontSize: `${Math.ceil(23 / mapControl.scale)}px`,
+                        maxWidth: "30px",
+                        maxHeight: "30px",
+                        color: "black",
+                        textShadow: `
+                        -${Math.ceil(2 / mapControl.scale)}px -${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
+                        0   -${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
+                        ${Math.ceil(2 / mapControl.scale)}px -${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
+                        ${Math.ceil(2 / mapControl.scale)}px  0   0 #FFF,
+                        ${Math.ceil(2 / mapControl.scale)}px  ${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
+                        0    ${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
+                       -${Math.ceil(2 / mapControl.scale)}px  ${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
+                       -${Math.ceil(2 / mapControl.scale)}px  0   0 #FFF`,
+                        // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
+                        }}
+                    >
+                        {location.name}
+                    </div>
+
+
                     <div
                         className="location"
                         id={`loc-${location.id}`}
-                        style={{ left: `${location.Vertex?.coord_x}px`, top: `${location.Vertex?.coord_y}px` }}>
+                        style={{
+                            left: `${location.Vertex?.coord_x}px`,
+                            top: `${location.Vertex?.coord_y}px` ,
+                            minWidth: "8px",
+                            minHeight: "8px",
+                            width:`${Math.ceil(15 / mapControl.scale)}px`,
+                            height:`${Math.ceil(15 / mapControl.scale)}px`,
+                            maxWidth: "30px",
+                            maxHeight: "30px",
+                            // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
+                            }}>
+                    </div>
+
+                    <div
+                        className="locationOutLine"
+                        id={`locOutLine-${location.id}`}
+                        style={{
+                            left: `${location.Vertex?.coord_x}px`,
+                            top: `${location.Vertex?.coord_y}px` ,
+                            minWidth: "12px",
+                            minHeight: "12px",
+                            width:`${Math.ceil((15 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
+                            height:`${Math.ceil((15 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
+                            maxWidth: "34px",
+                            maxHeight: "34px",
+                            // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
+                            }}>
                     </div>
                 </div>
             )}
@@ -80,7 +134,10 @@ function Map() {
                         key={`vertexKey-${v.id}`}
                         className="vertex" id={`${v.id}-v`}
                         onClick={(e) => vertexClick(e)}
-                        style={{ left: `${v.coord_x - 3}px`, top: `${v.coord_y - 3}px` }}>
+                        style={{
+                            left: `${v.coord_x - 3}px`,
+                            top: `${v.coord_y - 3}px` ,
+                            }}>
                     </div>
                 )}
             </></div>)}
