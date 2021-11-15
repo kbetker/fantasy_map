@@ -1,6 +1,7 @@
-add to locations: name X & Y offset
+
 zoom in to location - drop down list?
 
+Fix algo if the road loops.... add Visited?
 
 
 
@@ -12,6 +13,7 @@ preferences to add to db tables:
             add: name offsetX && offsetY
         Roads:
             add: show_on_map boolean
+            add: startVertex
 
 
 

@@ -8,12 +8,8 @@ function Map() {
     const mapData = useSelector(state => state.map_data)
     const [imageSize, setImageSize] = useState({ imageX: '3000px', imageY: '3000px' })
     const [isLoaded, setIsLoaded] = useState(false)
-    const [coordinateX, setCoordinateX] = useState()
-    const [coordinateY, setCoordinateY] = useState()
     const mapImage = useRef()
     const mapContainer = useRef()
-    const FindPosition = useRef()
-    const GetCoordinates = useRef()
     const mapControl = useSelector(state => state.map_controls)
 
 
@@ -46,13 +42,10 @@ function Map() {
     }, [])
 
     function handleClick(e){
-        // to do: handle click depending on current mode
-        // let pos_x = event.offsetX ? (event.offsetX) : event.pageX - document.getElementById("pointer_div").offsetLeft;
-        // let pos_y = event.offsetY ? (event.offsetY) : event.pageY - document.getElementById("pointer_div").offsetTop;
-        // document.pointform.form_x.value = pos_x;
-        // document.pointform.form_y.value = pos_y;
-        console.log(e.clientX)
+        let xPos = Math.round((e.clientX / mapControl.scale) - (mapControl.positionX/mapControl.scale) )
+        let yPos = Math.round((e.clientY / mapControl.scale) - ((mapControl.positionY + 50)/mapControl.scale) )
 
+        console.log(`X: ${xPos} - Y: ${yPos}`)
     }
 
     return (
@@ -94,7 +87,7 @@ function Map() {
 
 
             <img
-                alt='Test Image'
+                alt='Map'
                 src={mapData.image_url}
                 className="mapImage"
                 ref={mapImage}

@@ -48,7 +48,7 @@ function Roads({props}){
 
             for (let i = 0; i < newObjarr.length; i++) {
                 // if(i === newObjarr.length){
-                    ctx.lineTo(newObjarr[i].coord_x, newObjarr[i].coord_y)
+                    ctx.lineTo(newObjarr[i].coord_x - 3, newObjarr[i].coord_y - 3)
                 // } else {
                 //     let x1 = newObjarr[i].coord_x
                 //     let y1 = newObjarr[i].coord_y

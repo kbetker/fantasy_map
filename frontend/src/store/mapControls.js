@@ -32,7 +32,7 @@ const mapControlsReducer = (state = initialState, action) => {
             newState.scale = action.mapData.scale
             newState.positionX = action.mapData.positionX
             newState.positionY = action.mapData.positionY
-            console.log(newState, action.mapData, "WTFWTFWTFW")
+            // console.log(action.mapData)
             return newState
 
         default:
