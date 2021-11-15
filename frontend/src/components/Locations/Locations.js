@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router"
 import { useDispatch } from "react-redux"
 import { fetchMapData } from "../../store/map"
@@ -16,6 +16,7 @@ function Locations() {
     const [isLoaded, setIsLoaded] = useState(false)
     const { id } = useParams()
     const dispatch = useDispatch()
+    const transWrapper = useRef()
 
     useEffect(() => {
         dispatch(fetchMapData(id)).then(() => setIsLoaded(true))
@@ -36,30 +37,49 @@ function Locations() {
 
         return node
     }
-    function zoomTest(e){
+    function zoomTest(e) {
         //toDo send scale to store
         dispatch(sendMapControls(e.state))
     }
+
+    function init(e) {
+        dispatch(sendMapControls(e.state))
+    }
+
+    function setVertexZoomScale(e) {
+        let newObj = JSON.parse(JSON.stringify(transWrapper.current.state))
+        newObj.scale = 1 // todo make a variable
+        dispatch(sendMapControls(newObj))
+    }
+
+    function setVertexResetScale(e) {
+        let newObj = JSON.parse(JSON.stringify(transWrapper.current.state))
+        newObj.scale = 0.25 // todo make a variable
+        dispatch(sendMapControls(newObj))
+    }
+
 
     return (
         <TransformWrapper
             limitToBounds={false}
             initialScale={0.27}
-            maxScale={4 }
+            maxScale={1}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
             onZoomStop={(e) => zoomTest(e)}
             onPanningStop={(e) => zoomTest(e)}
-            wheel={{step: 0.05}}
+            wheel={{ step: 0.05 }}
+            onInit={(e) => init(e)}
+            ref={transWrapper}
         >
             {({ zoomIn, zoomOut, resetTransform, zoomToElement, ...rest }) => (
                 <React.Fragment>
                     <div className="wut">
-                        <div className="tools" style={{display: "none"}}>
+                        <div className="tools" style={{ display: "inherit" }}>
                             <button onClick={() => zoomIn()}>+</button>
                             <button onClick={() => zoomOut()}>-</button>
-                            <button onClick={() => resetTransform()}>Reset View</button>
-                            <button onClick={(e) => [zoomToElement(getEl('loc-4'), 1, 1000, "easeInOutQuad"), e.target.blur()]}>Luskan</button>
+                            <button onClick={() => [resetTransform(), setVertexResetScale()]}>Reset View</button>
+                            <button onClick={(e) => [zoomToElement(getEl('loc-4'), 1, 1000, "easeInOutQuad"), e.target.blur(), setVertexZoomScale()]}>Luskan</button>
                             <button onClick={(e) => [zoomToElement(getEl('loc-8'), 1, 1000, "easeInOutQuad"), e.target.blur()]}>Waterdeep</button>
                         </div>
 
