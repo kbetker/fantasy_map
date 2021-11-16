@@ -1,0 +1,31 @@
+.sideBarIcons{
+    background-color: rgb(90, 90, 90);
+    box-shadow: 7px 0 9px rgba(0, 0, 0, 0.5);
+    z-index: 7;
+    width: 50px;
+}
+
+
+.icon,.hideShowIcon,.iconSelected{
+    width: 50px;
+    background-color: rgb(135, 135, 135);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* margin-bottom: 10px; */
+    border-bottom: 2px solid black;
+}
+.hideShowIcon{
+    background-color: black;
+}
+
+.iconSelected{
+    background-color: rgb(55, 55, 55);
+}
+
+.icon:hover{
+    background-color: rgb(158, 158, 158);
+}
+.iconSelected:hover{
+    background-color: rgb(90, 90, 90);
+}

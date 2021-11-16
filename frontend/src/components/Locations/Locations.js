@@ -6,6 +6,7 @@ import Map from "../Map"
 import MapNav from "../MapNav"
 import "./Location.css"
 import { sendMapControls } from "../../store/mapControls"
+import SideBarIcons from "./SideBarIcons"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -19,7 +20,9 @@ function Locations() {
     const dispatch = useDispatch()
     const transWrapper = useRef()
     const childLocations = useSelector(state => state.map_data?.child_locations)
+    const mapControls = useSelector(state=> state.map_controls)
     const [searchName, setSearchName] = useState('')
+    const sideBar = useRef()
 
     useEffect(() => {
         dispatch(fetchMapData(id)).then(() => setIsLoaded(true))
@@ -74,52 +77,90 @@ function Locations() {
     }
 
 
+    useEffect(()=>{
+        if(mapControls.sideBarExpand){
+            sideBar.current.classList.remove("sideBarHide")
+        } else {
+            sideBar.current.classList.add("sideBarHide")
+        }
+
+
+    }, [mapControls.sideBarExpand])
+
+
     return (
         <TransformWrapper
             limitToBounds={false}
-            initialScale={0.27}
+            initialScale={0.315}
             maxScale={1}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
-            onZoomStop ={(e) => zoomTest(e)}
+            onZoomStop={(e) => zoomTest(e)}
             onPanningStop={(e) => zoomTest(e)}
             wheel={{ step: 0.05 }}
             onInit={(e) => init(e)}
+            initialPositionX={300}
             ref={transWrapper}
         >
             {({ zoomIn, zoomOut, resetTransform, zoomToElement, ...rest }) => (
                 <React.Fragment>
-                    <div className="wut">
-                        <div className="tools" style={{ display: "initial" }}>
-                            <button onClick={() => zoomIn()}>+</button>
-                            <button onClick={() => zoomOut()}>-</button>
-                            <button onClick={() => [resetTransform(1000, "easeInOutQuad"), setVertexResetScale()]}>Reset View</button>
+                    <div className="tools_map_container" >
 
-                            <div className="locationsList">
-                                <>
-                                    <input
-                                        type="text"
-                                        value={searchName}
-                                        onChange={(e) => setSearchName(e.target.value)}
-                                    />
-                                    {childLocations?.map(loc =><>
-                                         {searchByName(loc.name) &&
-                                         <div
-                                         className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
-                                         onClick={()=> setLocationId(`${loc.id}`)}
-                                         >{loc.name}
-                                         </div>}
-                                         </>
-                                    )}
-                                </>
+
+                        <div className="sideBar" ref={sideBar}>
+                            <div className="toolbarContainer">
+                                <div className="mapNavTools">
+                                    <button onClick={() => zoomIn()}>+</button>
+                                    <button onClick={() => zoomOut()}>-</button>
+                                    <button onClick={(e) => [
+                                        resetTransform(1000, "easeInOutQuad"),
+                                        setVertexResetScale(),
+                                        e.target.blur(),
+                                        ]}>Reset View</button>
+                                </div>
+
+                                <div className="locationsList">
+                                    <>
+                                        <input
+                                            type="text"
+                                            value={searchName}
+                                            onChange={(e) => setSearchName(e.target.value)}
+                                        />
+                                        {childLocations?.map(loc => <>
+                                            {searchByName(loc.name) &&
+                                                <div
+                                                    className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
+                                                    onClick={(e) => [
+                                                        zoomToElement(getEl(loc.id), 1, 1000, "easeInOutQuad"),
+                                                        setLocationId(`${loc.id}`),
+                                                        setVertexZoomScale(),
+                                                        e.target.blur(),
+                                                    ]}
+                                                >{loc.name}
+                                                </div>}
+                                        </>
+                                        )}
+                                    </>
+                                </div>
+
+                                {/*todo <Location Info /> */}
+                                {/*todo <Directions /> */}
+                                {/*todo <Create Road /> */}
+                                {/*todo <Edit  Road /> */}
+
+
                             </div>
 
-                            <button onClick={(e) => [zoomToElement(getEl(locationId), 1, 1000, "easeInOutQuad"), e.target.blur(), setVertexZoomScale()]}>View Location on Map</button>
+
+
+                           <SideBarIcons />
+
+
 
                         </div>
 
                         <TransformComponent
-                            contentStyle={{ width: `${windowWidth - 30}px`, height: `88vh` }}
+                            contentStyle={{ width: `${windowWidth - 30}px`, height: `93vh` }}
                             wrapperClass="transformComp"
                             wrapperStyle={{
                                 backgroundImage: "url(https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg)",

@@ -37,7 +37,7 @@ function Roads({props}){
             var ctx = myCanvas.current.getContext("2d");
             ctx.clearRect(0, 0, myCanvas.current.width, myCanvas.current.height);
             ctx.lineWidth = 3 / mapControls.scale;
-            ctx.setLineDash([2 / mapControls.scale, 2 / mapControls.scale]);
+            ctx.setLineDash([1 / mapControls.scale, 1 / mapControls.scale]);
             ctx.strokeStyle = "red";
             ctx.beginPath();
             ctx.moveTo(newObjarr[0]?.coord_x, newObjarr[0]?.coord_y);
@@ -60,7 +60,7 @@ function Roads({props}){
             ctx.stroke();
 
             if(road.name === "FireshearRoad"){
-                myCanvas.current.style.display = "none"
+                myCanvas.current.style.opacity = 0
             }
 
     }
