@@ -1,15 +1,10 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect, useRef, useState } from "react"
+import { useSelector } from "react-redux"
 import "./Road.css"
 
 function Roads({props}){
     const myCanvas = useRef()
-
-    let colorArray = ["red", "green", "cyan", "orange", "lime", "black"]
-
-    function randomColor(){
-        let rand =  Math.floor(Math.random() * (colorArray.length - 1));
-        return colorArray[rand]
-    }
+    const mapControls = useSelector(state => state.map_controls)
 
 
     function drawRoad(road) {
@@ -41,8 +36,9 @@ function Roads({props}){
 
             var ctx = myCanvas.current.getContext("2d");
             ctx.clearRect(0, 0, myCanvas.current.width, myCanvas.current.height);
-            ctx.lineWidth = 3;
-            ctx.strokeStyle = randomColor();
+            ctx.lineWidth = 3 / mapControls.scale;
+            ctx.setLineDash([2 / mapControls.scale, 2 / mapControls.scale]);
+            ctx.strokeStyle = "red";
             ctx.beginPath();
             ctx.moveTo(newObjarr[0]?.coord_x, newObjarr[0]?.coord_y);
 
@@ -75,7 +71,9 @@ function Roads({props}){
     useEffect(()=>{
         drawRoad(props.mapData)
         // console.log(myCanvas.current)
-    }, [])
+    }, [mapControls.scale])
+
+
 
     return(
     <div className="canvasContainer">

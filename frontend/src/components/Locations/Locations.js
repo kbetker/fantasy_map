@@ -32,12 +32,13 @@ function Locations() {
 
     function getEl(id) {
         console.log(id)
-        let node = document.getElementById(id)
-        node?.classList.add("animMarker")
+        let node = document.getElementById(`loc-${id}`)
+        let arrow = document.getElementById(`arrow-${id}`)
+        arrow?.classList.add("animMarker")
 
         setTimeout(() => {
-            node?.classList.remove("animMarker")
-        }, 1500);
+            arrow?.classList.remove("animMarker")
+        }, 2000);
 
         return node
     }
@@ -80,7 +81,7 @@ function Locations() {
             maxScale={1}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
-            onZoom={(e) => zoomTest(e)}
+            onZoomStop ={(e) => zoomTest(e)}
             onPanningStop={(e) => zoomTest(e)}
             wheel={{ step: 0.05 }}
             onInit={(e) => init(e)}
@@ -104,8 +105,8 @@ function Locations() {
                                     {childLocations?.map(loc =><>
                                          {searchByName(loc.name) &&
                                          <div
-                                         className={`${locationId === `loc-${loc.id}` ? "loactionSelected" : "locationbutton"} `}
-                                         onClick={()=> setLocationId(`loc-${loc.id}`)}
+                                         className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
+                                         onClick={()=> setLocationId(`${loc.id}`)}
                                          >{loc.name}
                                          </div>}
                                          </>

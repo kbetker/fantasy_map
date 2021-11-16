@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import "./Map.css"
 import Roads from "../Roads/Roads"
+import downArrow from "./downArrow.svg"
 
 function Map() {
 
@@ -91,6 +92,18 @@ function Map() {
                     >
                         {location.name}
                     </div>
+
+                    <img
+                    src={downArrow}
+                    className="downArrow"
+                    style={{
+                        left: `${location.Vertex?.coord_x}px`,
+                        top: `${location.Vertex?.coord_y}px` ,
+
+                    }}
+                    id={`arrow-${location.id}`}
+
+                    ></img>
 
 
                     <div
