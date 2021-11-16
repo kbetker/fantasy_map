@@ -11,9 +11,14 @@ preferences to add to db tables:
         locations:
             add: defined scale which they appear on map
             add: name offsetX && offsetY
+            add: name size
+            add: locationVertex Size
+            add: name max/min size
         Roads:
             add: show_on_map boolean
             add: startVertex
+            add: road Color
+
 
 
 
