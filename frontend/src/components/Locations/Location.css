@@ -9,16 +9,39 @@
     background-size: cover;
 
 }
-.wut{
+.tools_map_container{
+    display: flex;
+    /* position: relative; */
+}
+
+.toolbarContainer{
+    width: 250px;
+}
+.tollbarHide{
+    display: none;
+}
+
+.mapNavTools{
     display: flex;
 }
 
-.animMarker{
-    animation-name: anim;
-    animation-duration: 2s;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in-out;
+.sideBar{
+    display: flex;
+    /* opacity: 0.5; */
+    position: fixed;
+    left: 0;
+    top:50px;
+    z-index: 999;
+    height: 93vh;
+    background-color: rgb(48, 48, 48);
+    transition: all ease-in-out 1s;
 }
+
+.sideBarHide{
+    left: -250px
+}
+
+
 
 .locationbutton,.loactionSelected{
     background-color: grey;
@@ -45,6 +68,12 @@
 
 }
 
+.animMarker{
+    animation-name: anim;
+    animation-duration: 2s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+}
 
 @keyframes anim {
     0% {
@@ -62,7 +91,7 @@
     22% {
         transform: translate(-50%, -100%);
         z-index: 3;
-       opacity: 1;
+        opacity: 1;
     }
 
     33% {

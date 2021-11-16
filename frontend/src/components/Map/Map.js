@@ -43,9 +43,8 @@ function Map() {
     }, [])
 
     function handleClick(e){
-        let xPos = Math.round((e.clientX / mapControl.scale) - (mapControl.positionX/mapControl.scale) )
+        let xPos = Math.round(((e.clientX) / mapControl.scale) - (mapControl.positionX/mapControl.scale) )
         let yPos = Math.round((e.clientY / mapControl.scale) - ((mapControl.positionY + 50)/mapControl.scale) )
-
         console.log(`X: ${xPos} - Y: ${yPos}`)
     }
 
@@ -114,8 +113,8 @@ function Map() {
                             top: `${location.Vertex?.coord_y}px` ,
                             minWidth: "8px",
                             minHeight: "8px",
-                            width:`${Math.ceil(15 / mapControl.scale)}px`,
-                            height:`${Math.ceil(15 / mapControl.scale)}px`,
+                            width:`${Math.ceil(9 / mapControl.scale)}px`,
+                            height:`${Math.ceil(9 / mapControl.scale)}px`,
                             maxWidth: "30px",
                             maxHeight: "30px",
                             }}>
@@ -129,8 +128,8 @@ function Map() {
                             top: `${location.Vertex?.coord_y}px` ,
                             minWidth: "12px",
                             minHeight: "12px",
-                            width:`${Math.ceil((15 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
-                            height:`${Math.ceil((15 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
+                            width:`${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
+                            height:`${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
                             maxWidth: "34px",
                             maxHeight: "34px",
                             }}>
