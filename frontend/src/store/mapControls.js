@@ -48,7 +48,10 @@ const initialState = {
     positionY: 0,
     sideBarExpand: true,
     sideBarName: 'Location List',
-    toolbarOffset: 0, //might not need this
+    locationName: "",
+    locationId: 0,
+    locationDescription: '',
+
 }
 
 

@@ -118,7 +118,7 @@ function Locations() {
         <TransformWrapper
             limitToBounds={false}
             initialScale={0.315}
-            maxScale={5}
+            maxScale={1}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
             onZoomStop={(e) => zoomToLocation(e)}
@@ -162,6 +162,8 @@ function Locations() {
                                         ]} />
                                 </div>
 
+                                {/* ====================================  Locations List ============================ */}
+
                                 {mapControls.sideBarName === "Location List" && <div className="locationsList">
                                     <>
                                         <input
@@ -195,7 +197,7 @@ function Locations() {
                                                 <div
                                                     className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
                                                     onClick={(e) => [
-                                                        zoomToElement(getEl(loc.id), 1, 1000, "easeInOutQuad"),
+                                                        zoomToElement(getEl(loc.id), 1, 500, "easeInOutQuad"),
                                                         setLocationId(`${loc.id}`),
                                                         setVertexZoomScale(),
                                                         e.target.blur(),
@@ -207,7 +209,14 @@ function Locations() {
                                     </>
                                 </div>}
 
-                                {/*todo <Location Info /> */}
+                                {mapControls.sideBarName === "Location Information" &&
+
+                                <div>
+
+                                </div>
+
+
+                                }
                                 {/*todo <Directions /> */}
                                 {/*todo <Create Road /> */}
                                 {/*todo <Edit  Road /> */}
