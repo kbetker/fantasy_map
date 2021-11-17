@@ -15,6 +15,34 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      show_on_map: {
+        type: Sequelize.BOOLEAN,
+        allowNull: true,
+      },
+      start_vertex: {
+         type: Sequelize.INTEGER,
+         allowNull: true,
+      },
+      road_color: {
+         type: Sequelize.STRING,
+         allowNull: true,
+      },
+      road_dash_length: {
+         type: Sequelize.INTEGER,
+         allowNull: true,
+      },
+      road_dash_gap: {
+         type: Sequelize.INTEGER,
+         allowNull: true,
+      },
+      min_visible_scale: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+     },
+     max_visible_scale: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+   },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -22,7 +50,9 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+
+
     });
   },
   down: (queryInterface, Sequelize) => {
