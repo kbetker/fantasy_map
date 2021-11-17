@@ -73,10 +73,6 @@ const mapControlsReducer = (state = initialState, action) => {
             return newState
         case SIDEBAR_EXPAND:
             newState = Object.assign({}, state);
-            // console.log(state, "?!?!?!?!")
-            // console.log(newState, "?!?!?!?")
-            // console.log( action, "?!?!?!?!")
-            // console.log(newState, action, "WTF?!?!?!?!??!?!?!??!!?!?!?!?!?!?!?!??!!?")
             newState.sideBarExpand = action.sideBarExpand //shrink
             return newState
 
