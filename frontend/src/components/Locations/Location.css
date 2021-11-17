@@ -16,6 +16,7 @@
 
 .toolbarContainer{
     width: 250px;
+    position: relative;
 }
 .tollbarHide{
     display: none;
@@ -23,6 +24,17 @@
 
 .mapNavTools{
     display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 3px;
+    width: 250px;
+    position: absolute;
+    top: 0;
+    background-color: rgb(36, 36, 36);
+}
+.navButton{
+    width: 40px;
+    height: 40px;
 }
 
 .sideBar{
@@ -30,7 +42,7 @@
     /* opacity: 0.5; */
     position: fixed;
     left: 0;
-    top:50px;
+    top: 50px;
     z-index: 999;
     height: 93vh;
     background-color: rgb(48, 48, 48);
@@ -42,21 +54,29 @@
 }
 
 
-
 .locationbutton,.loactionSelected{
     background-color: grey;
     padding: 5px;
     border: 1px solid black;
     cursor: pointer;
     margin: 5px 0;
+    width: 190px;
 }
 
+
 .locationsList{
-    margin: 10px 5px;
+    margin-top: 50px;
+    margin-left: 10px;
     background-color: rgb(85, 85, 85);
-    height: 250px;
+    height: 85vh;
     overflow-y: auto;
     box-shadow: 0 0 20px black inset;
+    width: 230px;
+    padding: 3px;
+    box-sizing: border-box;
+    border: 3px solid black;
+    overflow-x: hidden;
+    position: relative;
 }
 
 .locationbutton:hover{
@@ -64,8 +84,22 @@
 }
 .loactionSelected{
     background-color: rgb(65, 65, 65);
+}
+.searchInput{
+    position: fixed;
+    width: 195px;
+    height: 35px;
+    background-color: rgb(65, 65, 65);
+    outline: none;
+    box-shadow: 0 0 10px black;
+    color: white;
+    /* background-color: red; */
+}
 
 
+
+.spacer{
+    margin-top: 55px;
 }
 
 .animMarker{
@@ -135,10 +169,26 @@
         z-index: 3;
        opacity: 0;
     }
+  }
 
 
 
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #212121;
+}
 
+/* Handle */
+::-webkit-scrollbar-thumb {
+      /* border-radius: 20px; */
+    background: rgb(192, 197, 155);
+  }
 
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(214, 214, 214);
   }
