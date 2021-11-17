@@ -12,6 +12,7 @@ function Map() {
     const mapImage = useRef()
     const mapContainer = useRef()
     const mapControl = useSelector(state => state.map_controls)
+    const stroke = useRef('')
 
 
     function vertexClick(e) {
@@ -48,13 +49,18 @@ function Map() {
         console.log(`X: ${xPos} - Y: ${yPos}`)
     }
 
+    useEffect(()=>{
+        stroke.current = Math.ceil(1 / mapControl.scale)
+
+    }, [mapControl.scale])
+
+
     return (
 
         <div className="mapContainer" ref={mapContainer} onClick={((e) => handleClick(e))}>
 
 
             {(mapData.Roads.length > 0 && isLoaded) && <>
-
                 {mapData.Roads.map(road =>
                     <div key={`key-${road.id}`}>
                         <Roads props={{ "mapData": road, "imageSize": imageSize }} />
@@ -77,15 +83,16 @@ function Map() {
                         maxWidth: "30px",
                         maxHeight: "30px",
                         color: "black",
+                        transform: `translate(${-450 / mapControl.scale}%, ${-50 / mapControl.scale }%)`,
                         textShadow: `
-                        -${Math.ceil(2 / mapControl.scale)}px -${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
-                        0   -${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
-                        ${Math.ceil(2 / mapControl.scale)}px -${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
-                        ${Math.ceil(2 / mapControl.scale)}px  0   0 #FFF,
-                        ${Math.ceil(2 / mapControl.scale)}px  ${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
-                        0    ${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
-                       -${Math.ceil(2 / mapControl.scale)}px  ${Math.ceil(2 / mapControl.scale)}px 0 #FFF,
-                       -${Math.ceil(2 / mapControl.scale)}px  0   0 #FFF`,
+                        -${stroke.current}px -${stroke.current}px 0 #FFF,
+                        0   -${stroke.current}px 0 #FFF,
+                        ${stroke.current}px -${stroke.current}px 0 #FFF,
+                        ${stroke.current}px  0   0 #FFF,
+                        ${stroke.current}px  ${stroke.current}px 0 #FFF,
+                        0    ${stroke.current}px 0 #FFF,
+                       -${stroke.current}px  ${stroke.current}px 0 #FFF,
+                       -${stroke.current}px  0   0 #FFF`,
                         // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
                         }}
                     >

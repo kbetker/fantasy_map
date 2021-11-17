@@ -10,6 +10,7 @@ import SideBarIcons from "./SideBarIcons"
 import zoomInButton from "./SideBarIcons/icons/zoom_in.svg"
 import zoomOutButton from "./SideBarIcons/icons/zoom_out.svg"
 import resetViewButton from "./SideBarIcons/icons/zoom_out_map.svg"
+import mainLoc from "./SideBarIcons/icons/my_location.svg"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -23,6 +24,7 @@ function Locations() {
     const dispatch = useDispatch()
     const transWrapper = useRef()
     const childLocations = useSelector(state => state.map_data?.child_locations)
+    const mainLocation = useSelector(state => state.map_data)
     const mapControls = useSelector(state => state.map_controls)
     const [searchName, setSearchName] = useState('')
     const sideBar = useRef()
@@ -116,7 +118,7 @@ function Locations() {
         <TransformWrapper
             limitToBounds={false}
             initialScale={0.315}
-            maxScale={1}
+            maxScale={5}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
             onZoomStop={(e) => zoomToLocation(e)}
@@ -160,18 +162,33 @@ function Locations() {
                                         ]} />
                                 </div>
 
-                              { mapControls.sideBarName === "Location List" && <div className="locationsList">
+                                {mapControls.sideBarName === "Location List" && <div className="locationsList">
                                     <>
-                                            <input
-                                                type="text"
-                                                value={searchName}
-                                                onChange={(e) => setSearchName(e.target.value)}
-                                                className="searchInput"
-                                                placeholder="Search..."
-                                            />
+                                        <input
+                                            type="text"
+                                            value={searchName}
+                                            onChange={(e) => setSearchName(e.target.value)}
+                                            className="searchInput"
+                                            placeholder="Search..."
+                                        />
 
 
                                         <div className="spacer"></div>
+
+
+                                        <div
+                                            className={`${locationId === `${mainLocation.id}` ? "loactionSelected mainLoc" : "locationbutton mainLoc"} `}
+                                            onClick={(e) => [
+                                                setVertexResetScale(),
+                                                setLocationId(`${mainLocation.id}`),
+                                                resetTransform(500, "easeInOutQuad"),
+                                                e.target.blur(),
+                                            ]}
+                                        >
+                                        <img src={mainLoc}/>
+                                        <div className="mainLocTitle">{mainLocation.name}</div>
+                                        </div>
+
 
                                         {childLocations?.map(loc => <>
                                             {searchByName(loc.name) &&
