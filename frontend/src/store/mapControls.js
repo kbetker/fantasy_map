@@ -47,7 +47,7 @@ const initialState = {
     positionX: 0,
     positionY: 0,
     sideBarExpand: true,
-    sideBarName: '',
+    sideBarName: 'Location List',
     toolbarOffset: 0, //might not need this
 }
 

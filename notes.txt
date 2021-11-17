@@ -14,10 +14,12 @@ preferences to add to db tables:
             add: name size
             add: locationVertex Size
             add: name max/min size
+            add: font-family
         Roads:
             add: show_on_map boolean
             add: startVertex
             add: road Color
+            add: solid and dashed options
 
 
 

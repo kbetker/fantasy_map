@@ -7,6 +7,9 @@ import MapNav from "../MapNav"
 import "./Location.css"
 import { sendMapControls } from "../../store/mapControls"
 import SideBarIcons from "./SideBarIcons"
+import zoomInButton from "./SideBarIcons/icons/zoom_in.svg"
+import zoomOutButton from "./SideBarIcons/icons/zoom_out.svg"
+import resetViewButton from "./SideBarIcons/icons/zoom_out_map.svg"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -20,7 +23,7 @@ function Locations() {
     const dispatch = useDispatch()
     const transWrapper = useRef()
     const childLocations = useSelector(state => state.map_data?.child_locations)
-    const mapControls = useSelector(state=> state.map_controls)
+    const mapControls = useSelector(state => state.map_controls)
     const [searchName, setSearchName] = useState('')
     const sideBar = useRef()
 
@@ -47,8 +50,9 @@ function Locations() {
     }
 
 
-    function zoomTest(e) {
-        //toDo send scale to store
+    function zoomToLocation(e) {
+        // console.log(e, "?!?!?!?!??!?!?!?!??")
+
         dispatch(sendMapControls(e.state))
     }
 
@@ -77,14 +81,34 @@ function Locations() {
     }
 
 
-    useEffect(()=>{
-        if(mapControls.sideBarExpand){
+    function zoomInFunc() {
+        if (mapControls.scale >= 1) return
+        let newObj = JSON.parse(JSON.stringify(mapControls))
+        console.log(newObj)
+        newObj.scale += 0.205
+        console.log(newObj)
+        dispatch(sendMapControls(newObj))
+    }
+
+    function zoomOutFunc() {
+        if (mapControls.scale <= 0.25) return
+
+        let newObj = JSON.parse(JSON.stringify(mapControls))
+        console.log(newObj)
+        newObj.scale -= 0.205
+        console.log(newObj)
+        dispatch(sendMapControls(newObj))
+    }
+
+
+
+
+    useEffect(() => {
+        if (mapControls.sideBarExpand) {
             sideBar.current.classList.remove("sideBarHide")
         } else {
             sideBar.current.classList.add("sideBarHide")
         }
-
-
     }, [mapControls.sideBarExpand])
 
 
@@ -95,14 +119,14 @@ function Locations() {
             maxScale={1}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
-            onZoomStop={(e) => zoomTest(e)}
-            onPanningStop={(e) => zoomTest(e)}
+            onZoomStop={(e) => zoomToLocation(e)}
+            onPanningStop={(e) => zoomToLocation(e)}
             wheel={{ step: 0.05 }}
             onInit={(e) => init(e)}
             initialPositionX={300}
             ref={transWrapper}
         >
-            {({ zoomIn, zoomOut, resetTransform, zoomToElement, ...rest }) => (
+            {({ zoomIn, zoomOut, resetTransform, zoomToElement, setTransform, ...rest }) => (
                 <React.Fragment>
                     <div className="tools_map_container" >
 
@@ -110,22 +134,45 @@ function Locations() {
                         <div className="sideBar" ref={sideBar}>
                             <div className="toolbarContainer">
                                 <div className="mapNavTools">
-                                    <button onClick={() => zoomIn()}>+</button>
-                                    <button onClick={() => zoomOut()}>-</button>
-                                    <button onClick={(e) => [
-                                        resetTransform(1000, "easeInOutQuad"),
-                                        setVertexResetScale(),
-                                        e.target.blur(),
-                                        ]}>Reset View</button>
+                                    <img
+                                        className="navButton"
+                                        src={zoomInButton}
+                                        onClick={(e) => [
+                                            zoomIn(),
+                                            zoomInFunc(),
+                                        ]} />
+                                    <img
+                                        className="navButton"
+                                        src={zoomOutButton}
+                                        onClick={(e) => [
+                                            zoomOut(),
+                                            zoomOutFunc(),
+                                            // zoomInButton(),
+                                        ]
+                                        } />
+                                    <img
+                                        className="navButton"
+                                        src={resetViewButton}
+                                        onClick={(e) => [
+                                            resetTransform(500, "easeInOutQuad"),
+                                            setVertexResetScale(),
+                                            e.target.blur(),
+                                        ]} />
                                 </div>
 
-                                <div className="locationsList">
+                              { mapControls.sideBarName === "Location List" && <div className="locationsList">
                                     <>
-                                        <input
-                                            type="text"
-                                            value={searchName}
-                                            onChange={(e) => setSearchName(e.target.value)}
-                                        />
+                                            <input
+                                                type="text"
+                                                value={searchName}
+                                                onChange={(e) => setSearchName(e.target.value)}
+                                                className="searchInput"
+                                                placeholder="Search..."
+                                            />
+
+
+                                        <div className="spacer"></div>
+
                                         {childLocations?.map(loc => <>
                                             {searchByName(loc.name) &&
                                                 <div
@@ -141,7 +188,7 @@ function Locations() {
                                         </>
                                         )}
                                     </>
-                                </div>
+                                </div>}
 
                                 {/*todo <Location Info /> */}
                                 {/*todo <Directions /> */}
@@ -153,7 +200,7 @@ function Locations() {
 
 
 
-                           <SideBarIcons />
+                            <SideBarIcons />
 
 
 
