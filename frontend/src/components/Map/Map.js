@@ -71,19 +71,20 @@ function Map() {
 
             {mapData.child_locations.map(location =>
                 <div className="locationContainer" key={`key-${location.id}`}>
-
                     <div
                     className="locationName"
                     style={{
                         left: `${location.Vertex?.coord_x}px`,
                         top: `${location.Vertex?.coord_y}px` ,
-                        minWidth: "8px",
-                        minHeight: "8px",
-                        fontSize: `${Math.ceil(23 / mapControl.scale)}px`,
-                        maxWidth: "30px",
-                        maxHeight: "30px",
+                        opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
+                        // minWidth: "8px",
+                        // minHeight: "8px",
+                        fontSize: `${Math.ceil(location.name_font_size_max / mapControl.scale)}px`,
+                        // maxWidth: "30px",
+                        // maxHeight: "30px",
                         color: "black",
-                        transform: `translate(${-450 / mapControl.scale}%, ${-50 / mapControl.scale }%)`,
+                        transform: `translate(${location.name_offset_x / mapControl.scale}px, ${location.name_offset_y / mapControl.scale }px)`,
+                        // transform: `translate(${20 / mapControl.scale}px, ${-5 / mapControl.scale }px)`,
                         textShadow: `
                         -${stroke.current}px -${stroke.current}px 0 #FFF,
                         0   -${stroke.current}px 0 #FFF,
@@ -124,6 +125,7 @@ function Map() {
                             height:`${Math.ceil(9 / mapControl.scale)}px`,
                             maxWidth: "30px",
                             maxHeight: "30px",
+                            opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
                             }}>
                     </div>
 
@@ -139,6 +141,8 @@ function Map() {
                             height:`${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
                             maxWidth: "34px",
                             maxHeight: "34px",
+                            opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
+
                             }}>
                     </div>
                 </div>

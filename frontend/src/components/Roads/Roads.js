@@ -8,6 +8,15 @@ function Roads({props}){
 
 
     function drawRoad(road) {
+
+        var ctx = myCanvas.current.getContext("2d");
+        ctx.clearRect(0, 0, myCanvas.current.width, myCanvas.current.height);
+
+        if(mapControls.scale < road.min_visible_scale * 0.01 || mapControls.scale > road.max_visible_scale * 0.01){
+            return
+        };
+
+
         let vertexArray = road.road_vertices
         let newObj = {}
         let newObjarr = []
@@ -34,8 +43,6 @@ function Roads({props}){
 
             recurseYou(vertexArray[0])
 
-            var ctx = myCanvas.current.getContext("2d");
-            ctx.clearRect(0, 0, myCanvas.current.width, myCanvas.current.height);
 
             let width = mapControls.scale >= 1 ? 3
                       : mapControls.scale <= 0.25 ? 3 / 0.25
@@ -67,9 +74,7 @@ function Roads({props}){
             }
             ctx.stroke();
 
-            if(road.name === "FireshearRoad"){
-                myCanvas.current.style.opacity = 0
-            }
+
 
     }
 
