@@ -2,7 +2,14 @@
 module.exports = (sequelize, DataTypes) => {
   const Road = sequelize.define('Road', {
     location_id: DataTypes.INTEGER,
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    show_on_map: DataTypes.BOOLEAN,
+    start_vertex: DataTypes.INTEGER,
+    road_color: DataTypes.STRING,
+    road_dash_length: DataTypes.INTEGER,
+    road_dash_gap: DataTypes.INTEGER,
+    min_visible_scale: DataTypes.INTEGER,
+    max_visible_scale: DataTypes.INTEGER,
   }, {});
   Road.associate = function(models) {
 

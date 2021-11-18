@@ -28,13 +28,26 @@
     align-items: center;
     padding: 3px;
     width: 250px;
+    height: 52px;
     position: absolute;
     top: 0;
+    box-sizing: border-box;
     background-color: rgb(36, 36, 36);
 }
+
 .navButton{
     width: 40px;
     height: 40px;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,0);
+}
+
+.navButton:hover{
+    background-color: rgb(58, 58, 58);
+    border: 1px solid rgb(128, 128, 128);
 }
 
 .sideBar{
@@ -65,14 +78,14 @@
 
 
 .locationsList{
-    margin-top: 50px;
+    margin-top: 55px;
     margin-left: 10px;
     background-color: rgb(85, 85, 85);
     height: 85vh;
     overflow-y: auto;
     box-shadow: 0 0 20px black inset;
     width: 230px;
-    padding: 3px;
+    padding: 5px;
     box-sizing: border-box;
     border: 3px solid black;
     overflow-x: hidden;
@@ -85,6 +98,10 @@
 .loactionSelected{
     background-color: rgb(65, 65, 65);
 }
+.loactionSelected:hover{
+    background-color: rgb(87, 87, 87);
+}
+
 .searchInput{
     position: fixed;
     width: 195px;
@@ -96,7 +113,16 @@
     /* background-color: red; */
 }
 
-
+.mainLoc{
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+.mainLocTitle{
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
 
 .spacer{
     margin-top: 55px;

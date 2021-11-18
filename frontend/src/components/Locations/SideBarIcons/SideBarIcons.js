@@ -23,8 +23,8 @@ function SideBarIcons() {
 
     return (
         <div
-        className="sideBarIcons"
-        ref={sidebarIcons}
+            className="sideBarIcons"
+            ref={sidebarIcons}
         >
             {mapControls.sideBarExpand ?
                 <img
@@ -48,6 +48,15 @@ function SideBarIcons() {
                 ]}
             />
 
+            <img src={location}
+                className={mapControls.sideBarName === 'Location Information' ? "iconSelected" : "icon"}
+                alt="Location Information"
+                onClick={(e) => [
+                    dispatch(sendSidebarName(e.target.alt)),
+                    dispatch(sendSidebarExpand(true))
+                ]}
+            />
+
             <img src={explore}
                 className={mapControls.sideBarName === 'Get Direction' ? "iconSelected" : "icon"}
                 alt="Get Direction"
@@ -57,14 +66,6 @@ function SideBarIcons() {
                 ]}
             />
 
-            <img src={location}
-                className={mapControls.sideBarName === 'Location Information' ? "iconSelected" : "icon"}
-                alt="Location Information"
-                onClick={(e) => [
-                    dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
-                ]}
-            />
 
             <img src={addRoad}
                 className={mapControls.sideBarName === 'Add Road' ? "iconSelected" : "icon"}

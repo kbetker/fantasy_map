@@ -10,6 +10,7 @@ import SideBarIcons from "./SideBarIcons"
 import zoomInButton from "./SideBarIcons/icons/zoom_in.svg"
 import zoomOutButton from "./SideBarIcons/icons/zoom_out.svg"
 import resetViewButton from "./SideBarIcons/icons/zoom_out_map.svg"
+import mainLoc from "./SideBarIcons/icons/my_location.svg"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -23,6 +24,7 @@ function Locations() {
     const dispatch = useDispatch()
     const transWrapper = useRef()
     const childLocations = useSelector(state => state.map_data?.child_locations)
+    const mainLocation = useSelector(state => state.map_data)
     const mapControls = useSelector(state => state.map_controls)
     const [searchName, setSearchName] = useState('')
     const sideBar = useRef()
@@ -160,25 +162,42 @@ function Locations() {
                                         ]} />
                                 </div>
 
-                              { mapControls.sideBarName === "Location List" && <div className="locationsList">
+                                {/* ====================================  Locations List ============================ */}
+
+                                {mapControls.sideBarName === "Location List" && <div className="locationsList">
                                     <>
-                                            <input
-                                                type="text"
-                                                value={searchName}
-                                                onChange={(e) => setSearchName(e.target.value)}
-                                                className="searchInput"
-                                                placeholder="Search..."
-                                            />
+                                        <input
+                                            type="text"
+                                            value={searchName}
+                                            onChange={(e) => setSearchName(e.target.value)}
+                                            className="searchInput"
+                                            placeholder="Search..."
+                                        />
 
 
                                         <div className="spacer"></div>
+
+
+                                        <div
+                                            className={`${locationId === `${mainLocation.id}` ? "loactionSelected mainLoc" : "locationbutton mainLoc"} `}
+                                            onClick={(e) => [
+                                                setVertexResetScale(),
+                                                setLocationId(`${mainLocation.id}`),
+                                                resetTransform(500, "easeInOutQuad"),
+                                                e.target.blur(),
+                                            ]}
+                                        >
+                                        <img src={mainLoc}/>
+                                        <div className="mainLocTitle">{mainLocation.name}</div>
+                                        </div>
+
 
                                         {childLocations?.map(loc => <>
                                             {searchByName(loc.name) &&
                                                 <div
                                                     className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
                                                     onClick={(e) => [
-                                                        zoomToElement(getEl(loc.id), 1, 1000, "easeInOutQuad"),
+                                                        zoomToElement(getEl(loc.id), 1, 500, "easeInOutQuad"),
                                                         setLocationId(`${loc.id}`),
                                                         setVertexZoomScale(),
                                                         e.target.blur(),
@@ -190,7 +209,14 @@ function Locations() {
                                     </>
                                 </div>}
 
-                                {/*todo <Location Info /> */}
+                                {mapControls.sideBarName === "Location Information" &&
+
+                                <div>
+
+                                </div>
+
+
+                                }
                                 {/*todo <Directions /> */}
                                 {/*todo <Create Road /> */}
                                 {/*todo <Edit  Road /> */}

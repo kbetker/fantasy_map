@@ -6,8 +6,20 @@ module.exports = (sequelize, DataTypes) => {
     show_on_map: DataTypes.BOOLEAN,
     vertex_id: DataTypes.INTEGER,
     image_url: DataTypes.STRING,
-    // coord_x: DataTypes.INTEGER,
-    // coord_y: DataTypes.INTEGER
+    thumbnail_url: DataTypes.STRING,
+    min_visible_scale: DataTypes.INTEGER,
+    max_visible_scale: DataTypes.INTEGER,
+    name_offset_x: DataTypes.INTEGER,
+    name_offset_y: DataTypes.INTEGER,
+    name_font_size_min: DataTypes.INTEGER,
+    name_font_size_max: DataTypes.INTEGER,
+    name_font_family: DataTypes.STRING,
+    loc_vertex_size_min: DataTypes.INTEGER,
+    loc_vertex_size_max: DataTypes.INTEGER,
+    loc_vertex_stroke: DataTypes.INTEGER,
+    location_color: DataTypes.STRING,
+    location_stroke_color: DataTypes.STRING,
+    location_description: DataTypes.STRING,
   }, {});
   Location.associate = function(models) {
 

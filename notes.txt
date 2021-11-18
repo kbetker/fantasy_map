@@ -1,20 +1,23 @@
 
-zoom in to location - drop down list?
+done - zoom in to location - drop down list?
 
 Fix algo if the road loops.... add Visited?
 
+click on location => send to store location name
+
+locations information => if parent - got to parent - if children - got to location
 
 
 preferences to add to db tables:
         map preference:
-            zoomIn wheel speed
+           changed my mind - no -  zoomIn wheel speed
         locations:
             add: defined scale which they appear on map
             add: name offsetX && offsetY
-            add: name size
-            add: locationVertex Size
-            add: name max/min size
+            add: name font-size min/max
+            add: locationVertex Size - min/max
             add: font-family
+            add: description
         Roads:
             add: show_on_map boolean
             add: startVertex
