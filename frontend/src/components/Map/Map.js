@@ -70,9 +70,10 @@ function Map() {
             }
 
             {mapData.child_locations.map(location =>
-                <div className="locationContainer" key={`key-${location.id}`}>
+                <div className="locationContainer" key={`locKey-${location.id}`}>
                     <div
                     className="locationName"
+                    key={`dude-${location.id}`}
                     style={{
                         left: `${location.Vertex?.coord_x}px`,
                         top: `${location.Vertex?.coord_y}px` ,
@@ -103,6 +104,7 @@ function Map() {
                     <img
                     src={downArrow}
                     className="downArrow"
+                    alt=""
                     style={{
                         left: `${location.Vertex?.coord_x}px`,
                         top: `${location.Vertex?.coord_y}px` ,

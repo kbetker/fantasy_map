@@ -9,8 +9,10 @@ export const loadMapControls = (mapData) => {
     };
 };
 export const sendMapControls = (controlData) => async (dispatch) => {
-        dispatch(loadMapControls(controlData));
+    dispatch(loadMapControls(controlData));
 };
+
+
 
 // ==================== Handles the current name of the sidebar tab ==================== \\
 const SIDEBAR_NAME = 'mapdata/SIDEBAR_NAME';
@@ -22,8 +24,10 @@ export const loadSidebarName = (sidebarName) => {
     };
 };
 export const sendSidebarName = (sidebarName) => async (dispatch) => {
-        dispatch(loadSidebarName(sidebarName));
+    dispatch(loadSidebarName(sidebarName));
 };
+
+
 
 // ==================== Handles if the sidebar is expanded ==================== \\
 const SIDEBAR_EXPAND = 'mapdata/SIDEBAR_EXPAND';
@@ -35,7 +39,23 @@ export const loadSidebarExpand = (sideBarExpand) => {
     };
 };
 export const sendSidebarExpand = (sidebarExpand) => async (dispatch) => {
-        dispatch(loadSidebarExpand(sidebarExpand));
+    dispatch(loadSidebarExpand(sidebarExpand));
+};
+
+
+
+
+// ==================== Handles Location Information ==================== \\
+const LOCATION_INFORMATION = 'mapdata/LOCATION_INFORMATION';
+
+export const loadLocationInformation = (locationInformation) => {
+    return {
+        type: LOCATION_INFORMATION,
+        locationInformation
+    };
+};
+export const sendLocationInformation = (locationInformation) => async (dispatch) => {
+    dispatch(loadLocationInformation(locationInformation));
 };
 
 
@@ -48,9 +68,10 @@ const initialState = {
     positionY: 0,
     sideBarExpand: true,
     sideBarName: 'Location List',
-    locationName: "",
-    locationId: 0,
-    locationDescription: '',
+    locationName: "huh",
+    location_id: 0,
+    name: 'what',
+    thumbnail_url: ''
 
 }
 
@@ -73,7 +94,14 @@ const mapControlsReducer = (state = initialState, action) => {
             return newState
         case SIDEBAR_EXPAND:
             newState = Object.assign({}, state);
-            newState.sideBarExpand = action.sideBarExpand //shrink
+            newState.sideBarExpand = action.sideBarExpand
+            return newState
+        case LOCATION_INFORMATION:
+            newState = Object.assign({}, state);
+            newState.name = action.locationInformation.name
+            newState.location_id = action.locationInformation.location_id
+            newState.location_description = action.locationInformation.location_description
+            newState.thumbnail_url = action.locationInformation.thumbnail_url
             return newState
 
         default:
