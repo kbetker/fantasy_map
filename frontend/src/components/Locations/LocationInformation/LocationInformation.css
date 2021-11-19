@@ -1,0 +1,51 @@
+.locationInfoContainer{
+    position: absolute;
+    top: 60px;
+    margin: 5px;
+    padding-left: 5px;
+    padding-right: 10px;
+    box-shadow: 0 0 15px black inset;
+    width: 90%;
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.locationInfoTitle{
+    text-shadow: 0 0 3px rgb(255, 255, 255);
+    font-size: 30px;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+    width: 230px;
+}
+.locationThumbnail{
+    width: 220px;
+}
+.locationDescription{
+    margin-top: 5px;
+    font-style: italic;
+    font-size: large;
+}
+
+.gotToLocation{
+    margin: 20px 0;
+    background-color: rgb(95, 95, 95);
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}
+.gotToLocation:hover{
+    background-color: rgb(155, 155, 155);
+
+}
+
+.gotToLocation > a {
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 12px;
+    text-decoration: none;
+}

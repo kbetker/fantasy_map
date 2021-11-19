@@ -10,9 +10,11 @@ import SideBarIcons from "./SideBarIcons"
 import zoomInButton from "./SideBarIcons/icons/zoom_in.svg"
 import zoomOutButton from "./SideBarIcons/icons/zoom_out.svg"
 import resetViewButton from "./SideBarIcons/icons/zoom_out_map.svg"
+import parentLocation from "./SideBarIcons/icons/parent_location.svg"
 import mainLoc from "./SideBarIcons/icons/my_location.svg"
 import { sendLocationInformation } from "../../store/mapControls"
 import { sendSidebarName } from "../../store/mapControls"
+import LocationInformation from "./LocationInformation/LocationInformation"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -25,17 +27,22 @@ function Locations() {
     const { id } = useParams()
     const dispatch = useDispatch()
     const transWrapper = useRef()
-    const childLocations = useSelector(state => state.map_data?.child_locations)
-    const mainLocation = useSelector(state => state.map_data)
+    const mapData = useSelector(state => state.map_data)
+    const childLocations = mapData?.child_locations
+    const parentLocations = mapData?.parent_locations
     const mapControls = useSelector(state => state.map_controls)
+
     const [searchName, setSearchName] = useState('')
     const sideBar = useRef()
 
     useEffect(() => {
-        dispatch(fetchMapData(id)).then(() => setIsLoaded(true))
         window.addEventListener("resize", (e) => {
             setWindowWidth(window.innerWidth)
         })
+
+        dispatch(fetchMapData(id))
+        .then(() => setIsLoaded(true))
+
     }, [dispatch, id])
 
 
@@ -43,6 +50,9 @@ function Locations() {
     useEffect(() => {
         mapControls.sideBarExpand ? sideBar.current.classList.remove("sideBarHide") : sideBar.current.classList.add("sideBarHide")
     }, [mapControls.sideBarExpand])
+
+
+    // sets select location to current location
 
 
     // ======== gets node for map to zoom to - and animates the pointing arrow ========== \\
@@ -159,18 +169,51 @@ function Locations() {
 
                                         <div className="spacer"></div>
 
+                                         {/* ==================================== Parent Locations ============================ */}
+                                        { parentLocations.length > 0 &&  <>
 
+                                            {parentLocations.map(loc =>
+                                                    <div
+                                                    className={`${locationId === `${loc.id}` ? "loactionSelected mainLoc" : "locationbutton mainLoc"} `}
+                                                    key={`$parentLoc-${loc.id}`}
+                                                    onClick={(e) => [
+                                                        setLocationId(`${loc.id}`),
+                                                        dispatch(sendLocationInformation({
+                                                            name: loc.name,
+                                                            location_id: loc.id,
+                                                            location_description: loc.location_description,
+                                                            thumbnail_url: loc.thumbnail_url,
+                                                        })),
+                                                        dispatch(sendSidebarName("Location Information")),
+                                                    ]}
+                                                >
+                                                    <img src={parentLocation} alt="Parent Location"/>
+                                                    <div className="mainLocTitle">{loc.name}</div>
+                                                </div>
+                                                )}
+                                        </>}
+
+
+
+                                         {/* ==================================== Current Location ============================ */}
                                         <div
-                                            className={`${locationId === `${mainLocation.id}` ? "loactionSelected mainLoc" : "locationbutton mainLoc"} `}
+                                            className={`${locationId === `${mapData.id}` ? "loactionSelected mainLoc" : "locationbutton mainLoc"} `}
                                             onClick={(e) => [
                                                 setVertexScale(0.315),
-                                                setLocationId(`${mainLocation.id}`),
+                                                setLocationId(`${mapData.id}`),
                                                 resetTransform(500, "easeInOutQuad"),
                                                 e.target.blur(),
+                                                dispatch(sendSidebarName("Location Information")),
+                                                dispatch(sendLocationInformation({
+                                                    name: mapData.name,
+                                                    location_id: mapData.id,
+                                                    location_description: mapData.location_description,
+                                                    thumbnail_url: mapData.thumbnail_url,
+                                                })),
                                             ]}
                                         >
                                             <img src={mainLoc} alt="Main Location" />
-                                            <div className="mainLocTitle">{mainLocation.name}</div>
+                                            <div className="mainLocTitle">{mapData.name}</div>
                                         </div>
 
 
@@ -199,19 +242,7 @@ function Locations() {
                                     </>
                                 </div>}
 
-                                {mapControls.sideBarName === "Location Information" &&
-
-                                    //  todo: make this a component
-
-
-                                    <div  style={{position: "absolute", top: "70px"}}>
-                                        {console.log(mapControls.name, "WTF?!?!?!?!?!?!??!")}
-                                      <div>{mapControls.name}</div>
-                                      <div>{mapControls.location_description}</div>
-                                      <div>{mapControls.location_id}</div>
-                                      <div>wat?!</div>
-                                    </div>
-                                }
+                                {mapControls.sideBarName === "Location Information" && <LocationInformation />}
                                 {/*todo <Directions /> */}
                                 {/*todo <Create Road /> */}
                                 {/*todo <Edit  Road /> */}
