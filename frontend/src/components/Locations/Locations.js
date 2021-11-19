@@ -11,6 +11,8 @@ import zoomInButton from "./SideBarIcons/icons/zoom_in.svg"
 import zoomOutButton from "./SideBarIcons/icons/zoom_out.svg"
 import resetViewButton from "./SideBarIcons/icons/zoom_out_map.svg"
 import mainLoc from "./SideBarIcons/icons/my_location.svg"
+import { sendLocationInformation } from "../../store/mapControls"
+import { sendSidebarName } from "../../store/mapControls"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -37,9 +39,9 @@ function Locations() {
     }, [dispatch, id])
 
 
-     // ======== handles the sidebar collapse/expand  ========== \\
+    // ======== handles the sidebar collapse/expand  ========== \\
     useEffect(() => {
-        mapControls.sideBarExpand ?  sideBar.current.classList.remove("sideBarHide") : sideBar.current.classList.add("sideBarHide")
+        mapControls.sideBarExpand ? sideBar.current.classList.remove("sideBarHide") : sideBar.current.classList.add("sideBarHide")
     }, [mapControls.sideBarExpand])
 
 
@@ -55,10 +57,10 @@ function Locations() {
     }
 
     // ======== sends scale, prev scale, and  X & Y positions to the store ========== \\
-     const sendMapData = (e) =>  {dispatch(sendMapControls(e.state))};
+    const sendMapData = (e) => { dispatch(sendMapControls(e.state)) };
 
     // ======== sends  INITIAL scale, prev scale, and  X & Y positions to the store ========== \\
-     const init = (e) => dispatch(sendMapControls(e.state));
+    const init = (e) => dispatch(sendMapControls(e.state));
 
 
     // ======== for locating a location by name  ========== \\
@@ -103,7 +105,7 @@ function Locations() {
             onInit={(e) => init(e)}
             initialPositionX={300}
             ref={transWrapper}
-            doubleClick={{disabled: true}}
+            doubleClick={{ disabled: true }}
         >
             {({ zoomIn, zoomOut, resetTransform, zoomToElement, setTransform, ...rest }) => (
                 <React.Fragment>
@@ -138,6 +140,7 @@ function Locations() {
                                             resetTransform(500, "easeInOutQuad"),
                                             setVertexScale(0.315),
                                             e.target.blur(),
+                                            dispatch(sendSidebarName("Location List"))
                                         ]} />
                                 </div>
 
@@ -166,12 +169,12 @@ function Locations() {
                                                 e.target.blur(),
                                             ]}
                                         >
-                                        <img src={mainLoc} alt="Main Location" />
-                                        <div className="mainLocTitle">{mainLocation.name}</div>
+                                            <img src={mainLoc} alt="Main Location" />
+                                            <div className="mainLocTitle">{mainLocation.name}</div>
                                         </div>
 
 
-                                        {childLocations?.map(loc => <div  key={`location-${loc.id}`}>
+                                        {childLocations?.map(loc => <div key={`location-${loc.id}`}>
                                             {searchByName(loc.name) &&
                                                 <div
                                                     className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
@@ -181,8 +184,15 @@ function Locations() {
                                                         setLocationId(`${loc.id}`),
                                                         setVertexScale(1),
                                                         e.target.blur(),
+                                                        dispatch(sendLocationInformation({
+                                                            name: loc.name,
+                                                            location_id: loc.id,
+                                                            location_description: loc.location_description,
+                                                            thumbnail_url: loc.thumbnail_url,
+                                                        })),
+                                                        dispatch(sendSidebarName("Location Information")),
                                                     ]}
-                                                >{loc.name}{loc.location_description}
+                                                >{loc.name}
                                                 </div>}
                                         </div>
                                         )}
@@ -191,11 +201,16 @@ function Locations() {
 
                                 {mapControls.sideBarName === "Location Information" &&
 
-                                <div>
-
-                                </div>
+                                    //  todo: make this a component
 
 
+                                    <div  style={{position: "absolute", top: "70px"}}>
+                                        {console.log(mapControls.name, "WTF?!?!?!?!?!?!??!")}
+                                      <div>{mapControls.name}</div>
+                                      <div>{mapControls.location_description}</div>
+                                      <div>{mapControls.location_id}</div>
+                                      <div>wat?!</div>
+                                    </div>
                                 }
                                 {/*todo <Directions /> */}
                                 {/*todo <Create Road /> */}

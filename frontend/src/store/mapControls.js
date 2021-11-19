@@ -68,9 +68,9 @@ const initialState = {
     positionY: 0,
     sideBarExpand: true,
     sideBarName: 'Location List',
-    locationName: "",
-    locationId: 0,
-    locationDescription: '',
+    locationName: "huh",
+    location_id: 0,
+    name: 'what',
     thumbnail_url: ''
 
 }
@@ -98,10 +98,10 @@ const mapControlsReducer = (state = initialState, action) => {
             return newState
         case LOCATION_INFORMATION:
             newState = Object.assign({}, state);
-            newState.locationName = action.locationName
-            newState.locationId = action.locationId
-            newState.locationDescription = action.locationDescription
-            newState.thumbnail_url = action.thumbnail_url
+            newState.name = action.locationInformation.name
+            newState.location_id = action.locationInformation.location_id
+            newState.location_description = action.locationInformation.location_description
+            newState.thumbnail_url = action.locationInformation.thumbnail_url
             return newState
 
         default:

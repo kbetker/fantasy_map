@@ -25,7 +25,24 @@ preferences to add to db tables:
             add: solid and dashed options
 
 
-
+name
+show_on_map
+vertex_id
+image_url
+thumbnail_url
+min_visible_scale
+max_visible_scale
+name_offset_x
+name_offset_y
+name_font_size_min
+name_font_size_max
+name_font_family
+loc_vertex_size_min
+loc_vertex_size_max
+loc_vertex_stroke
+location_color
+location_stroke_color
+location_description
 
 
 
