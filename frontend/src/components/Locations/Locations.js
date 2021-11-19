@@ -52,8 +52,6 @@ function Locations() {
     }, [mapControls.sideBarExpand])
 
 
-    // sets select location to current location
-
 
     // ======== gets node for map to zoom to - and animates the pointing arrow ========== \\
     function getEl(id) {

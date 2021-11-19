@@ -1,6 +1,7 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import "./LocationInformation.css"
+import arrowRight from "../SideBarIcons/icons/arrow_right.svg"
 
 function LocationInformation() {
     const mapControls = useSelector(state => state.map_controls)
@@ -9,11 +10,20 @@ function LocationInformation() {
 
         <div className="locationInfoContainer">
             <div className="locationInfoTitle">{mapControls.name}</div>
-            <div><img className="locationThumbnail" src={`${mapControls.thumbnail_url}`} /> </div>
 
-        { mapData.id !== mapControls.location_id &&   <div className="gotToLocation">
-                <a href={`/locations/${mapControls.location_id}`}> Go to Location</a>
-            </div>}
+                { mapControls.thumbnail_url ?
+                    <img className="locationThumbnail" src={`${mapControls.thumbnail_url}`} />
+                    : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" />
+                }
+
+
+            {(mapData.id !== mapControls.location_id && mapControls.location_id) &&
+                <a href={`/locations/${mapControls.location_id}`}>
+                    <div className="gotToLocation">
+                        <div>Go to Location </div>
+                    </div>
+                </a>
+            }
 
             <div className="locationDescription">{mapControls.location_description}</div>
         </div>
