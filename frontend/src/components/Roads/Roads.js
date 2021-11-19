@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 import { useSelector } from "react-redux"
 import "./Road.css"
 
@@ -8,14 +8,12 @@ function Roads({props}){
 
 
     function drawRoad(road) {
-
         var ctx = myCanvas.current.getContext("2d");
         ctx.clearRect(0, 0, myCanvas.current.width, myCanvas.current.height);
 
         if(mapControls.scale < road.min_visible_scale * 0.01 || mapControls.scale > road.max_visible_scale * 0.01){
             return
         };
-
 
         let vertexArray = road.road_vertices
         let newObj = {}
@@ -60,22 +58,19 @@ function Roads({props}){
             for (let i = 0; i < newObjarr.length; i++) {
                 // if(i === newObjarr.length){
                     ctx.lineTo(newObjarr[i].coord_x - 3, newObjarr[i].coord_y - 3)
-                // } else {
-                //     let x1 = newObjarr[i].coord_x
-                //     let y1 = newObjarr[i].coord_y
+            //     } else {
+            //         let x1 = newObjarr[i].coord_x
+            //         let y1 = newObjarr[i].coord_y
+            //         let x2 = newObjarr[i + 1]?.coord_x || newObjarr[i].coord_x
+            //         let y2 = newObjarr[i + 1]?.coord_y || newObjarr[i].coord_y
 
-                //     let x2 = newObjarr[i + 1]?.coord_x || newObjarr[i].coord_x
-                //     let y2 = newObjarr[i + 1]?.coord_y || newObjarr[i].coord_y
-                //     var xc = (x1 + x2) / 2;
-                //     var yc = (y1 + y2) / 2;
-                //     ctx.quadraticCurveTo(x1, y1, xc, yc);
-                // }
+            //         var xc = (x1 + x2) / 2;
+            //         var yc = (y1 + y2) / 2;
+            //         ctx.quadraticCurveTo(x1, y1, xc, yc);
+            //     }
 
             }
             ctx.stroke();
-
-
-
     }
 
 

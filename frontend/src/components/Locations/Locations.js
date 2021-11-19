@@ -31,51 +31,37 @@ function Locations() {
 
     useEffect(() => {
         dispatch(fetchMapData(id)).then(() => setIsLoaded(true))
-
         window.addEventListener("resize", (e) => {
             setWindowWidth(window.innerWidth)
         })
-
     }, [dispatch, id])
 
+
+     // ======== handles the sidebar collapse/expand  ========== \\
+    useEffect(() => {
+        mapControls.sideBarExpand ?  sideBar.current.classList.remove("sideBarHide") : sideBar.current.classList.add("sideBarHide")
+    }, [mapControls.sideBarExpand])
+
+
+    // ======== gets node for map to zoom to - and animates the pointing arrow ========== \\
     function getEl(id) {
-        console.log(id)
         let node = document.getElementById(`loc-${id}`)
         let arrow = document.getElementById(`arrow-${id}`)
         arrow?.classList.add("animMarker")
-
         setTimeout(() => {
             arrow?.classList.remove("animMarker")
         }, 2000);
-
         return node
     }
 
+    // ======== sends scale, prev scale, and  X & Y positions to the store ========== \\
+     const sendMapData = (e) =>  {dispatch(sendMapControls(e.state))};
 
-    function zoomToLocation(e) {
-        // console.log(e, "?!?!?!?!??!?!?!?!??")
-
-        dispatch(sendMapControls(e.state))
-    }
-
-
-    function init(e) {
-        dispatch(sendMapControls(e.state))
-    }
-
-    function setVertexZoomScale(e) {
-        let newObj = JSON.parse(JSON.stringify(transWrapper.current.state))
-        newObj.scale = 1 // todo make a variable
-        dispatch(sendMapControls(newObj))
-    }
-
-    function setVertexResetScale(e) {
-        let newObj = JSON.parse(JSON.stringify(transWrapper.current.state))
-        newObj.scale = 0.25 // todo make a variable
-        dispatch(sendMapControls(newObj))
-    }
+    // ======== sends  INITIAL scale, prev scale, and  X & Y positions to the store ========== \\
+     const init = (e) => dispatch(sendMapControls(e.state));
 
 
+    // ======== for locating a location by name  ========== \\
     function searchByName(name) {
         const upperCasedName = name.toLowerCase()
         const searchWord = searchName.toLowerCase()
@@ -83,35 +69,25 @@ function Locations() {
     }
 
 
-    function zoomInFunc() {
-        if (mapControls.scale >= 1) return
+    // ================ sets scale for vertices and location names when using zoom in/out tools =================\\
+    function zoomFunc(direction) {
+        if (mapControls.scale >= 1 || mapControls.scale <= 0.25) return;
+        let zoom = direction === "in" ? 0.1 : -0.1
         let newObj = JSON.parse(JSON.stringify(mapControls))
-        console.log(newObj)
-        newObj.scale += 0.205
-        console.log(newObj)
-        dispatch(sendMapControls(newObj))
-    }
-
-    function zoomOutFunc() {
-        if (mapControls.scale <= 0.25) return
-
-        let newObj = JSON.parse(JSON.stringify(mapControls))
-        console.log(newObj)
-        newObj.scale -= 0.205
-        console.log(newObj)
+        newObj.scale += zoom
         dispatch(sendMapControls(newObj))
     }
 
 
+    function setVertexScale(scale) {
+        let newObj = JSON.parse(JSON.stringify(transWrapper.current.state))
+        newObj.scale = scale // todo make a variable from database
+        dispatch(sendMapControls(newObj))
+    }
 
 
-    useEffect(() => {
-        if (mapControls.sideBarExpand) {
-            sideBar.current.classList.remove("sideBarHide")
-        } else {
-            sideBar.current.classList.add("sideBarHide")
-        }
-    }, [mapControls.sideBarExpand])
+
+
 
 
     return (
@@ -121,16 +97,17 @@ function Locations() {
             maxScale={1}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
-            onZoomStop={(e) => zoomToLocation(e)}
-            onPanningStop={(e) => zoomToLocation(e)}
+            onZoomStop={(e) => sendMapData(e)}
+            onPanningStop={(e) => sendMapData(e)}
             wheel={{ step: 0.05 }}
             onInit={(e) => init(e)}
             initialPositionX={300}
             ref={transWrapper}
+            doubleClick={{disabled: true}}
         >
             {({ zoomIn, zoomOut, resetTransform, zoomToElement, setTransform, ...rest }) => (
                 <React.Fragment>
-                    <div className="tools_map_container" >
+                    <div className="tools_map_container" > {/* notes  */}
 
 
                         <div className="sideBar" ref={sideBar}>
@@ -139,25 +116,27 @@ function Locations() {
                                     <img
                                         className="navButton"
                                         src={zoomInButton}
+                                        alt="Zoom In"
                                         onClick={(e) => [
-                                            zoomIn(),
-                                            zoomInFunc(),
+                                            zoomIn(0.25, 500, "easeInOutQuad"),
+                                            zoomFunc("in"),
                                         ]} />
                                     <img
                                         className="navButton"
                                         src={zoomOutButton}
+                                        alt="Zoom Out"
                                         onClick={(e) => [
-                                            zoomOut(),
-                                            zoomOutFunc(),
-                                            // zoomInButton(),
+                                            zoomOut(0.25, 500, "easeInOutQuad"),
+                                            zoomFunc("out"),
                                         ]
                                         } />
                                     <img
                                         className="navButton"
                                         src={resetViewButton}
+                                        alt="Reset View"
                                         onClick={(e) => [
                                             resetTransform(500, "easeInOutQuad"),
-                                            setVertexResetScale(),
+                                            setVertexScale(0.315),
                                             e.target.blur(),
                                         ]} />
                                 </div>
@@ -181,30 +160,31 @@ function Locations() {
                                         <div
                                             className={`${locationId === `${mainLocation.id}` ? "loactionSelected mainLoc" : "locationbutton mainLoc"} `}
                                             onClick={(e) => [
-                                                setVertexResetScale(),
+                                                setVertexScale(0.315),
                                                 setLocationId(`${mainLocation.id}`),
                                                 resetTransform(500, "easeInOutQuad"),
                                                 e.target.blur(),
                                             ]}
                                         >
-                                        <img src={mainLoc}/>
+                                        <img src={mainLoc} alt="Main Location" />
                                         <div className="mainLocTitle">{mainLocation.name}</div>
                                         </div>
 
 
-                                        {childLocations?.map(loc => <>
+                                        {childLocations?.map(loc => <div  key={`location-${loc.id}`}>
                                             {searchByName(loc.name) &&
                                                 <div
                                                     className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
+
                                                     onClick={(e) => [
                                                         zoomToElement(getEl(loc.id), 1, 500, "easeInOutQuad"),
                                                         setLocationId(`${loc.id}`),
-                                                        setVertexZoomScale(),
+                                                        setVertexScale(1),
                                                         e.target.blur(),
                                                     ]}
-                                                >{loc.name}
+                                                >{loc.name}{loc.location_description}
                                                 </div>}
-                                        </>
+                                        </div>
                                         )}
                                     </>
                                 </div>}
@@ -233,7 +213,7 @@ function Locations() {
                         </div>
 
                         <TransformComponent
-                            contentStyle={{ width: `${windowWidth - 30}px`, height: `93vh` }}
+                            contentStyle={{ width: `${windowWidth}px`, height: `93vh` }}
                             wrapperClass="transformComp"
                             wrapperStyle={{
                                 backgroundImage: "url(https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg)",
