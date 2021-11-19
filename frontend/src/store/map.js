@@ -58,6 +58,8 @@ const initialState = {
     parent_locations: [],
     show_on_map: true,
     vertex_id: null,
+    thumbnail_url: '',
+    location_description: ''
 }
 
 
@@ -77,6 +79,9 @@ const mapDataReducer = (state = initialState, action) => {
             newState.parent_locations = action.mapData.parent_locations
             newState.show_on_map = action.mapData.show_on_map
             newState.vertex_id = action.mapData.vertex_id
+            newState.thumbnail_url = action.mapData.thumbnail_url
+            newState.location_description = action.mapData.location_description
+
             return newState
 
         default:
