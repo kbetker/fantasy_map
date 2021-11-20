@@ -34,17 +34,20 @@ function SideBarIcons() {
                     src={leftArrow}
                     className="hideShowIcon" alt="shrink sidebar"
                     onClick={() => dispatch(sendSidebarExpand(false))}
+                    draggable="false"
                 />
                 : <img
                     src={rightArrow}
                     className="hideShowIcon" alt="expand sidebar"
                     onClick={() => dispatch(sendSidebarExpand(true))}
+                    draggable="false"
                 />
             }
 
             <img src={place}
                 className={mapControls.sideBarName === 'Location List' ? "iconSelected" : "icon"}
                 alt="Location List"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))
@@ -54,6 +57,7 @@ function SideBarIcons() {
             <img src={location}
                 className={mapControls.sideBarName === 'Location Information' ? "iconSelected" : "icon"}
                 alt="Location Information"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))
@@ -63,6 +67,7 @@ function SideBarIcons() {
             <img src={addLocation}
                 className={mapControls.sideBarName === 'Add Location' ? "iconSelected" : "icon"}
                 alt="Add Location"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))
@@ -73,6 +78,7 @@ function SideBarIcons() {
             <img src={editLocation}
                 className={mapControls.sideBarName === 'Edit Location' ? "iconSelected" : "icon"}
                 alt="Edit Location"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))
@@ -83,6 +89,7 @@ function SideBarIcons() {
             <img src={explore}
                 className={mapControls.sideBarName === 'Get Direction' ? "iconSelected" : "icon"}
                 alt="Get Direction"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))
@@ -94,6 +101,7 @@ function SideBarIcons() {
             <img src={roadInfo}
                 className={mapControls.sideBarName === 'Road Info' ? "iconSelected" : "icon"}
                 alt="Road Info"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))
@@ -104,6 +112,7 @@ function SideBarIcons() {
             <img src={addRoad}
                 className={mapControls.sideBarName === 'Add Road' ? "iconSelected" : "icon"}
                 alt="Add Road"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))
@@ -113,6 +122,7 @@ function SideBarIcons() {
             <img src={editRoad}
                 className={mapControls.sideBarName === 'Edit Road' ? "iconSelected" : "icon"}
                 alt="Edit Road"
+                draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     dispatch(sendSidebarExpand(true))

@@ -24,28 +24,35 @@
     width: 220px;
 }
 .locationDescription{
-    margin-top: 5px;
+    margin: 10px 3px 15px 3px;
     font-style: italic;
     font-size: large;
 }
 
 .gotToLocation{
-    margin: 20px 0;
-    background-color: rgb(95, 95, 95);
+    margin-bottom: 20px;
+    width: 210px;
+    background-color: rgb(58, 58, 58);
     padding: 5px;
-    border-radius: 5px;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
     display: flex;
     justify-content: center;
     cursor: pointer;
+    text-decoration: none;
+    border: 1px solid rgb(156, 156, 156);
 }
 .gotToLocation:hover{
     background-color: rgb(155, 155, 155);
 
 }
 
-.gotToLocation > a {
+a {
+    text-decoration: none;
+}
+
+a > .gotToLocation  {
     color: white;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 12px;
-    text-decoration: none;
+    font-size: 15px;
 }
