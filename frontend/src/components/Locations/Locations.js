@@ -215,6 +215,7 @@ function Locations() {
                                         </div>
 
 
+                                        {/* ==================================== Child Locations ============================ */}
                                         {childLocations?.map(loc => <div key={`location-${loc.id}`}>
                                             {searchByName(loc.name) &&
                                                 <div

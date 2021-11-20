@@ -1,7 +1,6 @@
 import React from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import "./LocationInformation.css"
-import arrowRight from "../SideBarIcons/icons/arrow_right.svg"
 
 function LocationInformation() {
     const mapControls = useSelector(state => state.map_controls)

@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "./Map.css"
 import Roads from "../Roads/Roads"
 import downArrow from "./downArrow.svg"
+import { sendLocationInformation } from "../../store/mapControls"
+import { sendSidebarName } from "../../store/mapControls"
 
 function Map() {
 
@@ -13,6 +15,7 @@ function Map() {
     const mapContainer = useRef()
     const mapControl = useSelector(state => state.map_controls)
     const stroke = useRef('')
+    const dispatch = useDispatch()
 
 
     function vertexClick(e) {
@@ -29,27 +32,27 @@ function Map() {
         })
 
         window.addEventListener("keydown", (e) => {
-            if(e.code === "Space"){
+            if (e.code === "Space") {
                 mapContainer.current.classList.add("handCursor")
                 mapContainer.current.focus()
             }
         })
 
         window.addEventListener("keyup", (e) => {
-            if(e.code === "Space"){
+            if (e.code === "Space") {
                 mapContainer.current.classList.remove("handCursor")
             }
         })
 
     }, [])
 
-    function handleClick(e){
-        let xPos = Math.round(((e.clientX) / mapControl.scale) - (mapControl.positionX/mapControl.scale) )
-        let yPos = Math.round((e.clientY / mapControl.scale) - ((mapControl.positionY + 50)/mapControl.scale) )
+    function handleClick(e) {
+        let xPos = Math.round(((e.clientX) / mapControl.scale) - (mapControl.positionX / mapControl.scale))
+        let yPos = Math.round((e.clientY / mapControl.scale) - ((mapControl.positionY + 50) / mapControl.scale))
         console.log(`X: ${xPos} - Y: ${yPos}`)
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         stroke.current = Math.ceil(1 / mapControl.scale)
 
     }, [mapControl.scale])
@@ -72,21 +75,31 @@ function Map() {
             {mapData.child_locations.map(location =>
                 <div className="locationContainer" key={`locKey-${location.id}`}>
                     <div
-                    className="locationName"
-                    key={`dude-${location.id}`}
-                    style={{
-                        left: `${location.Vertex?.coord_x}px`,
-                        top: `${location.Vertex?.coord_y}px` ,
-                        opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
-                        // minWidth: "8px",
-                        // minHeight: "8px",
-                        fontSize: `${Math.ceil(location.name_font_size_max / mapControl.scale)}px`,
-                        // maxWidth: "30px",
-                        // maxHeight: "30px",
-                        color: "black",
-                        transform: `translate(${location.name_offset_x / mapControl.scale}px, ${location.name_offset_y / mapControl.scale }px)`,
-                        // transform: `translate(${20 / mapControl.scale}px, ${-5 / mapControl.scale }px)`,
-                        textShadow: `
+                        className="locationName"
+                        key={`dude-${location.id}`}
+                        onClick={(e) => [
+                            dispatch(sendLocationInformation({
+                                name: location.name,
+                                location_id: location.id,
+                                location_description: location.location_description,
+                                thumbnail_url: location.thumbnail_url,
+                            })),
+                            dispatch(sendSidebarName('Location Information'))
+
+                        ]}
+                        style={{
+                            left: `${location.Vertex?.coord_x}px`,
+                            top: `${location.Vertex?.coord_y}px`,
+                            opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
+                            // minWidth: "8px",
+                            // minHeight: "8px",
+                            fontSize: `${Math.ceil(location.name_font_size_max / mapControl.scale)}px`,
+                            // maxWidth: "30px",
+                            // maxHeight: "30px",
+                            color: "black",
+                            transform: `translate(${location.name_offset_x / mapControl.scale}px, ${location.name_offset_y / mapControl.scale}px)`,
+                            // transform: `translate(${20 / mapControl.scale}px, ${-5 / mapControl.scale }px)`,
+                            textShadow: `
                         -${stroke.current}px -${stroke.current}px 0 #FFF,
                         0   -${stroke.current}px 0 #FFF,
                         ${stroke.current}px -${stroke.current}px 0 #FFF,
@@ -95,22 +108,23 @@ function Map() {
                         0    ${stroke.current}px 0 #FFF,
                        -${stroke.current}px  ${stroke.current}px 0 #FFF,
                        -${stroke.current}px  0   0 #FFF`,
-                        // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
+                            // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
                         }}
+
                     >
                         {location.name}
                     </div>
 
                     <img
-                    src={downArrow}
-                    className="downArrow"
-                    alt=""
-                    style={{
-                        left: `${location.Vertex?.coord_x}px`,
-                        top: `${location.Vertex?.coord_y}px` ,
+                        src={downArrow}
+                        className="downArrow"
+                        alt=""
+                        style={{
+                            left: `${location.Vertex?.coord_x}px`,
+                            top: `${location.Vertex?.coord_y}px`,
 
-                    }}
-                    id={`arrow-${location.id}`}
+                        }}
+                        id={`arrow-${location.id}`}
 
                     ></img>
 
@@ -120,15 +134,15 @@ function Map() {
                         id={`loc-${location.id}`}
                         style={{
                             left: `${location.Vertex?.coord_x}px`,
-                            top: `${location.Vertex?.coord_y}px` ,
+                            top: `${location.Vertex?.coord_y}px`,
                             minWidth: "8px",
                             minHeight: "8px",
-                            width:`${Math.ceil(9 / mapControl.scale)}px`,
-                            height:`${Math.ceil(9 / mapControl.scale)}px`,
+                            width: `${Math.ceil(9 / mapControl.scale)}px`,
+                            height: `${Math.ceil(9 / mapControl.scale)}px`,
                             maxWidth: "30px",
                             maxHeight: "30px",
                             opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
-                            }}>
+                        }}>
                     </div>
 
                     <div
@@ -136,16 +150,16 @@ function Map() {
                         id={`locOutLine-${location.id}`}
                         style={{
                             left: `${location.Vertex?.coord_x}px`,
-                            top: `${location.Vertex?.coord_y}px` ,
+                            top: `${location.Vertex?.coord_y}px`,
                             minWidth: "12px",
                             minHeight: "12px",
-                            width:`${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
-                            height:`${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
+                            width: `${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
+                            height: `${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
                             maxWidth: "34px",
                             maxHeight: "34px",
                             opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
 
-                            }}>
+                        }}>
                     </div>
                 </div>
             )}
@@ -159,8 +173,8 @@ function Map() {
                         onClick={(e) => vertexClick(e)}
                         style={{
                             left: `${v.coord_x - 3}px`,
-                            top: `${v.coord_y - 3}px` ,
-                            }}>
+                            top: `${v.coord_y - 3}px`,
+                        }}>
                     </div>
                 )}
             </></div>)}
