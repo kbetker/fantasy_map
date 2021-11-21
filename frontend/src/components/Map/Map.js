@@ -5,22 +5,20 @@ import Roads from "../Roads/Roads"
 import downArrow from "./downArrow.svg"
 import { sendLocationInformation } from "../../store/mapControls"
 import { sendSidebarName } from "../../store/mapControls"
+import { sendXY_coordinates } from "../../store/mapControls"
 
 function Map() {
 
     const mapData = useSelector(state => state.map_data)
     const [imageSize, setImageSize] = useState({ imageX: '3000px', imageY: '3000px' })
     const [isLoaded, setIsLoaded] = useState(false)
+    const [selectedVertex, setSelectedVertex] = useState(0)
     const mapImage = useRef()
     const mapContainer = useRef()
     const mapControl = useSelector(state => state.map_controls)
     const stroke = useRef('')
     const dispatch = useDispatch()
 
-
-    function vertexClick(e) {
-        // console.log(e.target.id)
-    }
 
 
     useEffect(() => {
@@ -49,13 +47,46 @@ function Map() {
     function handleClick(e) {
         let xPos = Math.round(((e.clientX) / mapControl.scale) - (mapControl.positionX / mapControl.scale))
         let yPos = Math.round((e.clientY / mapControl.scale) - ((mapControl.positionY + 50) / mapControl.scale))
-        console.log(`X: ${xPos} - Y: ${yPos}`)
+        dispatch(sendXY_coordinates({coordX: xPos, coordY: yPos}))
     }
 
     useEffect(() => {
         stroke.current = Math.ceil(1 / mapControl.scale)
-
     }, [mapControl.scale])
+
+    function showVertices(){
+        if( mapControl.sideBarName === "Location Information"
+            || mapControl.sideBarName === "Location List"
+            || mapControl.sideBarName === "Road Info") {
+                return false
+            } else {
+                return true
+            }
+    }
+
+
+    function handleNewLocation(){
+            // campaign_id
+            // name
+            // show_on_map
+            // discovered
+            // vertex_id
+            // image_url
+            // thumbnail_url
+            // min_visible_scale
+            // max_visible_scale
+            // name_offset_x
+            // name_offset_y
+            // name_font_size_min
+            // name_font_size_max
+            // name_font_family
+            // loc_vertex_size_min
+            // loc_vertex_size_max
+            // loc_vertex_stroke
+            // location_color
+            // location_stroke_color
+            // location_description
+    }
 
 
     return (
@@ -170,10 +201,16 @@ function Map() {
                     <div
                         key={`vertexKey-${v.id}`}
                         className="vertex" id={`${v.id}-v`}
-                        onClick={(e) => vertexClick(e)}
                         style={{
                             left: `${v.coord_x - 3}px`,
                             top: `${v.coord_y - 3}px`,
+                            backgroundColor: "white",
+                            width: `${6 / mapControl.scale}px`,
+                            height: `${6 / mapControl.scale}px`,
+                            border: `${2 / mapControl.scale}px solid black`,
+                            display: `${showVertices() ? "initial" : "none"}`,
+
+
                         }}>
                     </div>
                 )}

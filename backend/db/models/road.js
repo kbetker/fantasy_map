@@ -3,7 +3,14 @@ module.exports = (sequelize, DataTypes) => {
   const Road = sequelize.define('Road', {
     location_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
+    name_font_size: DataTypes.INTEGER,
+    name_color: DataTypes.STRING,
+    name_stroke: DataTypes.STRING,
+    name_rotation: DataTypes.INTEGER,
+    description:DataTypes.STRING,
+    thumbnail: DataTypes.STRING,
     show_on_map: DataTypes.BOOLEAN,
+    discovered: DataTypes.BOOLEAN,
     start_vertex: DataTypes.INTEGER,
     road_color: DataTypes.STRING,
     road_dash_length: DataTypes.INTEGER,
@@ -23,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Road.belongsToMany(models.Vertex, columnMappingOne);
 
+    Road.belongsTo(models.Vertex, { foreignKey: "start_vertex" });
     Road.belongsTo(models.Location, { foreignKey: "location_id"})
 
   };

@@ -3,11 +3,13 @@ import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import mapDataReducer from "./map";
 import mapControlsReducer from "./mapControls";
+import locationReducer from "./add_edit_location";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   map_data: mapDataReducer,
   map_controls: mapControlsReducer,
+  add_edit_location: locationReducer,
 });
 
 let enhancer;

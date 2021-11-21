@@ -78,7 +78,7 @@ function Roads({props}){
 
     useEffect(()=>{
         drawRoad(props.mapData)
-        // console.log(myCanvas.current)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [mapControls.scale])
 
 

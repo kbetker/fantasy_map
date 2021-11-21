@@ -11,8 +11,8 @@ function LocationInformation() {
             <div className="locationInfoTitle">{mapControls.name}</div>
 
                 { mapControls.thumbnail_url ?
-                    <img className="locationThumbnail" src={`${mapControls.thumbnail_url}`} />
-                    : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" />
+                    <img className="locationThumbnail" src={`${mapControls.thumbnail_url}`} alt="Location Thumbnail" />
+                    : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" alt="Not Thumbnail" />
                 }
 
 

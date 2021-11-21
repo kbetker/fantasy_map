@@ -8,19 +8,23 @@
 
 .vertex{
     position: absolute;
-    width: 4px;
-    height: 4px;
+    /* width: 4px; */
+    /* height: 4px; */
+    /* border: 1px solid black; */
     background-color: white;
-    border: 1px solid black;
     border-radius: 100px;
     z-index: 2;
-    left: 50%;
-    top: 50%;
+    /* left: 50%; */
+    /* top: 50%; */
     transform: translate(-50%, -50%);
     /* top: 300px;
     left: 300px; */
+    transition: all .1s linear;
+    cursor: pointer;
 }
-
+.vertex:hover{
+    transform: scale(2) translate(-25%, -25%);
+}
 
 .mapImage{
     z-index: 0;
