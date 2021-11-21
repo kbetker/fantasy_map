@@ -60,6 +60,21 @@ export const sendLocationInformation = (locationInformation) => async (dispatch)
 
 
 
+// ==================== Handles X & Y Coord clickin on map ==================== \\
+const XY_COORDINATES = 'mapdata/XY_COORDINATES';
+
+export const loadXY_coordinates = (xy_coordinates) => {
+    return {
+        type: XY_COORDINATES,
+        xy_coordinates
+    };
+};
+export const sendXY_coordinates = (xy_coordinates) => async (dispatch) => {
+    dispatch(loadXY_coordinates(xy_coordinates));
+};
+
+
+
 
 const initialState = {
     previousScale: 0,
@@ -71,7 +86,9 @@ const initialState = {
     location_id: null,
     name: 'Select a Location',
     thumbnail_url: '',
-    location_description: "No location selected"
+    location_description: "No location selected",
+    coordX: 0,
+    coordY: 0,
 
 }
 
@@ -102,6 +119,11 @@ const mapControlsReducer = (state = initialState, action) => {
             newState.location_id = action.locationInformation.location_id
             newState.location_description = action.locationInformation.location_description
             newState.thumbnail_url = action.locationInformation.thumbnail_url
+            return newState
+        case XY_COORDINATES:
+            newState = Object.assign({}, state);
+            newState.coordX = action.xy_coordinates.coordX
+            newState.coordY = action.xy_coordinates.coordY
             return newState
 
         default:

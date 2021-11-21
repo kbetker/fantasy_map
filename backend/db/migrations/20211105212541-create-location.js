@@ -18,6 +18,9 @@ module.exports = {
       show_on_map: {
         type: Sequelize.BOOLEAN
       },
+      discovered: {
+        type: Sequelize.BOOLEAN
+      },
       vertex_id: {
         type: Sequelize.INTEGER,
         references: {model: "Vertices"},
@@ -79,17 +82,18 @@ module.exports = {
         allowNull: true,
       },
       location_description:  {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(2000),
         allowNull: true,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        allowNull: true,
+        default: new Date(),
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        default: new Date(),
       }
     });
   },

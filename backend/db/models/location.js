@@ -4,6 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     campaign_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
     show_on_map: DataTypes.BOOLEAN,
+    discovered: DataTypes.BOOLEAN,
     vertex_id: DataTypes.INTEGER,
     image_url: DataTypes.STRING,
     thumbnail_url: DataTypes.STRING,

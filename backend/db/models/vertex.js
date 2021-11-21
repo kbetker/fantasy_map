@@ -35,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
 
 
     Vertex.hasOne(models.Location, { foreignKey: "vertex_id" });
+    Vertex.hasOne(models.Road, { foreignKey: "start_vertex" });
+
   };
   return Vertex;
 };

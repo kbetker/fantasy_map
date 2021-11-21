@@ -18,7 +18,7 @@ const excludeTags = (key, value) => {
 }
 
 router.get('/getall', async(req, res) => {
-  let data = await Joined_Location.findAll()
+  let data = await Location.findAll()
 
   res.type('json').send(JSON.stringify(data, excludeTags, 3) + '\n' );
 })
