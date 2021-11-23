@@ -68,7 +68,8 @@ const initialState =
     location_stroke_color: null,
     location_description: null,
     select_vertex: null,
-    selected_vertex: {id: null, coord_x: null, coord_y: null}
+    selected_vertex: {id: null, coord_x: null, coord_y: null},
+    id: null,
 }
 
 

@@ -4,6 +4,7 @@ import { sendVertexData, sendSelectedVertex } from "../../../store/add_edit_loca
 import { sendCreateLocation } from "../../../store/map"
 import { useDispatch, useSelector } from "react-redux"
 import { sendLocData } from "../../../store/add_edit_location"
+import { sendSidebarName } from "../../../store/mapControls"
 
 function LocationNew() {
     const addEditLocation = useSelector(state => state.add_edit_location)
@@ -45,10 +46,10 @@ function LocationNew() {
         }
         let response = await dispatch(sendCreateLocation(payload))
         if (response.ok) {
-            console.log(response)
             dispatch(sendLocData(response.location))
+            dispatch(sendSidebarName( "Edit Location"))
         } else {
-            console.log("NOOOOOOOOOOOOO", response)
+            alert("Well, something went wrong")
         }
     }
 
@@ -75,13 +76,13 @@ function LocationNew() {
             <div
                 className={`${addEditLocation.select_vertex === "newVertex" ? "newLocButtonSelected" : "newLocButton"}`}
                 onClick={() => [dispatch(sendVertexData("newVertex")), dispatch(sendSelectedVertex({ id: null, coord_x: null, coord_y: null }))]}>
-                Add new vertex
+                 {addEditLocation.select_vertex === "newVertex" && <>&bull;</>}   Create new location
             </div>
 
             <div
                 className={`${addEditLocation.select_vertex === "selectExisting" ? "newLocButtonSelected" : "newLocButton"}`}
                 onClick={() => dispatch(sendVertexData("selectExisting"))}>
-                Select Existing Vertex
+                 {addEditLocation.select_vertex === "selectExisting" && <>&bull;</>} Select existing vertex
             </div>
 
             {addEditLocation.select_vertex === "selectExisting" && <div className="vertexContainer">
@@ -91,6 +92,8 @@ function LocationNew() {
             </div>}
 
             {addEditLocation.select_vertex === "newVertex" && <div className="vertexContainer">
+                <div>Click anywhere on the map</div>
+                <br></br>
                 <div>Coordinate X: {mapControls.coordX}</div>
                 <div>Coordinate Y: {mapControls.coordY}</div>
             </div>}

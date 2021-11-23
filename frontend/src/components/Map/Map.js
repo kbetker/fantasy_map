@@ -6,7 +6,8 @@ import downArrow from "./downArrow.svg"
 import { sendLocationInformation } from "../../store/mapControls"
 import { sendSidebarName } from "../../store/mapControls"
 import { sendXY_coordinates } from "../../store/mapControls"
-import { sendSelectedVertex } from "../../store/add_edit_location"
+import { sendSelectedVertex, sendLocData } from "../../store/add_edit_location"
+
 
 function Map() {
 
@@ -50,7 +51,7 @@ function Map() {
     }, [])
 
     function handleClick(e) {
-        if(handsDown)return;
+        if (handsDown) return;
         let xPos = Math.round(((e.clientX) / mapControl.scale) - (mapControl.positionX / mapControl.scale))
         let yPos = Math.round((e.clientY / mapControl.scale) - ((mapControl.positionY + 50) / mapControl.scale))
         dispatch(sendXY_coordinates({ coordX: xPos, coordY: yPos }))
@@ -68,11 +69,8 @@ function Map() {
         }
     }
 
-
-
-
     function locationNameClick(location) {
-        if(handsDown)return;
+        if (handsDown) return;
         if (mapControl.sideBarName === "Location List" || mapControl.sideBarName === "Location Information") {
             dispatch(sendLocationInformation({
                 name: location.name,
@@ -81,6 +79,10 @@ function Map() {
                 thumbnail_url: location.thumbnail_url,
             }))
             dispatch(sendSidebarName('Location Information'))
+        }  if (mapControl.sideBarName ===  "Edit Location") {
+            dispatch(sendLocData(location))
+            // console.log(location)
+
         }
     }
 
@@ -96,9 +98,25 @@ function Map() {
         }
     }
 
-    function vertexClick(e){
-        dispatch(sendSelectedVertex({id: e.id, coord_x: e.coord_x, coord_y: e.coord_y}))
+    function vertexClick(e) {
+        dispatch(sendSelectedVertex({ id: e.id, coord_x: e.coord_x, coord_y: e.coord_y }))
     }
+
+
+    function textShadow(loc){
+    return  ` -${stroke.current}px   -${stroke.current}px 0 ${loc.location_stroke_color},
+      0  -${stroke.current}px 0 ${loc.location_stroke_color},
+          ${stroke.current}px -${stroke.current}px 0 ${loc.location_stroke_color},
+          ${stroke.current}px  0   0 ${loc.location_stroke_color},
+          ${stroke.current}px  ${stroke.current}px 0 ${loc.location_stroke_color},
+      0   ${stroke.current}px 0 ${loc.location_stroke_color},
+         -${stroke.current}px  ${stroke.current}px 0 ${loc.location_stroke_color},
+         -${stroke.current}px  0   0 ${loc.location_stroke_color}`
+    }
+
+
+
+
 
     return (
 
@@ -116,39 +134,51 @@ function Map() {
 
             {mapData.child_locations.map(location =>
                 <div className="locationContainer" key={`locKey-${location.id}`}>
-                    <div
-                        className="locationName"
-                        key={`dude-${location.id}`}
-                        onClick={(e) => locationNameClick(location)}
-                        style={{
-                            left: `${location.Vertex?.coord_x}px`,
-                            top: `${location.Vertex?.coord_y}px`,
-                            opacity: `${isVisible(location)}`,
-                            // minWidth: "8px",
-                            // minHeight: "8px",
-                            fontSize: `${Math.ceil(location.name_font_size_max / mapControl.scale)}px`,
-                            // maxWidth: "30px",
-                            // maxHeight: "30px",
-                            color: "black",
-                            transform: `translate(${location.name_offset_x / mapControl.scale}px, ${location.name_offset_y / mapControl.scale}px)`,
-                            // transform: `translate(${20 / mapControl.scale}px, ${-5 / mapControl.scale }px)`,
-                            textShadow: `
-                                -${stroke.current}px -${stroke.current}px 0 #FFF,
-                                0   -${stroke.current}px 0 #FFF,
-                                ${stroke.current}px -${stroke.current}px 0 #FFF,
-                                ${stroke.current}px  0   0 #FFF,
-                                ${stroke.current}px  ${stroke.current}px 0 #FFF,
-                                0    ${stroke.current}px 0 #FFF,
-                                -${stroke.current}px  ${stroke.current}px 0 #FFF,
-                                -${stroke.current}px  0   0 #FFF`,
-                            pointerEvents: `${mapControl.sideBarName === "Add Location" ? "none" : "initial"}`,
 
-                            // border: `${Math.ceil(4 / mapControl.scale)}px solid red `
-                        }}
+                    {location.id === addEditLocation.id ?
 
-                    >
-                        {location.name}
-                    </div>
+                        <div
+                            className="locationName"
+                            key={`dude-${location.id}`}
+                            onClick={(e) => locationNameClick(location)}
+                            style={{
+                                left: `${location.Vertex?.coord_x}px`,
+                                top: `${location.Vertex?.coord_y}px`,
+                                opacity: `${isVisible(location)}`,
+                                fontSize: `${Math.ceil(addEditLocation.name_font_size_max / mapControl.scale)}px`,
+                                color: `${addEditLocation.location_color}`,
+                                transform: `translate(${addEditLocation.name_offset_x / mapControl.scale}px, ${addEditLocation.name_offset_y / mapControl.scale}px)`,
+                                textShadow: textShadow(addEditLocation),
+                            }}
+
+                        >
+                            {location.name} ?????
+                        </div>
+
+
+
+
+                        : <div
+                            className="locationName"
+                            key={`dude-${location.id}`}
+                            onClick={(e) => locationNameClick(location)}
+                            style={{
+                                left: `${location.Vertex?.coord_x}px`,
+                                top: `${location.Vertex?.coord_y}px`,
+                                opacity: `${isVisible(location)}`,
+                                fontSize: `${Math.ceil(location.name_font_size_max / mapControl.scale)}px`,
+                                color: `${location.location_color}`,
+                                transform: `translate(${location.name_offset_x / mapControl.scale}px, ${location.name_offset_y / mapControl.scale}px)`,
+                                textShadow: textShadow(location),
+                                pointerEvents: `${mapControl.sideBarName === "Add Location" ? "none" : "initial"}`,
+                            }}
+
+                        >
+                            {location.name}
+                        </div>
+                    }
+
+
 
                     <img
                         src={downArrow}
@@ -201,7 +231,7 @@ function Map() {
 
 
 
-            {addEditLocation.select_vertex === "newVertex" &&  mapControl.sideBarName === "Add Location" && <div
+            {addEditLocation.select_vertex === "newVertex" && mapControl.sideBarName === "Add Location" && <div
                 className="location"
                 style={{
                     left: `${mapControl.coordX - 3}px`,
@@ -219,7 +249,7 @@ function Map() {
                     <div
                         key={`vertexKey-${v.id}`}
                         className="vertex" id={`${v.id}-v`}
-                        onClick={(e)=>vertexClick(v)}
+                        onClick={(e) => vertexClick(v)}
                         style={{
                             left: `${v.coord_x - 3}px`,
                             top: `${v.coord_y - 3}px`,
