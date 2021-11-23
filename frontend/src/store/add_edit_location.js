@@ -1,5 +1,4 @@
 import { csrfFetch } from './csrf';
-import { sendNewLoc } from './map';
 
 //====================todo=====================\\
 const LOCATION_DATA = 'location/LOCATION_DATA';
@@ -41,80 +40,6 @@ export const sendSelectedVertex = (selectedVertex) => async (dispatch) => {
 };
 
 
-//==================== Create new Location - name description and vertex_id =====================\\
-const CREATE_LOCATION = 'location/CREATE_LOCATION';
-export const loadCreateLocation = (newLocation) => {
-    return {
-        type: CREATE_LOCATION,
-        newLocation
-    };
-};
-export const sendCreateLocation = (newLocation) => async (dispatch) => {
-
-    let vertexId;
-    if(newLocation.vertex_id === null){
-       const vertexResponse = await csrfFetch('/api/vertex/new', {
-           method: "POST",
-           headers: {'Content-Type': 'application/json'},
-           body: JSON.stringify({coord_x: newLocation.coord_x, coord_y: newLocation.coord_y})
-       })
-       if(vertexResponse.ok){
-           const id = await vertexResponse.json()
-           vertexId = id.newVertex.id
-
-       } else {
-           alert(vertexResponse)
-       }
-    } else {
-        vertexId = newLocation.vertex_id
-    }
-
-    let new_location;
-    const locResponse = await csrfFetch('/api/location/new', {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            name: newLocation.name,
-            location_description: newLocation.location_description,
-            coord_x: newLocation.coord_x,
-            coord_y: newLocation.coord_y,
-            vertex_id: vertexId
-        })
-    })
-    if(locResponse.ok){
-        const newLoc = await locResponse.json()
-        new_location = newLoc.newLoc
-        new_location["Vertex"] = {id: vertexId, coord_x: newLocation.coord_x, coord_y: newLocation.coord_y}
-    }
-
-    const joinedResponse = await csrfFetch('/api/joined_location/new', {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-            parent_location: newLocation.parent_location,
-            child_location: new_location.id
-        })
-    })
-    if(joinedResponse.ok){
-        const newJoinedLoc = await joinedResponse.json()
-        console.log(newJoinedLoc)
-    }
-
-
-    dispatch(sendNewLoc(new_location))
-
-
-
-
-
-    // if vertex_id is null, create new vertex with coordX & y
-    // return id from api
-
-    //else create location name, vertex_id
-
-
-    // dispatch(loadCreateLocation(newLocation));
-};
 
 
 
@@ -152,8 +77,33 @@ const locationReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOCATION_DATA:
             newState = Object.assign({}, state);
-            newState.Roads = action.mapData.Roads
+            newState.id = action.locData.id
+            newState.campaign_id = action.locData.campaign_id
+            newState.name = action.locData.name
+            newState.show_on_map = action.locData.show_on_map
+            newState.discovered = action.locData.discovered
+            newState.vertex_id = action.locData.vertex_id
+            newState.image_url = action.locData.image_url
+            newState.thumbnail_url = action.locData.thumbnail_url
+            newState.min_visible_scale = action.locData.min_visible_scale
+            newState.max_visible_scale = action.locData.max_visible_scale
+            newState.name_offset_x = action.locData.name_offset_x
+            newState.name_offset_y = action.locData.name_offset_y
+            newState.name_font_size_min = action.locData.name_font_size_min
+            newState.name_font_size_max = action.locData.name_font_size_max
+            newState.name_font_family = action.locData.name_font_family
+            newState.loc_vertex_size_min = action.locData.loc_vertex_size_min
+            newState.loc_vertex_size_max = action.locData.loc_vertex_size_max
+            newState.loc_vertex_stroke = action.locData.loc_vertex_stroke
+            newState.location_color = action.locData.location_color
+            newState.location_stroke_color = action.locData.location_stroke_color
+            newState.location_description = action.locData.location_description
+            newState.select_vertex = action.locData.select_vertex
+            newState.selected_vertex = action.locData.selected_vertex
+
             return newState
+
+
         case VERTEX_SELECT:
             newState = Object.assign({}, state);
             newState.select_vertex = action.vertexData
@@ -161,11 +111,6 @@ const locationReducer = (state = initialState, action) => {
         case SELECTED_VERTEX:
             newState = Object.assign({}, state);
             newState.selected_vertex = action.selectedVertex
-            return newState
-        case CREATE_LOCATION:
-            // console.log(action.newLocation)
-            newState = JSON.parse(JSON.stringify(state))
-            // newState.selected_vertex = action.selectedVertex
             return newState
 
         default:

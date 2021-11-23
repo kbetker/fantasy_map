@@ -1,7 +1,9 @@
 import React, { useState } from "react"
 import "./LocationNew.css"
-import { sendVertexData, sendSelectedVertex, sendCreateLocation } from "../../../store/add_edit_location"
+import { sendVertexData, sendSelectedVertex } from "../../../store/add_edit_location"
+import { sendCreateLocation } from "../../../store/map"
 import { useDispatch, useSelector } from "react-redux"
+import { sendLocData } from "../../../store/add_edit_location"
 
 function LocationNew() {
     const addEditLocation = useSelector(state => state.add_edit_location)
@@ -32,18 +34,22 @@ function LocationNew() {
     // const [location_stroke_color, setlocation_stroke_color] = useState()
 
 
-    function handleSubmit(){
+    async function handleSubmit() {
         let payload = {
-        vertex_id: addEditLocation.selected_vertex?.id,
-        name,
-        location_description,
-        coord_x: mapControls.coordX,
-        coord_y: mapControls.coordY,
-        parent_location: mapData.id
+            vertex_id: addEditLocation.selected_vertex?.id,
+            name,
+            location_description,
+            coord_x: mapControls.coordX,
+            coord_y: mapControls.coordY,
+            parent_location_id: mapData.id
         }
-
-        dispatch(sendCreateLocation(payload))
-
+        let response = await dispatch(sendCreateLocation(payload))
+        if (response.ok) {
+            console.log(response)
+            dispatch(sendLocData(response.location))
+        } else {
+            console.log("NOOOOOOOOOOOOO", response)
+        }
     }
 
 
@@ -58,7 +64,7 @@ function LocationNew() {
                 className="newLocInput"
             ></input>
 
-               <textarea
+            <textarea
                 type="text"
                 placeholder="Description..."
                 value={location_description}
@@ -67,32 +73,32 @@ function LocationNew() {
             ></textarea>
 
             <div
-            className={`${addEditLocation.select_vertex === "newVertex" ? "newLocButtonSelected" : "newLocButton"}`}
-            onClick={()=> [dispatch(sendVertexData("newVertex")), dispatch(sendSelectedVertex({id: null, coord_x: null, coord_y:null}))]}>
+                className={`${addEditLocation.select_vertex === "newVertex" ? "newLocButtonSelected" : "newLocButton"}`}
+                onClick={() => [dispatch(sendVertexData("newVertex")), dispatch(sendSelectedVertex({ id: null, coord_x: null, coord_y: null }))]}>
                 Add new vertex
             </div>
 
             <div
-            className={`${addEditLocation.select_vertex === "selectExisting" ? "newLocButtonSelected" : "newLocButton"}`}
-            onClick={()=> dispatch(sendVertexData("selectExisting"))}>
-               Select Existing Vertex
+                className={`${addEditLocation.select_vertex === "selectExisting" ? "newLocButtonSelected" : "newLocButton"}`}
+                onClick={() => dispatch(sendVertexData("selectExisting"))}>
+                Select Existing Vertex
             </div>
 
-          { addEditLocation.select_vertex === "selectExisting" && <div className="vertexContainer">
+            {addEditLocation.select_vertex === "selectExisting" && <div className="vertexContainer">
                 <div>Vertex id: {addEditLocation.selected_vertex.id}</div>
                 <div>Coordinate X: {addEditLocation.selected_vertex.coord_x}</div>
                 <div>Coordinate Y: {addEditLocation.selected_vertex.coord_y}</div>
             </div>}
 
-            { addEditLocation.select_vertex === "newVertex" && <div className="vertexContainer">
+            {addEditLocation.select_vertex === "newVertex" && <div className="vertexContainer">
                 <div>Coordinate X: {mapControls.coordX}</div>
                 <div>Coordinate Y: {mapControls.coordY}</div>
             </div>}
 
             <div
-            className="newLocButton"
-            onClick={()=> handleSubmit()}>
-              Submit
+                className="newLocButton"
+                onClick={() => handleSubmit()}>
+                Submit
             </div>
 
 

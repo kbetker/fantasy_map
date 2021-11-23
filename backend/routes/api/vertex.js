@@ -10,7 +10,6 @@ const { Vertex } = require('../../db/models');
 const router = express.Router();
 
 router.post('/new', async (req, res) => {
-    // const wat = await Spot.findAll()
     const { coord_x, coord_y } = req.body;
     const newVertex = await Vertex.create({ coord_x, coord_y })
     return res.json({

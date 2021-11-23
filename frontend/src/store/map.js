@@ -1,3 +1,4 @@
+import { csrfFetch } from './csrf';
 
 //========================= Loads Data by Location ======================\\
 const LOAD_MAP_DATA = 'mapdata/LOAD_MAP_DATA';
@@ -39,19 +40,36 @@ export const fetchAllLocations = (id) => async (dispatch) => {
 };
 
 
-//========================= Loads Data by Location ======================\\
-const LOAD_NEW_LOCATION = 'mapdata/LOAD_NEW_LOCATION';
 
-export const loadNewLocatiom = (newLoc) => {
+//==================== Create new Location - name description and vertex_id =====================\\
+const CREATE_LOCATION = 'location/CREATE_LOCATION';
+export const loadCreateLocation = (newLocation) => {
     return {
-        type: LOAD_NEW_LOCATION,
-        newLoc
+        type: CREATE_LOCATION,
+        newLocation
     };
 };
-
-export const sendNewLoc = (newLoc) => async (dispatch) => {
-    console.log("SendNewLoc?!?!?!?!?", newLoc)
-        dispatch(loadNewLocatiom(newLoc));
+export const sendCreateLocation = (newLocation) => async (dispatch) => {
+    const locResponse = await csrfFetch('/api/location/new', {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            name: newLocation.name,
+            location_description: newLocation.location_description,
+            coord_x: newLocation.coord_x,
+            coord_y: newLocation.coord_y,
+            vertex_id: newLocation.vertex_id,
+            parent_location_id: Number(newLocation.parent_location_id),
+        })
+    })
+    if(locResponse.ok){
+        const newLoc = await locResponse.json()
+        newLoc.newLoc["Vertex"] = newLoc.newVertex
+        dispatch(loadCreateLocation(newLoc.newLoc))
+        return {ok: true, location: newLoc.newLoc}
+    } else {
+        return {ok: false}
+    }
 };
 
 
@@ -96,10 +114,9 @@ const mapDataReducer = (state = initialState, action) => {
             newState.thumbnail_url = action.mapData.thumbnail_url
             newState.location_description = action.mapData.location_description
             return newState
-        case LOAD_NEW_LOCATION:
+        case CREATE_LOCATION:
             newState = JSON.parse(JSON.stringify(state))
-            newState.child_locations.push(action.newLoc)
-            // console.log(newState.child_locations, "NEWSTATE!?!?!??!?")
+            newState.child_locations.push(action.newLocation)
             return newState
 
         default:

@@ -3,22 +3,29 @@ const asyncHandler = require('express-async-handler');
 // const { check } = require('express-validator');
 // const { handleValidationErrors } = require('../../utils/validation');
 // const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { Location } = require('../../db/models');
+const { Location, Vertex, Joined_Location } = require('../../db/models');
 // const sequelize = require('sequelize');
 // const Op = sequelize.Op;
 
 const router = express.Router();
 
 router.post('/new', async (req, res) => {
-    // const wat = await Spot.findAll()
-    console.log("Location!?!?!?!?!?!?!!??!?!??")
     const data = req.body;
-    const newLoc = await Location.create({
-        name: data.name,
+    let newVertex;
+
+    if (data.vertex_id === null) {
+        let createVertex = await Vertex.create({ coord_x: data.coord_x, coord_y: data.coord_y })
+        newVertex = await createVertex
+    } else {
+        const getVertex = await Vertex.findOne({ where: { id: data.vertex_id } })
+        newVertex = await getVertex
+    }
+
+    const newLoc = await Location.create({ name: data.name,
         location_description: data.location_description,
         coord_x: data.coord_x,
         coord_y: data.coord_y,
-        vertex_id: data.vertex_id,
+        vertex_id: newVertex.id,
         show_on_map: true,
         discovered: true,
         image_url: null,
@@ -35,19 +42,17 @@ router.post('/new', async (req, res) => {
         loc_vertex_stroke: 4,
         location_color: "black",
         location_stroke_color: "white",
-        campaign_id: 1,
+        campaign_id: 1, })
 
+    await Joined_Location.create({
+        parent_location_id: data.parent_location_id,
+        child_location_id: newLoc.id
     })
-    return res.json({
-        newLoc,
-    });
+
+    return res.json({ newLoc, newVertex })
 });
 
 
 
-router.get('/', async (req, res) => {
-    const spotById = await Vertex.findAll()
-    res.json(spotById)
-});
 
 module.exports = router;
