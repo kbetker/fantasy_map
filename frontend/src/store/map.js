@@ -39,6 +39,20 @@ export const fetchAllLocations = (id) => async (dispatch) => {
 };
 
 
+//========================= Loads Data by Location ======================\\
+const LOAD_NEW_LOCATION = 'mapdata/LOAD_NEW_LOCATION';
+
+export const loadNewLocatiom = (newLoc) => {
+    return {
+        type: LOAD_NEW_LOCATION,
+        newLoc
+    };
+};
+
+export const sendNewLoc = (newLoc) => async (dispatch) => {
+    console.log("SendNewLoc?!?!?!?!?", newLoc)
+        dispatch(loadNewLocatiom(newLoc));
+};
 
 
 
@@ -81,7 +95,11 @@ const mapDataReducer = (state = initialState, action) => {
             newState.vertex_id = action.mapData.vertex_id
             newState.thumbnail_url = action.mapData.thumbnail_url
             newState.location_description = action.mapData.location_description
-
+            return newState
+        case LOAD_NEW_LOCATION:
+            newState = JSON.parse(JSON.stringify(state))
+            newState.child_locations.push(action.newLoc)
+            // console.log(newState.child_locations, "NEWSTATE!?!?!??!?")
             return newState
 
         default:

@@ -15,6 +15,7 @@ import mainLoc from "./SideBarIcons/icons/my_location.svg"
 import { sendLocationInformation } from "../../store/mapControls"
 import { sendSidebarName } from "../../store/mapControls"
 import LocationInformation from "./LocationInformation/LocationInformation"
+import LocationNew from "./LocationNew/LocationNew"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -242,7 +243,7 @@ function Locations() {
                                 </div>}
 
                                 {mapControls.sideBarName === "Location Information" && <LocationInformation />}
-                                {/*todo <Directions /> */}
+                                {mapControls.sideBarName === "Add Location" && <LocationNew />}
                                 {/*todo <Create Road /> */}
                                 {/*todo <Edit  Road /> */}
 

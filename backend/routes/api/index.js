@@ -9,11 +9,23 @@ const { User } = require('../../db/models');
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const map_dataRouter = require('./map_data.js');
+const vertexRouter = require('./vertex.js');
+const locationRouter = require('./location.js');
+const joinedLocationRouter = require('./joined_location.js');
+
+
+
 
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
 router.use('/map_data', map_dataRouter);
+router.use('/vertex', vertexRouter);
+router.use('/location', locationRouter);
+router.use('/joined_location', joinedLocationRouter);
+
+
+
 
 
 router.post('/test', function(req, res) {
