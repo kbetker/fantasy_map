@@ -1,0 +1,73 @@
+.locationNewContainer{
+    position: absolute;
+    top: 60px;
+    margin: 5px;
+    padding-left: 5px;
+    padding-right: 10px;
+    box-shadow: 0 0 15px black inset;
+    width: 90%;
+    height: 80vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.newLocInput,.newLocTextarea{
+    width: 95%;
+    padding: 5px;
+    margin: 3px;
+    height: 35px;
+    background-color: rgb(65, 65, 65);
+    outline: none;
+    box-shadow: 0 0 10px black;
+    color: white;
+}
+.newLocInput:focus{
+    outline: 1px solid rgb(136, 135, 116);
+}
+
+.newLocTextarea{
+    height: 185px;
+}
+
+.newLocTextarea:focus{
+    outline: 1px solid rgb(136, 135, 116);
+}
+
+.newLocButton,.newLocButtonSelected{
+    background-color: rgb(77, 77, 77);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 3px;
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid rgb(128, 128, 128);
+}
+.newLocButton:hover{
+    background-color: rgb(129, 129, 129);
+}
+.newLocButtonSelected{
+    background-color: rgb(53, 53, 53);
+}
+.newLocButtonSelected:hover{
+    background-color: rgb(77, 77, 77);
+}
+.vertexContainer{
+    margin: 30px 3px;
+    border: 1px solid rgb(196, 196, 196);
+    border-radius: 8px;
+    width: 100%;
+    /* height: 200px; */
+    padding: 15px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+    background-color: rgb(37, 37, 37);
+}
