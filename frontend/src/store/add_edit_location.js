@@ -59,9 +59,11 @@ const initialState =
     name_offset_x: null,
     name_offset_y: null,
     name_font_size_min: null,
+    name_font_size: null,
     name_font_size_max: null,
     name_font_family: null,
     loc_vertex_size_min: null,
+    loc_vertex_size: null,
     loc_vertex_size_max: null,
     loc_vertex_stroke: null,
     location_color: null,
@@ -101,6 +103,9 @@ const locationReducer = (state = initialState, action) => {
             newState.location_description = action.locData.location_description
             newState.select_vertex = action.locData.select_vertex
             newState.selected_vertex = action.locData.selected_vertex
+
+            newState.loc_vertex_size = action.locData.loc_vertex_size
+            newState.name_font_size = action.locData.name_font_size
 
             return newState
 

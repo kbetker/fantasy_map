@@ -221,11 +221,11 @@ function Locations() {
                                         {childLocations?.map(loc => <div key={`location-${loc.id}`}>
                                             {searchByName(loc.name) &&
                                                 <div
-                                                    className={`${locationId === `${loc.id}` ? "loactionSelected" : "locationbutton"} `}
+                                                    className={`${mapControls.location_id === loc.id ? "loactionSelected" : "locationbutton"} `}
 
                                                     onClick={(e) => [
                                                         zoomToElement(getEl(loc.id), 1, 500, "easeInOutQuad"),
-                                                        setLocationId(`${loc.id}`),
+                                                        // setLocationId(`${loc.id}`),
                                                         setVertexScale(1),
                                                         e.target.blur(),
                                                         dispatch(sendLocationInformation({
@@ -236,7 +236,8 @@ function Locations() {
                                                         })),
                                                         dispatch(sendSidebarName("Location Information")),
                                                     ]}
-                                                >{loc.name}
+                                                >
+                                                    {mapControls.location_id === loc.id ? <>&bull; </> : ""}{loc.name}
                                                 </div>}
                                         </div>
                                         )}

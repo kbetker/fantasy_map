@@ -53,6 +53,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      name_font_size:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       name_font_size_max:  {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -62,6 +66,10 @@ module.exports = {
         allowNull: true,
       },
       loc_vertex_size_min:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      loc_vertex_size:  {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
