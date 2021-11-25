@@ -7,7 +7,6 @@ function Location_Name({ props }) {
     const mapControl = props.mapControl
     const textShadow = props.textShadow
     const vertex = props.vertex
-
     function fontSize(e){
       if(loc.name_font_size / mapControl.scale > loc.name_font_size_max){
           return loc.name_font_size_max
@@ -18,8 +17,21 @@ function Location_Name({ props }) {
       }
     }
 
-    function offset(coord){
-        return  coord
+    function offset(coordX, coordY){
+        let maxX = (loc.name_font_size_max * loc.name_offset_x) / loc.name_font_size
+        let maxY = (loc.name_font_size_max * loc.name_offset_y) / loc.name_font_size
+
+        let minX = (loc.name_font_size_min * loc.name_offset_x) / loc.name_font_size
+        let minY = (loc.name_font_size_min * loc.name_offset_y) / loc.name_font_size
+
+        if(loc.name_font_size / mapControl.scale > loc.name_font_size_max){
+            return `${maxX}px, ${maxY}px`
+        } else if (loc.name_font_size / mapControl.scale < loc.name_font_size_min ){
+            return `${minX}px, ${minY}px`
+        } else {
+            return `${coordX / mapControl.scale}px, ${coordY / mapControl.scale}px`
+        }
+
     }
 
     return (
@@ -29,12 +41,12 @@ function Location_Name({ props }) {
             key={`dude-${loc.id}`}
             onClick={(e) => locationNameClick(loc)}
             style={{
-                left: `${offset(vertex.coord_x)}px`,
+                left: `${vertex.coord_x}px`,
                 top: `${vertex.coord_y}px`,
                 opacity: `${isVisible(loc)}`,
                 fontSize: `${fontSize()}px`,
                 color: `${loc.location_color}`,
-                transform: `translate(${loc.name_offset_x / mapControl.scale}px, ${loc.name_offset_y / mapControl.scale}px)`,
+                transform: `translate(${offset(loc.name_offset_x, loc.name_offset_y)})`,
                 textShadow: textShadow(loc),
             }}
 

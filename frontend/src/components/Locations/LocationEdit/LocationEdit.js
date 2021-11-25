@@ -91,7 +91,7 @@ function LocationEdit() {
         thumbnail_url: thumbnail_url,
         min_visible_scale: min_visible_scale,
         max_visible_scale: max_visible_scale,
-        name_offset_x: name_offset_x,
+        name_offset_x: Number(name_offset_x),
         name_offset_y: name_offset_y,
         name_font_size_min: name_font_size_min,
         name_font_size_max: name_font_size_max,
