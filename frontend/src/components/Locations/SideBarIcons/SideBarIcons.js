@@ -22,6 +22,12 @@ function SideBarIcons() {
     const dispatch = useDispatch()
     const sidebarIcons = useRef()
 
+    function expandSidebar(){
+        if(!mapControls.sideBarExpand){
+            dispatch(sendSidebarExpand(true))
+        }
+    }
+
 
 
     return (
@@ -50,7 +56,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
@@ -60,7 +66,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
@@ -70,7 +76,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
@@ -81,7 +87,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
@@ -92,7 +98,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
@@ -104,7 +110,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
@@ -115,7 +121,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
@@ -125,7 +131,7 @@ function SideBarIcons() {
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
-                    dispatch(sendSidebarExpand(true))
+                    expandSidebar()
                 ]}
             />
 
