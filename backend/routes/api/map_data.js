@@ -30,6 +30,7 @@ router.get('/location/:id', async (req, res) => {
   const mapData = await Location.findOne({
     where: { id: id },
    include: [
+          { model: Vertex },
           { model: Location, as: "child_locations", include: {model: Vertex} },
           { model: Location, as: "parent_locations"},
           {

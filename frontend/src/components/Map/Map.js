@@ -71,6 +71,8 @@ function Map() {
         if (handsDown) return;
         if (location.name === addEditLocation.name) return;
 
+
+
         if (mapControl.sideBarName === "Location List" || mapControl.sideBarName === "Location Information") {
             dispatch(sendLocationInformation({
                 name: location.name,
@@ -79,10 +81,10 @@ function Map() {
                 thumbnail_url: location.thumbnail_url,
             }))
             dispatch(sendSidebarName('Location Information'))
+            dispatch(sendLocData(location))
         } if (mapControl.sideBarName === "Edit Location") {
             dispatch(sendLocData(location))
             // console.log(location)
-
         }
     }
 
