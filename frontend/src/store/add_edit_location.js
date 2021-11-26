@@ -40,6 +40,16 @@ export const sendSelectedVertex = (selectedVertex) => async (dispatch) => {
 };
 
 
+//==================== Update Color =====================\\
+const LOCATION_COLOR = 'location/LOCATION_COLOR';
+export const location_color = (color) => { return { type: LOCATION_COLOR, color } };
+
+export const send_color = (value, attribute) => async (dispatch) => {
+    if(attribute === "location_color"){
+        dispatch(location_color(value));
+    }
+};
+
 
 
 
@@ -118,6 +128,11 @@ const locationReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             newState.selected_vertex = action.selectedVertex
             return newState
+        case LOCATION_COLOR:
+            newState = Object.assign({}, state);
+            newState.location_color = action.color
+            return newState
+
 
         default:
             return state;

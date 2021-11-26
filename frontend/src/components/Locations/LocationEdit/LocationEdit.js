@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./LocationEdit.css"
 import { sendLocData } from "../../../store/add_edit_location";
+import Colors from "../../ColorPicker/Colors";
+import { send_color } from "../../../store/add_edit_location";
 
 function LocationEdit() {
 
@@ -10,6 +12,8 @@ function LocationEdit() {
     const dispatch = useDispatch();
     const locForm = useRef()
     const [currentLoc, setCurrentLoc] = useState("")
+    const updateMapTimeOut = useRef('')
+    const updateColorTimeout = useRef('')
 
 
     const [name, setName] = useState("") // ******
@@ -63,7 +67,7 @@ function LocationEdit() {
         setVertex_id(location.vertex_id || "")
 
         // srolls to top when selecting new location
-        if(currentLoc === location.name){
+        if (currentLoc === location.name) {
             return
         } else {
 
@@ -105,8 +109,21 @@ function LocationEdit() {
 
 
 
-    function updateMap() {
-        dispatch(sendLocData(payload))
+    // updates afte a second instead of with every change
+    function updateMapDelay() {
+        console.log("WTFWTFWT")
+       clearInterval(updateMapTimeOut.current)
+       updateMapTimeOut.current = setTimeout(() => {
+           dispatch(sendLocData(payload))
+       }, 1000);
+    }
+
+    function updateColor(color, attribute){
+        clearInterval(updateColorTimeout.current)
+        updateColorTimeout.current = setTimeout(() => {
+            console.log(color, attribute)
+            dispatch(send_color(color, attribute))
+        }, 500);
     }
 
 
@@ -114,24 +131,18 @@ function LocationEdit() {
     return (
 
         <div className="locationEditContainer">
+
+            <Colors props={{color: location_color, updateColor, updateMapDelay, attribute: "location_color"}} />
+
             <div className="locationEditForm" ref={locForm}>
                 <h2>Edit Location</h2>
                 <input
                     type="text"
                     placeholder="Name..."
                     value={name}
-                    onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value)]}
-                    className="newLocInput"
+                    onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value), updateMapDelay()]}
+                    className="editLocInput"
                 ></input>
-
-                <textarea
-                    type="text"
-                    placeholder="Description..."
-                    value={location_description}
-                    onChange={(e) => setLocation_description(e.target.value)}
-                    className="newLocTextarea"
-                ></textarea>
-
                 {thumbnail_url ?
                     <img className="locationThumbnail" src={`${thumbnail_url}`} alt="Location Thumbnail" />
                     : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" alt="Not Thumbnail" />
@@ -141,37 +152,36 @@ function LocationEdit() {
                     type="text"
                     placeholder="Thumbnail URL..."
                     value={thumbnail_url}
-                    onChange={(e) => setThumbnail_url(e.target.value)}
-                    className="newLocInput"
+                    onChange={(e) => [setThumbnail_url(e.target.value), updateMapDelay()]}
+                    className="editLocInput imgUrl"
                 ></input>
 
-                {image_url ?
-                    <img className="locationThumbnail" src={`${image_url}`} alt="Location Thumbnail" />
-                    : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" alt="Not Thumbnail" />
-                }
 
-                <input
+                <textarea
                     type="text"
-                    placeholder="Map Image URL..."
-                    value={image_url}
-                    onChange={(e) => setImage_url(e.target.value)}
-                    className="newLocInput"
-                ></input>
+                    placeholder="Description..."
+                    value={location_description}
+                    onChange={(e) => [setLocation_description(e.target.value), updateMapDelay()]}
+                    className="editLocTextarea"
+                ></textarea>
+
+
+
 
                 <input
                     type="text"
                     placeholder="Font Color"
                     value={location_color}
-                    onChange={(e) => setLocation_color(e.target.value)}
-                    className="newLocInput"
+                    onChange={(e) => [setLocation_color(e.target.value), updateMapDelay()]}
+                    className="editLocInput"
                 ></input>
 
                 <input
                     type="text"
                     placeholder="Stroke Color"
                     value={location_stroke_color}
-                    onChange={(e) => setLocation_stroke_color(e.target.value)}
-                    className="newLocInput"
+                    onChange={(e) => [setLocation_stroke_color(e.target.value), updateMapDelay()]}
+                    className="editLocInput"
                 ></input>
 
                 <div className="currentScale">Current Scale: {mapControls.scale}</div>
@@ -180,8 +190,8 @@ function LocationEdit() {
                     type="number"
                     placeholder="0"
                     value={min_visible_scale}
-                    onChange={(e) => setMin_visible_scale(e.target.value)}
-                    className="newLocInput"
+                    onChange={(e) => [setMin_visible_scale(e.target.value), updateMapDelay()]}
+                    className="editLocInput"
                 ></input>
 
 
@@ -189,8 +199,8 @@ function LocationEdit() {
                     type="number"
                     placeholder="0"
                     value={max_visible_scale}
-                    onChange={(e) => setMax_visible_scale(e.target.value)}
-                    className="newLocInput"
+                    onChange={(e) => [setMax_visible_scale(e.target.value), updateMapDelay()]}
+                    className="editLocInput"
                 ></input>
 
 
@@ -198,19 +208,30 @@ function LocationEdit() {
                     type="number"
                     placeholder="0"
                     value={name_offset_x}
-                    onChange={(e) => setName_offset_x(e.target.value)}
-                    className="newLocInput"
+                    onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay()]}
+                    className="editLocInput"
                 ></input>
 
                 <input
                     type="number"
                     placeholder="0"
                     value={name_offset_y}
-                    onChange={(e) => setName_offset_y(e.target.value)}
-                    className="newLocInput"
+                    onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay()]}
+                    className="editLocInput"
                 ></input>
 
 
+                {image_url ?
+                    <img className="locationThumbnail" src={`${image_url}`} alt="Location Thumbnail" />
+                    : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" alt="Not Thumbnail" />
+                }
+                <input
+                    type="text"
+                    placeholder="Map Image URL..."
+                    value={image_url}
+                    onChange={(e) => [setImage_url(e.target.value), updateMapDelay()]}
+                    className="editLocInput imgUrl"
+                ></input>
 
 
 
@@ -219,7 +240,7 @@ function LocationEdit() {
             <div className="updateMap">
                 <button
                     className="updateMapButton"
-                    onClick={() => updateMap()}
+                    onClick={() => updateMapDelay()}
                 >
                     Update Map
                 </button>
