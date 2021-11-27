@@ -120,11 +120,12 @@ function LocationEdit() {
         }, 1000);
     }
 
-    function updateMapDelay2(){
+    function updateMapDelay2() {
         clearInterval(updateMapTimeOut2.current)
         updateMapTimeOut2.current = setTimeout(() => {
             dispatch(sendLocData(payload))
-        }, 100);    }
+        }, 100);
+    }
 
     function updateColor(color, attribute) {
         clearInterval(updateColorTimeout.current)
@@ -201,14 +202,14 @@ function LocationEdit() {
                         onClick={() => setColorAttribute("location_stroke_color")}
                         className="colorButton"
                     >
-                     <img src={locEdit}></img>
+                        <img src={locEdit}></img>
                         <div>Stroke</div>
 
                     </button>
                     <div
                         className="colorSwatch"
                         style={{
-                            color: "rgba(0,0,0,0)" ,
+                            color: "rgba(0,0,0,0)",
                             WebkitTextStroke: "1px",
                             WebkitTextStrokeColor: location_stroke_color
                         }}
@@ -220,46 +221,59 @@ function LocationEdit() {
 
 
 
+                <div className="scaleDiv">
+                    <h2>Visible Scale</h2>
+                    <div className="currentScale">Current Scale: {mapControls.scale}</div>
 
-                <div className="currentScale">Current Scale: {mapControls.scale}</div>
+                    <div className="scaleInputs">
+                        <div>Min:</div>
+                        <input
+                            type="number"
+                            placeholder="0"
+                            value={min_visible_scale}
+                            onChange={(e) => [setMin_visible_scale(e.target.value), updateMapDelay()]}
+                            className="scaleInput"
+                        ></input>
 
-                <input
-                    type="number"
-                    placeholder="0"
-                    value={min_visible_scale}
-                    onChange={(e) => [setMin_visible_scale(e.target.value), updateMapDelay()]}
-                    className="editLocInput"
-                ></input>
+                        <div>Max:</div>
+                        <input
+                            type="number"
+                            placeholder="0"
+                            value={max_visible_scale}
+                            onChange={(e) => [setMax_visible_scale(e.target.value), updateMapDelay()]}
+                            className="scaleInput"
+                        ></input>
+                    </div>
+                </div>
 
+                <h2>Name Offset</h2>
 
-                <input
-                    type="number"
-                    placeholder="0"
-                    value={max_visible_scale}
-                    onChange={(e) => [setMax_visible_scale(e.target.value), updateMapDelay()]}
-                    className="editLocInput"
-                ></input>
+                <div className="offsetDiv">
+                    <h2>X: {name_offset_x}</h2>
+                    <input
+                        type="range"
+                        placeholder="0"
+                        min="-400"
+                        max="400"
+                        value={name_offset_x}
+                        onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
+                        className="editLocInput"
+                    ></input>
+                </div>
 
+                <div>
+                    <h2>Y: {name_offset_y}</h2>
+                    <input
+                        type="range"
+                        placeholder="0"
+                        min="-50"
+                        max="50"
+                        value={name_offset_y}
+                        onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay2()]}
+                        className="editLocInput"
+                    ></input>
+                </div>
 
-                <input
-                    type="range"
-                    placeholder="0"
-                    min="-400"
-                    max="400"
-                    value={name_offset_x}
-                    onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
-                    className="editLocInput"
-                ></input>
-
-                <input
-                    type="range"
-                    placeholder="0"
-                    min="-50"
-                    max="50"
-                    value={name_offset_y}
-                    onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay2()]}
-                    className="editLocInput"
-                ></input>
 
 
                 {image_url ?
