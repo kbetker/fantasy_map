@@ -23,6 +23,10 @@ function Location_Name({ props }) {
 
         let minX = (loc.name_font_size_min * loc.name_offset_x) / loc.name_font_size
         let minY = (loc.name_font_size_min * loc.name_offset_y) / loc.name_font_size
+        if (loc.name === "LongSaddle" ){
+            console.log(coordX)
+            console.log(`${coordX / mapControl.scale}px, ${coordY / mapControl.scale}px`)
+        }
 
         if(loc.name_font_size / mapControl.scale > loc.name_font_size_max){
             return `${maxX}px, ${maxY}px`
@@ -31,7 +35,6 @@ function Location_Name({ props }) {
         } else {
             return `${coordX / mapControl.scale}px, ${coordY / mapControl.scale}px`
         }
-
     }
 
     return (
@@ -43,11 +46,12 @@ function Location_Name({ props }) {
             style={{
                 left: `${vertex.coord_x}px`,
                 top: `${vertex.coord_y}px`,
-                opacity: `${isVisible(loc)}`,
+                opacity: `${(isVisible(loc)).opacity}`,
                 fontSize: `${fontSize()}px`,
                 color: `${loc.location_color}`,
                 transform: `translate(${offset(loc.name_offset_x, loc.name_offset_y)})`,
                 textShadow: textShadow(loc),
+                pointerEvents: isVisible(loc).pointer
             }}
 
         >

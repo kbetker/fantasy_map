@@ -17,6 +17,7 @@ import { sendSidebarName } from "../../store/mapControls"
 import LocationInformation from "./LocationInformation/LocationInformation"
 import LocationNew from "./LocationNew/LocationNew"
 import LocationEdit from "./LocationEdit/LocationEdit"
+import { sendLocData } from "../../store/add_edit_location"
 
 // import PinchZoomPan from "react-image-zoom-pan";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
@@ -235,6 +236,7 @@ function Locations() {
                                                             thumbnail_url: loc.thumbnail_url,
                                                         })),
                                                         dispatch(sendSidebarName("Location Information")),
+                                                        dispatch(sendLocData(loc))
                                                     ]}
                                                 >
                                                     {mapControls.location_id === loc.id ? <>&bull; </> : ""}{loc.name}
