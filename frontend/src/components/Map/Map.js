@@ -91,14 +91,16 @@ function Map() {
     function isVisible(loc) {
         if (mapControl.scale >= loc.min_visible_scale * 0.01 && mapControl.scale <= loc.max_visible_scale * 0.01) {
             if (mapControl.sideBarName === "Add Location") {
-                return 0.4
+                return {opacity: 0.4, pointer: "initial"}
             } else {
-                return 1
+                return {opacity: 1, pointer: "initial"}
             }
         } else {
-            return 0
+            return {opacity: 0, pointer: "none"}
         }
     }
+
+
 
     function vertexClick(e) {
         dispatch(sendSelectedVertex({ id: e.id, coord_x: e.coord_x, coord_y: e.coord_y }))

@@ -115,6 +115,7 @@ const locationReducer = (state = initialState, action) => {
             newState.name_offset_x = action.locData.name_offset_x
             newState.name_offset_y = action.locData.name_offset_y
             newState.name_font_size_min = action.locData.name_font_size_min
+            newState.loc_vertex_size = action.locData.loc_vertex_size
             newState.name_font_size_max = action.locData.name_font_size_max
             newState.name_font_family = action.locData.name_font_family
             newState.loc_vertex_size_min = action.locData.loc_vertex_size_min
@@ -125,10 +126,7 @@ const locationReducer = (state = initialState, action) => {
             newState.location_description = action.locData.location_description
             newState.select_vertex = action.locData.select_vertex
             newState.selected_vertex = action.locData.selected_vertex
-
-            newState.loc_vertex_size = action.locData.loc_vertex_size
             newState.name_font_size = action.locData.name_font_size
-
             return newState
 
 

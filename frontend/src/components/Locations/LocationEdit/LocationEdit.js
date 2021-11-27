@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./LocationEdit.css"
+import "./RangeStyles.css"
 import { sendLocData } from "../../../store/add_edit_location";
 import Colors from "../../ColorPicker/Colors";
 import { send_color } from "../../../store/add_edit_location";
@@ -32,6 +33,7 @@ function LocationEdit() {
     const [name_offset_x, setName_offset_x] = useState(0) // ******
     const [name_offset_y, setName_offset_y] = useState(0) // ******
     const [name_font_size_min, setName_font_size_min] = useState(20)
+    const [name_font_size, setName_font_size] = useState(30)
     const [name_font_size_max, setName_font_size_max] = useState(20)
     const [name_font_family, setName_font_family] = useState("Verdana")
     const [loc_vertex_size_min, setLoc_vertex_size_min] = useState(8)
@@ -62,6 +64,7 @@ function LocationEdit() {
         setName(location.name || "No Location Selected")
         setName_font_family(location.name_font_family || "")
         setName_font_size_max(location.name_font_size_max || "")
+        setName_font_size(location.name_font_size || "")
         setName_font_size_min(location.name_font_size_min || "")
         setName_offset_x(location.name_offset_x || "")
         setName_offset_y(location.name_offset_y || "")
@@ -99,8 +102,9 @@ function LocationEdit() {
         min_visible_scale: min_visible_scale,
         max_visible_scale: max_visible_scale,
         name_offset_x: Number(name_offset_x),
-        name_offset_y: name_offset_y,
+        name_offset_y: Number(name_offset_y),
         name_font_size_min: name_font_size_min,
+        name_font_size: name_font_size,
         name_font_size_max: name_font_size_max,
         name_font_family: name_font_family,
         loc_vertex_size_min: loc_vertex_size_min,
@@ -113,8 +117,9 @@ function LocationEdit() {
 
 
     // updates afte a second instead of with every change
-    function updateMapDelay() {
+    function updateMapDelay(id, value) {
         clearInterval(updateMapTimeOut.current)
+        payload[id] = value
         updateMapTimeOut.current = setTimeout(() => {
             dispatch(sendLocData(payload))
         }, 1000);
@@ -152,9 +157,10 @@ function LocationEdit() {
                 <h2>Edit Location</h2>
                 <input
                     type="text"
+                    id="name"
                     placeholder="Name..."
                     value={name}
-                    onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value), updateMapDelay()]}
+                    onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
                     className="editLocInput"
                 ></input>
                 {thumbnail_url ?
@@ -166,8 +172,9 @@ function LocationEdit() {
                     type="text"
                     placeholder="Thumbnail URL..."
                     value={thumbnail_url}
-                    onChange={(e) => [setThumbnail_url(e.target.value), updateMapDelay()]}
+                    onChange={(e) => [setThumbnail_url(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
                     className="editLocInput imgUrl"
+                    id="thumbnail_url"
                 ></input>
 
 
@@ -175,8 +182,9 @@ function LocationEdit() {
                     type="text"
                     placeholder="Description..."
                     value={location_description}
-                    onChange={(e) => [setLocation_description(e.target.value), updateMapDelay()]}
+                    onChange={(e) => [setLocation_description(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
                     className="editLocTextarea"
+                    id="location_description"
                 ></textarea>
 
 
@@ -223,7 +231,7 @@ function LocationEdit() {
 
                 <div className="scaleDiv">
                     <h2>Visible Scale</h2>
-                    <div className="currentScale">Current Scale: {mapControls.scale}</div>
+                    <div className="currentScale">Current Scale: {(mapControls.scale * 100).toFixed(1)}</div>
 
                     <div className="scaleInputs">
                         <div>Min:</div>
@@ -231,8 +239,9 @@ function LocationEdit() {
                             type="number"
                             placeholder="0"
                             value={min_visible_scale}
-                            onChange={(e) => [setMin_visible_scale(e.target.value), updateMapDelay()]}
+                            onChange={(e) => [setMin_visible_scale(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
                             className="scaleInput"
+                            id="min_visible_scale"
                         ></input>
 
                         <div>Max:</div>
@@ -240,40 +249,43 @@ function LocationEdit() {
                             type="number"
                             placeholder="0"
                             value={max_visible_scale}
-                            onChange={(e) => [setMax_visible_scale(e.target.value), updateMapDelay()]}
+                            onChange={(e) => [setMax_visible_scale(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
                             className="scaleInput"
+                            id="max_visible_scale"
                         ></input>
                     </div>
                 </div>
 
-                <h2>Name Offset</h2>
+                <div className="nameOffsetDiv">
 
-                <div className="offsetDiv">
-                    <h2>X: {name_offset_x}</h2>
-                    <input
-                        type="range"
-                        placeholder="0"
-                        min="-400"
-                        max="400"
-                        value={name_offset_x}
-                        onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
-                        className="editLocInput"
-                    ></input>
+                    <h2 style={{alignSelf: "flex-start"}}>Name Offset</h2>
+
+                    <div className="offsetDiv">
+                        <div>X: {name_offset_x}</div>
+                        <input
+                            type="range"
+                            placeholder="0"
+                            min="-600"
+                            max="200"
+                            value={name_offset_x}
+                            onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
+                            className="editLocInput"
+                        ></input>
+                    </div>
+
+                    <div>
+                        <div>Y: {name_offset_y}</div>
+                        <input
+                            type="range"
+                            placeholder="0"
+                            min="-100"
+                            max="50"
+                            value={name_offset_y}
+                            onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay2()]}
+                            className="editLocInput"
+                        ></input>
+                    </div>
                 </div>
-
-                <div>
-                    <h2>Y: {name_offset_y}</h2>
-                    <input
-                        type="range"
-                        placeholder="0"
-                        min="-50"
-                        max="50"
-                        value={name_offset_y}
-                        onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay2()]}
-                        className="editLocInput"
-                    ></input>
-                </div>
-
 
 
                 {image_url ?
@@ -284,8 +296,9 @@ function LocationEdit() {
                     type="text"
                     placeholder="Map Image URL..."
                     value={image_url}
-                    onChange={(e) => [setImage_url(e.target.value), updateMapDelay()]}
+                    onChange={(e) => [setImage_url(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
                     className="editLocInput imgUrl"
+                    id="image_url"
                 ></input>
 
 
@@ -293,12 +306,12 @@ function LocationEdit() {
             </div>
 
             <div className="updateMap">
-                <button
+                {/* <button
                     className="updateMapButton"
                     onClick={() => updateMapDelay()}
                 >
                     Update Map
-                </button>
+                </button> */}
                 <button className="updateMapButton">Save Changes</button>
             </div>
 
