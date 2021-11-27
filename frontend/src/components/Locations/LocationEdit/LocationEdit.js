@@ -4,6 +4,7 @@ import "./LocationEdit.css"
 import { sendLocData } from "../../../store/add_edit_location";
 import Colors from "../../ColorPicker/Colors";
 import { send_color } from "../../../store/add_edit_location";
+import locEdit from "./edit.svg"
 
 function LocationEdit() {
 
@@ -12,7 +13,9 @@ function LocationEdit() {
     const dispatch = useDispatch();
     const locForm = useRef()
     const [currentLoc, setCurrentLoc] = useState("")
+    const [colorAttribute, setColorAttribute] = useState("")
     const updateMapTimeOut = useRef('')
+    const updateMapTimeOut2 = useRef('')
     const updateColorTimeout = useRef('')
 
 
@@ -111,19 +114,28 @@ function LocationEdit() {
 
     // updates afte a second instead of with every change
     function updateMapDelay() {
-        console.log("WTFWTFWT")
-       clearInterval(updateMapTimeOut.current)
-       updateMapTimeOut.current = setTimeout(() => {
-           dispatch(sendLocData(payload))
-       }, 1000);
+        clearInterval(updateMapTimeOut.current)
+        updateMapTimeOut.current = setTimeout(() => {
+            dispatch(sendLocData(payload))
+        }, 1000);
     }
 
-    function updateColor(color, attribute){
+    function updateMapDelay2(){
+        clearInterval(updateMapTimeOut2.current)
+        updateMapTimeOut2.current = setTimeout(() => {
+            dispatch(sendLocData(payload))
+        }, 100);    }
+
+    function updateColor(color, attribute) {
         clearInterval(updateColorTimeout.current)
         updateColorTimeout.current = setTimeout(() => {
             console.log(color, attribute)
             dispatch(send_color(color, attribute))
-        }, 500);
+        }, 100);
+    }
+
+    function closeColorPicker() {
+        setColorAttribute("")
     }
 
 
@@ -132,7 +144,8 @@ function LocationEdit() {
 
         <div className="locationEditContainer">
 
-            <Colors props={{color: location_color, updateColor, updateMapDelay, attribute: "location_color"}} />
+            {colorAttribute === "location_color" && <Colors props={{ color: location_color, updateColor, updateMapDelay, attribute: "location_color", closeColorPicker }} />}
+            {colorAttribute === "location_stroke_color" && <Colors props={{ color: location_stroke_color, updateColor, updateMapDelay, attribute: "location_stroke_color", closeColorPicker }} />}
 
             <div className="locationEditForm" ref={locForm}>
                 <h2>Edit Location</h2>
@@ -166,23 +179,47 @@ function LocationEdit() {
                 ></textarea>
 
 
+                <div className="colorDiv">
+                    <button
+                        onClick={() => setColorAttribute("location_color")}
+                        className="colorButton"
+                    >
+                        <img src={locEdit}></img>
+                        <div>Color</div>
+                    </button>
+                    <div
+                        className="colorSwatch"
+                        style={{ color: location_color }}
+                    >
+                        {name}
+                    </div>
+                </div>
 
 
-                <input
-                    type="text"
-                    placeholder="Font Color"
-                    value={location_color}
-                    onChange={(e) => [setLocation_color(e.target.value), updateMapDelay()]}
-                    className="editLocInput"
-                ></input>
+                <div className="colorDiv">
+                    <button
+                        onClick={() => setColorAttribute("location_stroke_color")}
+                        className="colorButton"
+                    >
+                     <img src={locEdit}></img>
+                        <div>Stroke</div>
 
-                <input
-                    type="text"
-                    placeholder="Stroke Color"
-                    value={location_stroke_color}
-                    onChange={(e) => [setLocation_stroke_color(e.target.value), updateMapDelay()]}
-                    className="editLocInput"
-                ></input>
+                    </button>
+                    <div
+                        className="colorSwatch"
+                        style={{
+                            color: "rgba(0,0,0,0)" ,
+                            WebkitTextStroke: "1px",
+                            WebkitTextStrokeColor: location_stroke_color
+                        }}
+                    > {name}
+                    </div>
+                </div>
+
+
+
+
+
 
                 <div className="currentScale">Current Scale: {mapControls.scale}</div>
 
@@ -205,18 +242,22 @@ function LocationEdit() {
 
 
                 <input
-                    type="number"
+                    type="range"
                     placeholder="0"
+                    min="-400"
+                    max="400"
                     value={name_offset_x}
-                    onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay()]}
+                    onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
                     className="editLocInput"
                 ></input>
 
                 <input
-                    type="number"
+                    type="range"
                     placeholder="0"
+                    min="-50"
+                    max="50"
                     value={name_offset_y}
-                    onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay()]}
+                    onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay2()]}
                     className="editLocInput"
                 ></input>
 

@@ -6,41 +6,28 @@ import transparent from "./transparent.png"
 function Colors({props}) {
       const pickedColor = props.color
 
-      const knobRed = useRef(0)
+      const knobRed = useRef()
       const knobRedPOS = useRef(0)
       const knobGreen = useRef()
       const knobGreenPOS = useRef(0)
-      const knobBlue = useRef(0)
+      const knobBlue = useRef()
       const knobBluePOS = useRef(0)
-      const knobAlpha = useRef(0)
+      const knobAlpha = useRef()
       const knobAlphaPOS = useRef(255)
 
 
       const leftMarker = useRef()
 
-      const dispatch = useDispatch();
       const [red, setRed] = useState(0)
       const [green, setGreen] = useState(0)
       const [blue, setBlue] = useState(0)
       const [alpha, setAlpha] = useState(255)
 
-      const [currColor, setCurrColor] = useState('')
-
-
 
       function stopDrag() {
             document.onmouseup = null; // stop moving when mouse button is released:
             document.onmousemove = null;
-            upDate()
-
       }
-
-      // props.updateColor(`rgba(${red}, ${green}, ${blue}, ${alpha})`)
-     function upDate(){
-      //      console.log(`rgba(${red}, ${green}, ${blue}, ${alpha})`)
-           console.log(currColor)
-      // props.updateColor(`rgba(${red}, ${green}, ${blue}, ${alpha})`)
-     }
 
 
       useEffect(() => {
@@ -82,8 +69,6 @@ function Colors({props}) {
             dragKnob(knobBlue.current);
             dragKnob(knobAlpha.current);
 
-
-            // let curr_scene = parseInt(currentscene)
             function dragKnob(theKnob) {
                   let xDiff = 0, Xold = 0;
                   function mouseDown(e) {
@@ -118,7 +103,6 @@ function Colors({props}) {
                         setGreen(knobGreenPOS.current < 0 ? 0 : knobGreenPOS.current > 255 ? 255 : knobGreenPOS.current)
                         setBlue(knobBluePOS.current < 0 ? 0 : knobBluePOS.current > 255 ? 255 : knobBluePOS.current)
                         setAlpha(adjustAlpha < 0 ? 0 : adjustAlpha > 1 ? 1.00 : (adjustAlpha).toFixed(2))
-
                   }
                   theKnob.onmousedown = mouseDown;
             }
@@ -146,21 +130,17 @@ function Colors({props}) {
 
 
       //======================  converts to rgba if not already  ======================
-      function convertToRGBA(color) {
-            if (!color.startsWith("rgba")) {
-                  let first = color.slice(0, 3)
-                  let mid = color.slice(color.indexOf("("), color.indexOf(")"))
-                  return `${first}a${mid}, 1.00)`
-            } else {
-                  return color
-            }
-      }
+      // function convertToRGBA(color) {
+      //       if (!color.startsWith("rgba")) {
+      //             let first = color.slice(0, 3)
+      //             let mid = color.slice(color.indexOf("("), color.indexOf(")"))
+      //             return `${first}a${mid}, 1.00)`
+      //       } else {
+      //             return color
+      //       }
+      // }
 
-      // dispatch(dispatchSelectedColor(`rgba(${red}, ${green}, ${blue}, ${alpha})`
-      // style={{ height: `${hideColors ? "18px" : "145px"}` }}
-      function toDoChangeColor(e){
-            console.log((e))
-      }
+
       return (
             <>
 
@@ -170,7 +150,10 @@ function Colors({props}) {
                   onMouseLeave={()=> props.updateColor(`rgba(${red}, ${green}, ${blue}, ${alpha})`, props.attribute)}
                   >
 
-
+            <div
+            className="closeColorPicker"
+            onClick={()=> props.closeColorPicker()}
+            >X</div>
                         <div className="slidersAndSelectedColor">
                               <div className="leftMarker" ref={leftMarker}></div>
                               <div className="slidersContainer" style={{ backgroundImage: `url(${transparent})` }}>
@@ -185,8 +168,8 @@ function Colors({props}) {
                                                 id="red"
                                                 autoComplete="off"
                                                 onChange={(e) => [
-                                                      setRed(e.target.value),
-                                                      props.updateColor(`rgba(${e.target.value}, ${green}, ${blue}, ${alpha})`, props.attribute),
+                                                      setRed(handleInput(e)),
+                                                      props.updateColor(`rgba(${handleInput(e)}, ${green}, ${blue}, ${alpha})`, props.attribute),
                                                 ]}
                                                 value={red}
                                                 type="number">
@@ -202,11 +185,13 @@ function Colors({props}) {
                                                 className="sliderInput"
                                                 id="green"
                                                 onChange={(e) => [
-                                                      setGreen(e.target.value),
-                                                      props.updateColor(`rgba(${red}, ${e.target.value}, ${blue}, ${alpha})`, props.attribute),
+                                                      setGreen(handleInput(e)),
+                                                      props.updateColor(`rgba(${red}, ${handleInput(e)}, ${blue}, ${alpha})`, props.attribute),
                                                 ]}
                                                 value={green}
-                                                type="number">
+                                                type="number"
+                                                autoComplete="off"
+                                                >
 
                                           </input>
                                     </div>
@@ -220,11 +205,13 @@ function Colors({props}) {
                                                 className="sliderInput"
                                                 id="blue"
                                                 onChange={(e) => [
-                                                      setBlue(e.target.value),
-                                                      props.updateColor(`rgba(${red}, ${green}, ${e.target.value}, ${alpha})`, props.attribute),
+                                                      setBlue(handleInput(e)),
+                                                      props.updateColor(`rgba(${red}, ${green}, ${handleInput(e)}, ${alpha})`, props.attribute),
                                                 ]}
                                                 value={blue}
-                                                type="number">
+                                                type="number"
+                                                autoComplete="off"
+                                                >
                                           </input>
                                     </div>
 
@@ -236,11 +223,13 @@ function Colors({props}) {
                                           <input className="sliderInput"
                                                 id="alpha"
                                                 onChange={(e) => [
-                                                      setAlpha(e.target.value),
-                                                      props.updateColor(`rgba(${red}, ${green}, ${blue}, ${e.target.value})`, props.attribute),
+                                                      setAlpha(handleInput(e)),
+                                                      props.updateColor(`rgba(${red}, ${green}, ${blue}, ${handleInput(e)})`, props.attribute),
                                                 ]}
                                                 value={alpha}
-                                                type="number">
+                                                type="number"
+                                                autoComplete="off"
+                                                >
                                           </input>
                                     </div>
 
@@ -256,9 +245,6 @@ function Colors({props}) {
 
 
                   </div>
-                  <button onClick={()=> props.updateColor(`rgba(${red}, ${green}, ${blue}, ${alpha})`, props.attribute)}>PeSrh Da bUtToN</button>
-                  <button onClick={()=> props.updateMapDelay()}>derp</button>
-
             </>
       )
 }
