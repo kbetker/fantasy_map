@@ -154,14 +154,56 @@ function LocationEdit() {
 
             <div className="locationEditForm" ref={locForm}>
                 <h2>Edit Location</h2>
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Name..."
-                    value={name}
-                    onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
-                    className="editLocInput"
-                ></input>
+
+
+                <div className="colorDiv">
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Name..."
+                        value={name}
+                        onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
+                        className="colorSwatch"
+                        style={{
+                            color: location_color,
+
+                            textShadow: `-1px -1px  0px ${location_stroke_color},
+                                      0px -1px  0px ${location_stroke_color},
+                                      1px -1px  0px ${location_stroke_color},
+                                      1px  0px  0px ${location_stroke_color},
+                                      1px  1px  0px ${location_stroke_color},
+                                      0px  1px  0px ${location_stroke_color},
+                                     -1px  1px  0px ${location_stroke_color},
+                                     -1px  0px  0px ${location_stroke_color}`
+                        }}
+                    ></input>
+
+
+                    <div className="colorEditButtons">
+                        <button
+                            onClick={() => setColorAttribute("location_color")}
+                            className="colorButton"
+                        >
+                            <img src={locEdit}></img>
+                            <div>Color</div>
+                        </button>
+
+                        <button
+                            onClick={() => setColorAttribute("location_stroke_color")}
+                            className="colorButton"
+                        >
+                            <img src={locEdit}></img>
+                            <div>Stroke</div>
+
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+
                 {thumbnail_url ?
                     <img className="locationThumbnail" src={`${thumbnail_url}`} alt="Location Thumbnail" />
                     : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" alt="Not Thumbnail" />
@@ -185,54 +227,6 @@ function LocationEdit() {
                     className="editLocTextarea"
                     id="location_description"
                 ></textarea>
-
-
-                <div className="colorDiv">
-                    <button
-                        onClick={() => setColorAttribute("location_color")}
-                        className="colorButton"
-                    >
-                        <img src={locEdit}></img>
-                        <div>Color</div>
-                    </button>
-                    <div
-                        className="colorSwatch"
-                        style={{ color: location_color }}
-                    >
-                        {name}
-                    </div>
-                </div>
-
-
-                <div className="colorDiv">
-                    <button
-                        onClick={() => setColorAttribute("location_stroke_color")}
-                        className="colorButton"
-                    >
-                        <img src={locEdit}></img>
-                        <div>Stroke</div>
-
-                    </button>
-                    <div
-                        className="colorSwatch"
-                        style={{
-                            color: location_color,
-                            // WebkitTextStroke: "1px",
-                            // WebkitTextStrokeColor: location_stroke_color
-                            textShadow: `-1px -1px  0px ${location_stroke_color},
-                                            0px -1px  0px ${location_stroke_color},
-                                        1px -1px  0px ${location_stroke_color},
-                                        1px     0px  0px ${location_stroke_color},
-                                        1px  1px  0px ${location_stroke_color},
-                                            0px  1px  0px ${location_stroke_color},
-                                        -1px  1px  0px ${location_stroke_color},
-                                        -1px     0px  0px ${location_stroke_color}`
-                        }}
-                    > {name}
-                    </div>
-                </div>
-
-
 
 
 
@@ -265,7 +259,7 @@ function LocationEdit() {
 
                 <div className="nameOffsetDiv">
 
-                    <h2 style={{alignSelf: "flex-start"}}>Name Offset</h2>
+                    <h2 style={{ alignSelf: "flex-start" }}>Name Offset</h2>
 
                     <div className="offsetDiv">
                         <div>X: {name_offset_x}</div>
@@ -273,7 +267,7 @@ function LocationEdit() {
                             type="range"
                             placeholder="0"
                             min="-600"
-                            max="200"
+                            max="400"
                             value={name_offset_x}
                             onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
                             className="editLocInput"
