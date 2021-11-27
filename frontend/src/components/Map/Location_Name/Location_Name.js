@@ -23,10 +23,7 @@ function Location_Name({ props }) {
 
         let minX = (loc.name_font_size_min * loc.name_offset_x) / loc.name_font_size
         let minY = (loc.name_font_size_min * loc.name_offset_y) / loc.name_font_size
-        if (loc.name === "LongSaddle" ){
-            console.log(coordX)
-            console.log(`${coordX / mapControl.scale}px, ${coordY / mapControl.scale}px`)
-        }
+
 
         if(loc.name_font_size / mapControl.scale > loc.name_font_size_max){
             return `${maxX}px, ${maxY}px`

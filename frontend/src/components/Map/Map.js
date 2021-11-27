@@ -73,7 +73,7 @@ function Map() {
 
 
 
-        if (mapControl.sideBarName === "Location List" || mapControl.sideBarName === "Location Information") {
+        if (mapControl.sideBarName === "List Locations" || mapControl.sideBarName === "Location Information") {
             dispatch(sendLocationInformation({
                 name: location.name,
                 location_id: location.id,
@@ -82,15 +82,14 @@ function Map() {
             }))
             dispatch(sendSidebarName('Location Information'))
             dispatch(sendLocData(location))
-        } if (mapControl.sideBarName === "Edit Location") {
+        } if (mapControl.sideBarName === "Location Edit") {
             dispatch(sendLocData(location))
-            // console.log(location)
         }
     }
 
     function isVisible(loc) {
         if (mapControl.scale >= loc.min_visible_scale * 0.01 && mapControl.scale <= loc.max_visible_scale * 0.01) {
-            if (mapControl.sideBarName === "Add Location") {
+            if (mapControl.sideBarName === "Location Add") {
                 return {opacity: 0.4, pointer: "initial"}
             } else {
                 return {opacity: 1, pointer: "initial"}
@@ -196,7 +195,7 @@ function Map() {
 
 
 
-            {addEditLocation.select_vertex === "newVertex" && mapControl.sideBarName === "Add Location" && <div
+            {addEditLocation.select_vertex === "newVertex" && mapControl.sideBarName === "Location Add" && <div
                 className="location"
                 style={{
                     left: `${mapControl.coordX - 3}px`,
