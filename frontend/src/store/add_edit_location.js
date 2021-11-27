@@ -40,13 +40,25 @@ export const sendSelectedVertex = (selectedVertex) => async (dispatch) => {
 };
 
 
+//    location_stroke_color
 //==================== Update Color =====================\\
 const LOCATION_COLOR = 'location/LOCATION_COLOR';
+const LOCATION_STROKE_COLOR = 'location/LOCATION_STROKE_COLOR';
+
 export const location_color = (color) => { return { type: LOCATION_COLOR, color } };
+export const location_stroke_color = (color) => { return { type: LOCATION_STROKE_COLOR, color } };
+
 
 export const send_color = (value, attribute) => async (dispatch) => {
-    if(attribute === "location_color"){
-        dispatch(location_color(value));
+    switch (attribute) {
+        case "location_color":
+            dispatch(location_color(value));
+            break;
+        case "location_stroke_color":
+            dispatch(location_stroke_color(value));
+            break;
+        default:
+            break;
     }
 };
 
@@ -80,7 +92,7 @@ const initialState =
     location_stroke_color: null,
     location_description: null,
     select_vertex: null,
-    selected_vertex: {id: null, coord_x: null, coord_y: null},
+    selected_vertex: { id: null, coord_x: null, coord_y: null },
     id: null,
 }
 
@@ -131,6 +143,10 @@ const locationReducer = (state = initialState, action) => {
         case LOCATION_COLOR:
             newState = Object.assign({}, state);
             newState.location_color = action.color
+            return newState
+        case LOCATION_STROKE_COLOR:
+            newState = Object.assign({}, state);
+            newState.location_stroke_color = action.color
             return newState
 
 

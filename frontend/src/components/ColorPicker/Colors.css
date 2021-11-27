@@ -8,15 +8,53 @@
     align-self: flex-end;
 
 }
+.closeColorPicker{
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    color: white;
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bolder;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 5px black;
+}
+.closeColorPicker:hover{
+    background-color: rgb(53, 53, 53);
+}
+.colorSwatch{
+    width: 150px;
+    /* height: 35px; */
+    font-size: 50px;
+}
+.colorButton{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+.colorDiv{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    align-items: center;
+}
 
 .sliderSelectedColorContainer{
     display: flex;
     /* flex-direction: column; */
     justify-content: space-evenly;
-    border-top: 3px solid white;
-    border-left: 3px solid rgb(196, 196, 196);
-    border-right: 3px solid rgb(97, 97, 97);
-    border-bottom: 3px solid rgb(0, 0, 0);
+    border: 1px solid white;
+    box-shadow: 0 0 10px black;
     /* box-shadow: 3px 3px 10px black; */
     width: 470px;
     height: 105px;
@@ -25,6 +63,7 @@
     position: absolute;
     z-index: 99;
     top: 30%;
+    left: 15px;
 }
 .color-columnsTop,.color-columnsBottom{
     display: flex;
