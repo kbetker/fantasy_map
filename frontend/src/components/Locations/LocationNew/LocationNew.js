@@ -47,7 +47,7 @@ function LocationNew() {
         let response = await dispatch(sendCreateLocation(payload))
         if (response.ok) {
             dispatch(sendLocData(response.location))
-            dispatch(sendSidebarName( "Edit Location"))
+            dispatch(sendSidebarName( "Location Edit"))
         } else {
             alert("Well, something went wrong")
         }

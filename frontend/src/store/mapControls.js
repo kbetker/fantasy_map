@@ -82,7 +82,7 @@ const initialState = {
     positionX: 0,
     positionY: 0,
     sideBarExpand: true,
-    sideBarName: 'Location List',
+    sideBarName: 'List Locations',
     location_id: null,
     name: 'Select a Location',
     thumbnail_url: '',

@@ -135,7 +135,6 @@ function LocationEdit() {
     function updateColor(color, attribute) {
         clearInterval(updateColorTimeout.current)
         updateColorTimeout.current = setTimeout(() => {
-            console.log(color, attribute)
             dispatch(send_color(color, attribute))
         }, 100);
     }
@@ -217,9 +216,17 @@ function LocationEdit() {
                     <div
                         className="colorSwatch"
                         style={{
-                            color: "rgba(0,0,0,0)",
-                            WebkitTextStroke: "1px",
-                            WebkitTextStrokeColor: location_stroke_color
+                            color: location_color,
+                            // WebkitTextStroke: "1px",
+                            // WebkitTextStrokeColor: location_stroke_color
+                            textShadow: `-1px -1px  0px ${location_stroke_color},
+                                            0px -1px  0px ${location_stroke_color},
+                                        1px -1px  0px ${location_stroke_color},
+                                        1px     0px  0px ${location_stroke_color},
+                                        1px  1px  0px ${location_stroke_color},
+                                            0px  1px  0px ${location_stroke_color},
+                                        -1px  1px  0px ${location_stroke_color},
+                                        -1px     0px  0px ${location_stroke_color}`
                         }}
                     > {name}
                     </div>

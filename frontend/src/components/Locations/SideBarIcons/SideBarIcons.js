@@ -51,8 +51,8 @@ function SideBarIcons() {
             }
 
             <img src={place}
-                className={mapControls.sideBarName === 'Location List' ? "iconSelected" : "icon"}
-                alt="Location List"
+                className={mapControls.sideBarName === 'List Locations' ? "iconSelected" : "icon"}
+                alt="List Locations"
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
@@ -70,25 +70,27 @@ function SideBarIcons() {
                 ]}
             />
 
-            <img src={editLocation}
-                className={mapControls.sideBarName === 'Edit Location' ? "iconSelected" : "icon subIcon"}
-                alt="Edit Location"
-                draggable="false"
-                onClick={(e) => [
-                    dispatch(sendSidebarName(e.target.alt)),
-                    expandSidebar()
-                ]}
-            />
 
-            <img src={addLocation}
-                className={mapControls.sideBarName === 'Add Location' ? "iconSelected" : "icon subIcon"}
-                alt="Add Location"
+            {mapControls.sideBarName.startsWith("Location") && <img src={editLocation}
+                className={mapControls.sideBarName === 'Location Edit' ? "iconSelected" : "icon subIcon"}
+                alt="Location Edit"
                 draggable="false"
                 onClick={(e) => [
                     dispatch(sendSidebarName(e.target.alt)),
                     expandSidebar()
                 ]}
-            />
+            />}
+
+            {mapControls.sideBarName.startsWith("Location") &&
+                <img src={addLocation}
+                    className={mapControls.sideBarName === 'Location Add' ? "iconSelected" : "icon subIcon"}
+                    alt="Location Add"
+                    draggable="false"
+                    onClick={(e) => [
+                        dispatch(sendSidebarName(e.target.alt)),
+                        expandSidebar()
+                    ]}
+                />}
 
             <img src={explore}
                 className={mapControls.sideBarName === 'Get Direction' ? "iconSelected" : "icon"}
@@ -112,26 +114,30 @@ function SideBarIcons() {
                 ]}
             />
 
-            <img src={editRoad}
-                className={mapControls.sideBarName === 'Edit Road' ? "iconSelected" : "icon"}
-                alt="Edit Road"
-                draggable="false"
-                onClick={(e) => [
-                    dispatch(sendSidebarName(e.target.alt)),
-                    expandSidebar()
-                ]}
-            />
+            {mapControls.sideBarName.startsWith("Road") &&
+                <img src={editRoad}
+                    className={mapControls.sideBarName === 'Road Edit' ? "iconSelected" : "icon"}
+                    alt="Road Edit"
+                    draggable="false"
+                    onClick={(e) => [
+                        dispatch(sendSidebarName(e.target.alt)),
+                        expandSidebar()
+                    ]}
+                />
+            }
 
 
-            <img src={addRoad}
-                className={mapControls.sideBarName === 'Add Road' ? "iconSelected" : "icon"}
-                alt="Add Road"
-                draggable="false"
-                onClick={(e) => [
-                    dispatch(sendSidebarName(e.target.alt)),
-                    expandSidebar()
-                ]}
-            />
+            {mapControls.sideBarName.startsWith("Road") &&
+                <img src={addRoad}
+                    className={mapControls.sideBarName === 'Road Add' ? "iconSelected" : "icon"}
+                    alt="Road Add"
+                    draggable="false"
+                    onClick={(e) => [
+                        dispatch(sendSidebarName(e.target.alt)),
+                        expandSidebar()
+                    ]}
+                />
+            }
 
 
         </div>

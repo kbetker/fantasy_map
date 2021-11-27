@@ -151,13 +151,13 @@ function Locations() {
                                             resetTransform(500, "easeInOutQuad"),
                                             setVertexScale(0.315),
                                             e.target.blur(),
-                                            dispatch(sendSidebarName("Location List"))
+                                            dispatch(sendSidebarName("List Locations"))
                                         ]} />
                                 </div>
 
                                 {/* ====================================  Locations List ============================ */}
 
-                                {mapControls.sideBarName === "Location List" && <div className="locationsList">
+                                {mapControls.sideBarName === "List Locations" && <div className="locationsList">
                                     <>
                                         <input
                                             type="text"
@@ -247,8 +247,8 @@ function Locations() {
                                 </div>}
 
                                 {mapControls.sideBarName === "Location Information" && <LocationInformation />}
-                                {mapControls.sideBarName === "Add Location" && <LocationNew />}
-                                {mapControls.sideBarName ===  "Edit Location" && <LocationEdit />}
+                                {mapControls.sideBarName === "Location Add" && <LocationNew />}
+                                {mapControls.sideBarName ===  "Location Edit" && <LocationEdit />}
                                 {/*todo <Edit  Road /> */}
 
 
