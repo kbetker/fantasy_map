@@ -5,6 +5,7 @@
     flex-direction: column;
     width: 100%;
     height: 80vh;
+    font-family:  Helvetica, Arial, sans-serif ;
     /* background-color: red; */
 }
 
@@ -75,4 +76,42 @@
 
 .imgUrl{
     height: 10px;
+}
+
+.offsetDiv{
+    display: flex;
+    flex-direction: column;
+}
+
+.colorDiv{
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    align-items: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.scaleDiv{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px black inset;
+}
+
+.scaleInputs{
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    justify-content: space-between;
+    /* background-color: red; */
+}
+.scaleInput{
+    width: 30px;
+    /* padding: 5px; */
+    /* margin: 3px; */
+    /* height: 35px; */
+    background-color: rgb(65, 65, 65);
+    outline: none;
+    box-shadow: 0 0 10px black;
+    color: white;
+    /* margin-bottom: 20px; */
 }
