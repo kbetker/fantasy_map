@@ -85,10 +85,14 @@
 
 .colorDiv{
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin: 20px 0;
     align-items: center;
     font-family: 'Times New Roman', Times, serif;
+    width: 230px;
+    box-shadow: 0 0 15px black inset;
+    padding: 20px;
 }
 
 .scaleDiv{
@@ -102,16 +106,17 @@
     align-items: center;
     margin: 15px 0;
     justify-content: space-evenly;
-    /* background-color: red; */
 }
 .scaleInput{
     width: 30px;
+    height: 30px;
+    display: flex;
     /* padding: 5px; */
     /* margin: 3px; */
     /* height: 35px; */
     background-color: rgb(65, 65, 65);
     outline: none;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 3px black;
     color: white;
     /* margin-bottom: 20px; */
 }
@@ -120,4 +125,13 @@
     padding: 5px 3px;
     margin: 35px 0;
 
+}
+.colorEditButtons{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.currentScale{
+    font-size: 20px;
+    font-weight: bolder;
 }

@@ -30,12 +30,22 @@
     background-color: rgb(53, 53, 53);
 }
 .colorSwatch{
-    width: 150px;
+    width: 260px;
     /* height: 35px; */
     font-size: 50px;
     overflow-x: hidden;
     white-space: nowrap;
+    text-align: center;
+    box-shadow: 0 0 15px black inset;
+    background-color: rgb(112, 112, 112);
+    margin: 0 4px 20px 4px;
+    border: 2px solid black;
+    padding: 5px;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Times New Roman', Times, serif;
 }
+
 .colorButton{
     display: flex;
     flex-direction: column;
@@ -236,4 +246,10 @@ input[type=number] {
 .selectItem:hover, .selectItemActive{
     background-color: rgb(0, 0, 0);
     color: white;
+}
+.colorEditButtons{
+    display: flex;
+    justify-content: space-between;
+    /* background-color: red; */
+    width: 130px;
 }

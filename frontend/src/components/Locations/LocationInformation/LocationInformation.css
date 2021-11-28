@@ -9,6 +9,9 @@
     height: 80vh;
     overflow-y: scroll;
     overflow-x: hidden;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .locationInfoTitle{
@@ -18,10 +21,10 @@
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
-    width: 230px;
+    width: 280px;
 }
 .locationThumbnail{
-    width: 220px;
+    width: 270px;
 }
 .locationDescription{
     margin: 10px 3px 15px 3px;
@@ -31,7 +34,7 @@
 
 .gotToLocation{
     margin-bottom: 20px;
-    width: 210px;
+    width: 260px;
     background-color: rgb(58, 58, 58);
     padding: 5px;
     border-bottom-left-radius: 6px;

@@ -37,6 +37,7 @@ function LocationEdit() {
     const [name_font_size_max, setName_font_size_max] = useState(20)
     const [name_font_family, setName_font_family] = useState("Verdana")
     const [loc_vertex_size_min, setLoc_vertex_size_min] = useState(8)
+    const [loc_vertex_size, setLoc_vertex_size] = useState(8)
     const [loc_vertex_size_max, setLoc_vertex_size_max] = useState(8)
     const [loc_vertex_stroke, setLoc_vertex_stroke] = useState(4)
     const [location_color, setLocation_color] = useState("black") // ******
@@ -54,6 +55,7 @@ function LocationEdit() {
         setDiscovered(location.discovered || true)
         setImage_url(location.image_url || "")
         setLoc_vertex_size_max(location.loc_vertex_size_max || "")
+        setLoc_vertex_size(location.loc_vertex_size_max || "")
         setLoc_vertex_size_min(location.loc_vertex_size_min || "")
         setLoc_vertex_stroke(location.loc_vertex_stroke || "")
         setLocation_color(location.location_color || "")
@@ -61,7 +63,7 @@ function LocationEdit() {
         setLocation_stroke_color(location.location_stroke_color || "")
         setMax_visible_scale(location.max_visible_scale || "")
         setMin_visible_scale(location.min_visible_scale || "")
-        setName(location.name || "No Location Selected")
+        setName(location.name || "")
         setName_font_family(location.name_font_family || "")
         setName_font_size_max(location.name_font_size_max || "")
         setName_font_size(location.name_font_size || "")
@@ -108,6 +110,7 @@ function LocationEdit() {
         name_font_size_max: name_font_size_max,
         name_font_family: name_font_family,
         loc_vertex_size_min: loc_vertex_size_min,
+        loc_vertex_size: loc_vertex_size,
         loc_vertex_size_max: loc_vertex_size_max,
         loc_vertex_stroke: loc_vertex_stroke,
         location_color: location_color,
@@ -154,14 +157,56 @@ function LocationEdit() {
 
             <div className="locationEditForm" ref={locForm}>
                 <h2>Edit Location</h2>
-                <input
-                    type="text"
-                    id="name"
-                    placeholder="Name..."
-                    value={name}
-                    onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
-                    className="editLocInput"
-                ></input>
+
+
+                <div className="colorDiv">
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Name..."
+                        value={name}
+                        onChange={(e) => [setName(e.target.value), setCurrentLoc(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
+                        className="colorSwatch"
+                        style={{
+                            color: location_color,
+
+                            textShadow: `-1px -1px  0px ${location_stroke_color},
+                                      0px -1px  0px ${location_stroke_color},
+                                      1px -1px  0px ${location_stroke_color},
+                                      1px  0px  0px ${location_stroke_color},
+                                      1px  1px  0px ${location_stroke_color},
+                                      0px  1px  0px ${location_stroke_color},
+                                     -1px  1px  0px ${location_stroke_color},
+                                     -1px  0px  0px ${location_stroke_color}`
+                        }}
+                    ></input>
+
+
+                    <div className="colorEditButtons">
+                        <button
+                            onClick={() => setColorAttribute("location_color")}
+                            className="colorButton"
+                        >
+                            <img src={locEdit}></img>
+                            <div>Color</div>
+                        </button>
+
+                        <button
+                            onClick={() => setColorAttribute("location_stroke_color")}
+                            className="colorButton"
+                        >
+                            <img src={locEdit}></img>
+                            <div>Stroke</div>
+
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+
                 {thumbnail_url ?
                     <img className="locationThumbnail" src={`${thumbnail_url}`} alt="Location Thumbnail" />
                     : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" alt="Not Thumbnail" />
@@ -185,54 +230,6 @@ function LocationEdit() {
                     className="editLocTextarea"
                     id="location_description"
                 ></textarea>
-
-
-                <div className="colorDiv">
-                    <button
-                        onClick={() => setColorAttribute("location_color")}
-                        className="colorButton"
-                    >
-                        <img src={locEdit}></img>
-                        <div>Color</div>
-                    </button>
-                    <div
-                        className="colorSwatch"
-                        style={{ color: location_color }}
-                    >
-                        {name}
-                    </div>
-                </div>
-
-
-                <div className="colorDiv">
-                    <button
-                        onClick={() => setColorAttribute("location_stroke_color")}
-                        className="colorButton"
-                    >
-                        <img src={locEdit}></img>
-                        <div>Stroke</div>
-
-                    </button>
-                    <div
-                        className="colorSwatch"
-                        style={{
-                            color: location_color,
-                            // WebkitTextStroke: "1px",
-                            // WebkitTextStrokeColor: location_stroke_color
-                            textShadow: `-1px -1px  0px ${location_stroke_color},
-                                            0px -1px  0px ${location_stroke_color},
-                                        1px -1px  0px ${location_stroke_color},
-                                        1px     0px  0px ${location_stroke_color},
-                                        1px  1px  0px ${location_stroke_color},
-                                            0px  1px  0px ${location_stroke_color},
-                                        -1px  1px  0px ${location_stroke_color},
-                                        -1px     0px  0px ${location_stroke_color}`
-                        }}
-                    > {name}
-                    </div>
-                </div>
-
-
 
 
 
@@ -265,7 +262,7 @@ function LocationEdit() {
 
                 <div className="nameOffsetDiv">
 
-                    <h2 style={{alignSelf: "flex-start"}}>Name Offset</h2>
+                    <h2 style={{ alignSelf: "flex-start" }}>Name Offset</h2>
 
                     <div className="offsetDiv">
                         <div>X: {name_offset_x}</div>
@@ -273,7 +270,7 @@ function LocationEdit() {
                             type="range"
                             placeholder="0"
                             min="-600"
-                            max="200"
+                            max="400"
                             value={name_offset_x}
                             onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
                             className="editLocInput"
@@ -293,6 +290,69 @@ function LocationEdit() {
                         ></input>
                     </div>
                 </div>
+
+
+
+                <div className="booleans nameOffsetDiv">
+                    <div>
+                        <label htmlFor="show on map">Show on map?:</label>
+                        <input
+                            name="show on map"
+                            type="checkbox"
+                            checked={show_on_map}
+                            onChange={(e) => { setShow_on_map(e.target.checked) }} /
+                        >
+                    </div>
+
+
+                    <div>
+                        <label htmlFor="Discovered">Discovered?:</label>
+                        <input
+                            name="Discovered"
+                            type="checkbox"
+                            checked={discovered}
+                            onChange={(e) => { setDiscovered(e.target.checked) }} /
+                        >
+                    </div>
+
+                </div>
+
+
+
+                <div className="fontSizes nameOffsetDiv">
+                    <div className="currFontSize">Current actual font size: {(name_font_size / mapControls.scale).toFixed(2)}</div>
+
+                    <div className="fontSize">
+                        <div>Target font size:</div>
+                        <input
+                            type="font size"
+                            value={name_font_size}
+                            onChange={(e) => { setName_font_size(e.target.checked) }} /
+                        >
+                    </div>
+
+                    <div className="fontSize">
+                        <div>Minimum font size:</div>
+                        <input
+                            type="font size"
+                            value={name_font_size_min}
+                            onChange={(e) => { setName_font_size_min(e.target.checked) }} /
+                        >
+                    </div>
+
+                    <div className="fontSize">
+                        <div>Maximum font size:</div>
+                        <input
+                            type="font size"
+                            value={name_font_size_max}
+                            onChange={(e) => { setName_font_size_max(e.target.checked) }} /
+                        >
+                    </div>
+                </div>
+
+
+
+
 
 
                 {image_url ?

@@ -15,7 +15,7 @@
 }
 
 .toolbarContainer{
-    width: 260px;
+    width: 310px;
     position: relative;
 }
 .tollbarHide{
@@ -27,7 +27,7 @@
     justify-content: space-evenly;
     align-items: center;
     padding: 3px;
-    width: 260px;
+    width: 310px;
     height: 52px;
     position: absolute;
     top: 0;
@@ -56,14 +56,14 @@
     position: fixed;
     left: 0;
     top: 50px;
-    z-index: 999;
+    z-index: 30;
     height: 93vh;
     background-color: rgb(48, 48, 48);
     transition: all ease-in-out 1s;
 }
 
 .sideBarHide{
-    left: -260px
+    left: -310px
 }
 
 
