@@ -60,6 +60,7 @@
     height: 93vh;
     background-color: rgb(48, 48, 48);
     transition: all ease-in-out 1s;
+    /* font-family: Helvetica, Arial, sans-serif; */
 }
 
 .sideBarHide{
@@ -74,6 +75,8 @@
     cursor: pointer;
     margin: 5px 0;
     width: 190px;
+    overflow-x: hidden;
+    white-space: nowrap;
 }
 
 

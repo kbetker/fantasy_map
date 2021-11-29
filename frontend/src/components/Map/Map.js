@@ -137,11 +137,17 @@ function Map() {
             {mapData.child_locations.map(location =>
                 <div className="locationContainer" key={`locKey-${location.id}`}>
 
-                    {location.id === addEditLocation.id ?
-                        <Location_Name props={{location: addEditLocation, locationNameClick, mapControl, isVisible, textShadow, vertex: location.Vertex }} />
-                        :
-                        <Location_Name props={{location: location, locationNameClick, mapControl, isVisible, textShadow, vertex: location.Vertex }} />
-                    }
+
+                        <Location_Name
+                         props={{
+                             location: location.id === addEditLocation.id ? addEditLocation : location,
+                             locationNameClick,
+                             mapControl,
+                             isVisible,
+                             textShadow,
+                             vertex: location.Vertex
+                            }} />
+
 
 
 

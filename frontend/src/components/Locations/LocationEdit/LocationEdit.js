@@ -52,7 +52,7 @@ function LocationEdit() {
         // setSelect_vertex(location.select_vertex)
         // setSelected_vertex(location.selected_vertex)
         setCampaign_id(location.campaign_id || "")
-        setDiscovered(location.discovered || true)
+        setDiscovered(location.discovered)
         setImage_url(location.image_url || "")
         setLoc_vertex_size_max(location.loc_vertex_size_max || "")
         setLoc_vertex_size(location.loc_vertex_size_max || "")
@@ -70,7 +70,7 @@ function LocationEdit() {
         setName_font_size_min(location.name_font_size_min || "")
         setName_offset_x(location.name_offset_x || "")
         setName_offset_y(location.name_offset_y || "")
-        setShow_on_map(location.show_on_map || "")
+        setShow_on_map(location.show_on_map)
         setThumbnail_url(location.thumbnail_url || "")
         setVertex_id(location.vertex_id || "")
 
@@ -128,8 +128,9 @@ function LocationEdit() {
         }, 1000);
     }
 
-    function updateMapDelay2() {
+    function updateMapDelay2(id, value) {
         clearInterval(updateMapTimeOut2.current)
+        payload[id] = value
         updateMapTimeOut2.current = setTimeout(() => {
             dispatch(sendLocData(payload))
         }, 100);
@@ -170,15 +171,15 @@ function LocationEdit() {
                         className="colorSwatch"
                         style={{
                             color: location_color,
-
+                            fontFamily: name_font_family,
                             textShadow: `-1px -1px  0px ${location_stroke_color},
-                                      0px -1px  0px ${location_stroke_color},
-                                      1px -1px  0px ${location_stroke_color},
-                                      1px  0px  0px ${location_stroke_color},
-                                      1px  1px  0px ${location_stroke_color},
-                                      0px  1px  0px ${location_stroke_color},
-                                     -1px  1px  0px ${location_stroke_color},
-                                     -1px  0px  0px ${location_stroke_color}`
+                                          0px -1px  0px ${location_stroke_color},
+                                          1px -1px  0px ${location_stroke_color},
+                                          1px  0px  0px ${location_stroke_color},
+                                          1px  1px  0px ${location_stroke_color},
+                                          0px  1px  0px ${location_stroke_color},
+                                         -1px  1px  0px ${location_stroke_color},
+                                         -1px  0px  0px ${location_stroke_color}`
                         }}
                     ></input>
 
@@ -202,6 +203,137 @@ function LocationEdit() {
                         </button>
                     </div>
                 </div>
+
+
+
+
+
+                <div className="fontSizes nameOffsetDiv">
+                    <label htmlFor="fontFamily">Font?:</label>
+                    <div>
+                        <select
+                            name="fontFamily"
+                            checked={name_font_family}
+                            id="name_font_family"
+                            onChange={(e) => [
+                                setName_font_family(e.target.value),
+                                updateMapDelay2(e.target.id, e.target.value)
+                            ]}>
+                            <option value="null"> --Select Option--</option>
+
+
+                            <option
+                                value="Helvetica, Arial, sans-serif"
+                                selected={name_font_family === "Helvetica, Arial, sans-serif" ? true : false}
+                            >Helvetica, Arial, sans-serif
+                            </option>
+
+                            <option
+                                value="'Times New Roman', Times, serif" selected={name_font_family === "'Times New Roman', Times, serif" ? true : false}>Times New Roman, Times, serif
+                            </option>
+
+                            <option
+                                value="'M PLUS Rounded 1c', sans-serif"
+                                selected={name_font_family === "'M PLUS Rounded 1c', sans-serif" ? true : false}
+                            >M PLUS Rounded 1c, sans-serif
+                            </option>
+
+                            <option
+                                value="'Press Start 2P', cursive"
+                                selected={name_font_family === "'Press Start 2P', cursive" ? true : false}
+                            >Press Start 2P, cursive
+                            </option>
+
+                            <option
+                                value="'Poiret One', cursive"
+                                selected={name_font_family === "'Poiret One', cursive" ? true : false}
+                            >Poiret One, cursive
+                            </option>
+
+                            <option
+                                value="'Creepster', cursive"
+                                selected={name_font_family === "'Creepster', cursive" ? true : false}
+                            >Creepster, cursive
+                            </option>
+
+                            <option
+                                value="'UnifrakturMaguntia', cursive"
+                                selected={name_font_family === "'UnifrakturMaguntia', cursive" ? true : false}
+                            >UnifrakturMaguntia, cursive
+                            </option>
+
+                            <option
+                                value="'Nosifer', cursive"
+                                selected={name_font_family === "'Nosifer', cursive" ? true : false}
+                            >Nosifer, cursive
+                            </option>
+
+                            <option
+                                value="'Big Shoulders Stencil Display', cursiv"
+                                selected={name_font_family === "'Big Shoulders Stencil Display', cursiv" ? true : false}
+                            >Big Shoulders Stencil Display, cursiv
+                            </option>
+
+                            <option
+                                value="'Geostar Fill', cursive"
+                                selected={name_font_family === "'Geostar Fill', cursive" ? true : false}
+                            >Geostar Fill, cursive
+                            </option>
+
+                        </select>
+                    </div>
+
+
+                    <div className="currFontSize">Current actual font size: {(name_font_size / mapControls.scale).toFixed(2)}</div>
+
+                    <div className="fontSize">
+                        <div>Target font size:</div>
+                        <input
+                            type="number"
+                            value={name_font_size}
+                            id="name_font_size"
+                            onChange={(e) => [
+                                setName_font_size(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} /
+                        >
+                    </div>
+
+                    <div className="fontSize">
+                        <div>Minimum font size:</div>
+                        <input
+                            type="number"
+                            value={name_font_size_min}
+                            id="name_font_size_min"
+                            onChange={(e) => [
+                                setName_font_size_min(e.target.value),
+                                updateMapDelay2(e.target.id, e.target.value),
+                            ]} /
+                        >
+                    </div>
+
+                    <div className="fontSize">
+                        <div>Maximum font size:</div>
+                        <input
+                            type="number"
+                            value={name_font_size_max}
+                            id="name_font_size_max"
+                            onChange={(e) => [
+                                setName_font_size_max(e.target.value),
+                                updateMapDelay2(e.target.id, e.target.value),
+                            ]} /
+                        >
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -241,7 +373,6 @@ function LocationEdit() {
                         <div>Min:</div>
                         <input
                             type="number"
-                            placeholder="0"
                             value={min_visible_scale}
                             onChange={(e) => [setMin_visible_scale(e.target.value), updateMapDelay(e.target.id, e.target.value)]}
                             className="scaleInput"
@@ -271,8 +402,9 @@ function LocationEdit() {
                             placeholder="0"
                             min="-600"
                             max="400"
+                            id={"name_offset_x"}
                             value={name_offset_x}
-                            onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2()]}
+                            onChange={(e) => [setName_offset_x(e.target.value), updateMapDelay2(e.target.id, e.target.value)]}
                             className="editLocInput"
                         ></input>
                     </div>
@@ -284,8 +416,9 @@ function LocationEdit() {
                             placeholder="0"
                             min="-100"
                             max="50"
+                            id={"name_offset_y"}
                             value={name_offset_y}
-                            onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay2()]}
+                            onChange={(e) => [setName_offset_y(e.target.value), updateMapDelay2(e.target.id, e.target.value)]}
                             className="editLocInput"
                         ></input>
                     </div>
@@ -293,14 +426,19 @@ function LocationEdit() {
 
 
 
-                <div className="booleans nameOffsetDiv">
+                <div className="nameOffsetDiv">
                     <div>
                         <label htmlFor="show on map">Show on map?:</label>
                         <input
                             name="show on map"
                             type="checkbox"
+                            id="show_on_map"
                             checked={show_on_map}
-                            onChange={(e) => { setShow_on_map(e.target.checked) }} /
+                            onChange={(e) => [
+                                setShow_on_map(e.target.checked),
+                                updateMapDelay2(e.target.id, e.target.checked)
+                            ]
+                            } /
                         >
                     </div>
 
@@ -311,7 +449,60 @@ function LocationEdit() {
                             name="Discovered"
                             type="checkbox"
                             checked={discovered}
-                            onChange={(e) => { setDiscovered(e.target.checked) }} /
+                            id="discovered"
+                            onChange={(e) => [
+                                setDiscovered(e.target.checked),
+                                updateMapDelay2(e.target.id, e.target.checked)
+                            ]} /
+                        >
+                    </div>
+
+                </div>
+
+
+                <div className="nameOffsetDiv">
+
+                        <div>Current Vertex Size: {(loc_vertex_size / mapControls.scale).toFixed(2)}</div>
+
+                    <div className="vertexInputContainer">
+                    <label htmlFor="loc_vertex_size">Target Vertex Size:</label>
+                        <input
+                            type="number"
+                            value={loc_vertex_size}
+                            id="loc_vertex_size"
+                            name="loc_vertex_size"
+                            onChange={(e) => [
+                                setName_font_size(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} /
+                        >
+                    </div>
+
+                    <div className="vertexInputContainer">
+                    <label htmlFor="loc_vertex_size_min">Min Vertex Size:</label>
+                        <input
+                            type="number"
+                            value={loc_vertex_size_min}
+                            id="loc_vertex_size_min"
+                            name="loc_vertex_size_min"
+                            onChange={(e) => [
+                                setName_font_size(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} /
+                        >
+                    </div>
+
+                    <div className="vertexInputContainer">
+                    <label htmlFor="loc_vertex_size_max">Max Vertex Size:</label>
+                        <input
+                            type="number"
+                            value={loc_vertex_size_max}
+                            id="loc_vertex_size_max"
+                            name="loc_vertex_size_max"
+                            onChange={(e) => [
+                                setName_font_size(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} /
                         >
                     </div>
 
@@ -319,36 +510,6 @@ function LocationEdit() {
 
 
 
-                <div className="fontSizes nameOffsetDiv">
-                    <div className="currFontSize">Current actual font size: {(name_font_size / mapControls.scale).toFixed(2)}</div>
-
-                    <div className="fontSize">
-                        <div>Target font size:</div>
-                        <input
-                            type="font size"
-                            value={name_font_size}
-                            onChange={(e) => { setName_font_size(e.target.checked) }} /
-                        >
-                    </div>
-
-                    <div className="fontSize">
-                        <div>Minimum font size:</div>
-                        <input
-                            type="font size"
-                            value={name_font_size_min}
-                            onChange={(e) => { setName_font_size_min(e.target.checked) }} /
-                        >
-                    </div>
-
-                    <div className="fontSize">
-                        <div>Maximum font size:</div>
-                        <input
-                            type="font size"
-                            value={name_font_size_max}
-                            onChange={(e) => { setName_font_size_max(e.target.checked) }} /
-                        >
-                    </div>
-                </div>
 
 
 
