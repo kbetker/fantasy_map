@@ -16,12 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     name_font_size: DataTypes.INTEGER,
     name_font_size_max: DataTypes.INTEGER,
     name_font_family: DataTypes.STRING,
+    location_color: DataTypes.STRING,
+    location_stroke_color: DataTypes.STRING,
     loc_vertex_size_min: DataTypes.INTEGER,
     loc_vertex_size: DataTypes.INTEGER,
     loc_vertex_size_max: DataTypes.INTEGER,
     loc_vertex_stroke: DataTypes.INTEGER,
-    location_color: DataTypes.STRING,
-    location_stroke_color: DataTypes.STRING,
+    loc_vertex_color: DataTypes.STRING,
+    loc_vertex_stroke_color: DataTypes.STRING,
     location_description: DataTypes.STRING,
   }, {});
   Location.associate = function(models) {

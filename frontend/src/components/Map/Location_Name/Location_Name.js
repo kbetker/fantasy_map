@@ -34,6 +34,7 @@ function Location_Name({ props }) {
         }
     }
 
+
     return (
 
         <div
@@ -48,7 +49,8 @@ function Location_Name({ props }) {
                 color: `${loc.location_color}`,
                 transform: `translate(${offset(loc.name_offset_x, loc.name_offset_y)})`,
                 textShadow: textShadow(loc),
-                pointerEvents: isVisible(loc).pointer
+                pointerEvents: isVisible(loc).pointer,
+                fontFamily: loc.name_font_family,
             }}
 
         >

@@ -1,0 +1,8 @@
+Estonia                         :   'M PLUS Rounded 1c', sans-serif;
+Press Start 2P                  :   'Press Start 2P', cursive;
+Poiret One                      :   'Poiret One', cursive;
+Creepster                       :   'Creepster', cursive;
+UnifrakturMaguntia              :   'UnifrakturMaguntia', cursive;
+Nosifer                         :   'Nosifer', cursive;
+Big Shoulders Stencil Display   :   'Big Shoulders Stencil Display', cursive
+Geostar Fill                    :   'Geostar Fill', cursive;

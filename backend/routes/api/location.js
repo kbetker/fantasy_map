@@ -43,6 +43,8 @@ router.post('/new', async (req, res) => {
         loc_vertex_stroke: 4,
         location_color: "black",
         location_stroke_color: "white",
+        loc_vertex_color: "black",
+        loc_vertex_stroke_color: "white",
         campaign_id: 1, })
 
     await Joined_Location.create({
