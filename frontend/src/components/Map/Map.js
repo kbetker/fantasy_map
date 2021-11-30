@@ -8,6 +8,7 @@ import { sendSidebarName } from "../../store/mapControls"
 import { sendXY_coordinates } from "../../store/mapControls"
 import { sendSelectedVertex, sendLocData } from "../../store/add_edit_location"
 import Location_Name from "./Location_Name"
+import Vertex from "./Vertex/Vertex"
 
 
 function Map() {
@@ -90,12 +91,12 @@ function Map() {
     function isVisible(loc) {
         if (mapControl.scale >= loc.min_visible_scale * 0.01 && mapControl.scale <= loc.max_visible_scale * 0.01) {
             if (mapControl.sideBarName === "Location Add") {
-                return {opacity: 0.4, pointer: "initial"}
+                return { opacity: 0.4, pointer: "initial" }
             } else {
-                return {opacity: 1, pointer: "initial"}
+                return { opacity: 1, pointer: "initial" }
             }
         } else {
-            return {opacity: 0, pointer: "none"}
+            return { opacity: 0, pointer: "none" }
         }
     }
 
@@ -138,18 +139,15 @@ function Map() {
                 <div className="locationContainer" key={`locKey-${location.id}`}>
 
 
-                        <Location_Name
-                         props={{
-                             location: location.id === addEditLocation.id ? addEditLocation : location,
-                             locationNameClick,
-                             mapControl,
-                             isVisible,
-                             textShadow,
-                             vertex: location.Vertex
-                            }} />
-
-
-
+                    <Location_Name
+                        props={{
+                            location: location.id === addEditLocation.id ? addEditLocation : location,
+                            locationNameClick,
+                            mapControl,
+                            isVisible,
+                            textShadow,
+                            vertex: location.Vertex
+                        }} />
 
                     <img
                         src={downArrow}
@@ -164,38 +162,12 @@ function Map() {
                     ></img>
 
 
-                    <div
-                        className="location"
-                        id={`loc-${location.id}`}
-                        style={{
-                            left: `${location.Vertex?.coord_x}px`,
-                            top: `${location.Vertex?.coord_y}px`,
-                            minWidth: "8px",
-                            minHeight: "8px",
-                            width: `${Math.ceil(9 / mapControl.scale)}px`,
-                            height: `${Math.ceil(9 / mapControl.scale)}px`,
-                            maxWidth: "30px",
-                            maxHeight: "30px",
-                            opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
-                        }}>
-                    </div>
+                    <Vertex
+                        props={{
+                            location: location.id === addEditLocation.id ? addEditLocation : location,
+                            mapControl: mapControl,
+                        }} />
 
-                    <div
-                        className="locationOutLine"
-                        id={`locOutLine-${location.id}`}
-                        style={{
-                            left: `${location.Vertex?.coord_x}px`,
-                            top: `${location.Vertex?.coord_y}px`,
-                            minWidth: "12px",
-                            minHeight: "12px",
-                            width: `${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
-                            height: `${Math.ceil((9 / mapControl.scale) + Math.ceil(2 / mapControl.scale))}px`,
-                            maxWidth: "34px",
-                            maxHeight: "34px",
-                            opacity: `${(mapControl.scale >= location.min_visible_scale * 0.01 && mapControl.scale <= location.max_visible_scale * 0.01) ? 1 : 0}`,
-
-                        }}>
-                    </div>
                 </div>
             )}
 

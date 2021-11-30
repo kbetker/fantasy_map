@@ -65,6 +65,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      location_color:  {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      location_stroke_color:  {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       loc_vertex_size_min:  {
         type: Sequelize.INTEGER,
         allowNull: true,
@@ -81,11 +89,11 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
-      location_color:  {
+      loc_vertex_color:  {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      location_stroke_color:  {
+      loc_vertex_stroke_color:  {
         type: Sequelize.STRING,
         allowNull: true,
       },

@@ -42,6 +42,9 @@ function LocationEdit() {
     const [loc_vertex_stroke, setLoc_vertex_stroke] = useState(4)
     const [location_color, setLocation_color] = useState("black") // ******
     const [location_stroke_color, setLocation_stroke_color] = useState("white") // ******
+    const [loc_vertex_color, setLoc_vertex_color] = useState()
+    const [loc_vertex_stroke_color, setLoc_vertex_stroke_color] = useState()
+
     const [id, setId] = useState() // ******  NA
 
 
@@ -73,6 +76,8 @@ function LocationEdit() {
         setShow_on_map(location.show_on_map)
         setThumbnail_url(location.thumbnail_url || "")
         setVertex_id(location.vertex_id || "")
+        setLoc_vertex_color(location.loc_vertex_color)
+        setLoc_vertex_stroke_color(location.loc_vertex_stroke_color)
 
         // srolls to top when selecting new location
         if (currentLoc === location.name) {
@@ -115,6 +120,8 @@ function LocationEdit() {
         loc_vertex_stroke: loc_vertex_stroke,
         location_color: location_color,
         location_stroke_color: location_stroke_color,
+        loc_vertex_color: loc_vertex_color,
+        loc_vertex_stroke_color: loc_vertex_stroke_color,
     }
 
 
@@ -148,13 +155,15 @@ function LocationEdit() {
     }
 
 
-
+    // "vertex_stroke_color"
     return (
 
         <div className="locationEditContainer">
 
             {colorAttribute === "location_color" && <Colors props={{ color: location_color, updateColor, updateMapDelay, attribute: "location_color", closeColorPicker }} />}
             {colorAttribute === "location_stroke_color" && <Colors props={{ color: location_stroke_color, updateColor, updateMapDelay, attribute: "location_stroke_color", closeColorPicker }} />}
+            {colorAttribute === "loc_vertex_color" && <Colors props={{ color: loc_vertex_color, updateColor, updateMapDelay, attribute: "loc_vertex_color", closeColorPicker }} />}
+            {colorAttribute === "loc_vertex_stroke_color" && <Colors props={{ color: loc_vertex_stroke_color, updateColor, updateMapDelay, attribute: "loc_vertex_stroke_color", closeColorPicker }} />}
 
             <div className="locationEditForm" ref={locForm}>
                 <h2>Edit Location</h2>
@@ -215,6 +224,7 @@ function LocationEdit() {
                             name="fontFamily"
                             checked={name_font_family}
                             id="name_font_family"
+                            // defaultValue={name_font_family}
                             onChange={(e) => [
                                 setName_font_family(e.target.value),
                                 updateMapDelay2(e.target.id, e.target.value)
@@ -229,7 +239,9 @@ function LocationEdit() {
                             </option>
 
                             <option
-                                value="'Times New Roman', Times, serif" selected={name_font_family === "'Times New Roman', Times, serif" ? true : false}>Times New Roman, Times, serif
+                                value="'Times New Roman', Times, serif"
+                                selected={name_font_family === "'Times New Roman', Times, serif" ? true : false}
+                                >Times New Roman, Times, serif
                             </option>
 
                             <option
@@ -504,6 +516,27 @@ function LocationEdit() {
                                 updateMapDelay(e.target.id, e.target.value)
                             ]} /
                         >
+                    </div>
+
+
+
+                    <div className="colorEditButtons">
+                        <button
+                            onClick={() => setColorAttribute("loc_vertex_color")}
+                            className="colorButton"
+                        >
+                            <img src={locEdit}></img>
+                            <div>Vertex Color</div>
+                        </button>
+
+                        <button
+                            onClick={() => setColorAttribute("loc_vertex_stroke_color")}
+                            className="colorButton"
+                        >
+                            <img src={locEdit}></img>
+                            <div>Vertex Stroke</div>
+
+                        </button>
                     </div>
 
                 </div>

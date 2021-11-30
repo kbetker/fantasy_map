@@ -44,9 +44,14 @@ export const sendSelectedVertex = (selectedVertex) => async (dispatch) => {
 //==================== Update Color =====================\\
 const LOCATION_COLOR = 'location/LOCATION_COLOR';
 const LOCATION_STROKE_COLOR = 'location/LOCATION_STROKE_COLOR';
+const VERTEX_COLOR = 'location/VERTEX_COLOR';
+const VERTEX_STROKE_COLOR = 'location/VERTEX_STROKE_COLOR';
+
 
 export const location_color = (color) => { return { type: LOCATION_COLOR, color } };
 export const location_stroke_color = (color) => { return { type: LOCATION_STROKE_COLOR, color } };
+export const loc_vertex_color = (color) => { return { type: VERTEX_COLOR, color } };
+export const loc_vertex_stroke_color = (color) => { return { type: VERTEX_STROKE_COLOR, color } };
 
 
 export const send_color = (value, attribute) => async (dispatch) => {
@@ -56,6 +61,12 @@ export const send_color = (value, attribute) => async (dispatch) => {
             break;
         case "location_stroke_color":
             dispatch(location_stroke_color(value));
+            break;
+        case "loc_vertex_color":
+            dispatch(loc_vertex_color(value));
+            break;
+        case "loc_vertex_stroke_color":
+            dispatch(loc_vertex_stroke_color(value));
             break;
         default:
             break;
@@ -91,6 +102,8 @@ const initialState =
     location_color: null,
     location_stroke_color: null,
     location_description: null,
+    loc_vertex_color: null,
+    loc_vertex_stroke_color: null,
     select_vertex: null,
     selected_vertex: { id: null, coord_x: null, coord_y: null },
     id: null,
@@ -127,6 +140,8 @@ const locationReducer = (state = initialState, action) => {
             newState.select_vertex = action.locData.select_vertex
             newState.selected_vertex = action.locData.selected_vertex
             newState.name_font_size = action.locData.name_font_size
+            newState.loc_vertex_stroke_color = action.locData.loc_vertex_stroke_color
+            newState.loc_vertex_color = action.locData.loc_vertex_color
             return newState
 
 
@@ -146,6 +161,15 @@ const locationReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             newState.location_stroke_color = action.color
             return newState
+        case VERTEX_COLOR:
+            newState = Object.assign({}, state);
+            newState.loc_vertex_color = action.color
+            return newState
+        case VERTEX_STROKE_COLOR:
+            newState = Object.assign({}, state);
+            newState.loc_vertex_stroke_color = action.color
+            return newState
+
 
 
         default:
