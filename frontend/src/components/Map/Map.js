@@ -34,6 +34,7 @@ function Map() {
             setIsLoaded(true)
         })
 
+        //intermittant bug: TypeError: Cannot read properties of null (reading 'classList')
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space") {
                 mapContainer.current.classList.add("handCursor")
@@ -109,7 +110,7 @@ function Map() {
 
     function textShadow(loc) {
         let X = 1 / mapControl.scale
-        let C = loc.location_stroke_color
+        let C = loc.location_stroke_color || "white"
 
         return `-${X}px -${X}px  0px ${C},
                     0px -${X}px  0px ${C},
@@ -134,6 +135,28 @@ function Map() {
                 )}
             </>
             }
+
+
+            <div
+                className="locationName"
+                key={`dude-${mapData.id}`}
+                onClick={(e) => locationNameClick(mapData)}
+                style={{
+                    left: `0px`,
+                    top: `0px`,
+                    opacity: `1`,
+                    fontSize: `${30 / mapControl.scale}px`,
+                    color: `black`,
+                    transform: `translate(0, -100%)`,
+                    textShadow: textShadow(mapData),
+                    // pointerEvents: isVisible(loc).pointer,
+                    fontFamily: mapData.name_font_family,
+                }}
+
+            >
+                {mapData.name}
+            </div>
+
 
             {mapData.child_locations.map(location =>
                 <div className="locationContainer" key={`locKey-${location.id}`}>

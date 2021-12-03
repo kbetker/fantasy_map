@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 import "./Colors.css"
-import { useDispatch, useSelector } from "react-redux"
+// import { useDispatch, useSelector } from "react-redux"
 import transparent from "./transparent.png"
 
 function Colors({props}) {
