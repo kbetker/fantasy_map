@@ -58,7 +58,7 @@ function LocationEdit() {
         setDiscovered(location.discovered)
         setImage_url(location.image_url || "")
         setLoc_vertex_size_max(location.loc_vertex_size_max || "")
-        setLoc_vertex_size(location.loc_vertex_size_max || "")
+        setLoc_vertex_size(location.loc_vertex_size || "")
         setLoc_vertex_size_min(location.loc_vertex_size_min || "")
         setLoc_vertex_stroke(location.loc_vertex_stroke || "")
         setLocation_color(location.location_color || "")
@@ -106,18 +106,18 @@ function LocationEdit() {
         vertex_id: vertex_id,
         image_url: image_url,
         thumbnail_url: thumbnail_url,
-        min_visible_scale: min_visible_scale,
-        max_visible_scale: max_visible_scale,
+        min_visible_scale: Number(min_visible_scale),
+        max_visible_scale: Number(max_visible_scale),
         name_offset_x: Number(name_offset_x),
         name_offset_y: Number(name_offset_y),
         name_font_size_min: name_font_size_min,
-        name_font_size: name_font_size,
-        name_font_size_max: name_font_size_max,
-        name_font_family: name_font_family,
-        loc_vertex_size_min: loc_vertex_size_min,
-        loc_vertex_size: loc_vertex_size,
-        loc_vertex_size_max: loc_vertex_size_max,
-        loc_vertex_stroke: loc_vertex_stroke,
+        name_font_size: Number(name_font_size),
+        name_font_size_max: Number(name_font_size_max),
+        name_font_family: Number(name_font_family),
+        loc_vertex_size_min: Number(loc_vertex_size_min),
+        loc_vertex_size: Number(loc_vertex_size),
+        loc_vertex_size_max: Number(loc_vertex_size_max),
+        loc_vertex_stroke: Number(loc_vertex_stroke),
         location_color: location_color,
         location_stroke_color: location_stroke_color,
         loc_vertex_color: loc_vertex_color,
@@ -484,7 +484,7 @@ function LocationEdit() {
                             id="loc_vertex_size"
                             name="loc_vertex_size"
                             onChange={(e) => [
-                                setName_font_size(e.target.value),
+                                setLoc_vertex_size(e.target.value),
                                 updateMapDelay(e.target.id, e.target.value)
                             ]} /
                         >
@@ -498,7 +498,7 @@ function LocationEdit() {
                             id="loc_vertex_size_min"
                             name="loc_vertex_size_min"
                             onChange={(e) => [
-                                setName_font_size(e.target.value),
+                                setLoc_vertex_size_min(e.target.value),
                                 updateMapDelay(e.target.id, e.target.value)
                             ]} /
                         >
@@ -512,7 +512,7 @@ function LocationEdit() {
                             id="loc_vertex_size_max"
                             name="loc_vertex_size_max"
                             onChange={(e) => [
-                                setName_font_size(e.target.value),
+                                setLoc_vertex_size_max(e.target.value),
                                 updateMapDelay(e.target.id, e.target.value)
                             ]} /
                         >

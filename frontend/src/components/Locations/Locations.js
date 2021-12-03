@@ -26,7 +26,7 @@ function Locations() {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [locationId, setLocationId] = useState('loc-4')
+    const [locationId, setLocationId] = useState('')
     const { id } = useParams()
     const dispatch = useDispatch()
     const transWrapper = useRef()
