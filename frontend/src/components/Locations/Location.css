@@ -120,6 +120,7 @@
     display: flex;
     align-items: center;
     height: 30px;
+    /* margin-top: 15px; */
 }
 .mainLocTitle{
     font-size: 20px;

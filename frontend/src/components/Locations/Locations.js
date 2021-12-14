@@ -107,14 +107,15 @@ function Locations() {
         <TransformWrapper
             limitToBounds={false}
             initialScale={0.315}
-            maxScale={1}
+            maxScale={3}
             minScale={0.25}
             panning={{ activationKeys: [" "] }}
             onZoomStop={(e) => sendMapData(e)}
             onPanningStop={(e) => sendMapData(e)}
             wheel={{ step: 0.05 }}
             onInit={(e) => init(e)}
-            initialPositionX={300}
+            initialPositionX={360}
+            initialPositionY={50}
             ref={transWrapper}
             doubleClick={{ disabled: true }}
         >
@@ -200,7 +201,7 @@ function Locations() {
                                         <div
                                             className={`${locationId === `${mapData.id}` ? "loactionSelected mainLoc" : "locationbutton mainLoc"} `}
                                             onClick={(e) => [
-                                                setVertexScale(0.315),
+                                                setVertexScale(0.315), // todo - make value a variable
                                                 setLocationId(`${mapData.id}`),
                                                 resetTransform(500, "easeInOutQuad"),
                                                 e.target.blur(),
@@ -211,6 +212,10 @@ function Locations() {
                                                     location_description: mapData.location_description,
                                                     thumbnail_url: mapData.thumbnail_url,
                                                 })),
+                                                dispatch(sendLocData(
+                                                  mapData
+
+                                                ))
                                             ]}
                                         >
                                             <img src={mainLoc} alt="Main Location" />

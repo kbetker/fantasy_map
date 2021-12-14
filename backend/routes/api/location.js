@@ -45,7 +45,19 @@ router.post('/new', async (req, res) => {
         location_stroke_color: "white",
         loc_vertex_color: "black",
         loc_vertex_stroke_color: "white",
-        campaign_id: 1, })
+        campaign_id: 1, //todo - should be a variable
+        interface_scale_min: 0.25,
+        interface_scale_max: 1,
+        map_scale_start_x: 0,
+        map_scale_start_y: 0,
+        map_scale_end_x: 0,
+        map_scale_end_y: 0,
+        map_scale_measurement: null,
+        map_scale_measurement_name: "Miles",
+
+
+
+    })
 
     await Joined_Location.create({
         parent_location_id: data.parent_location_id,

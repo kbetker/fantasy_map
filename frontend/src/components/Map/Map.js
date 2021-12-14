@@ -73,8 +73,6 @@ function Map() {
         if (handsDown) return;
         if (location.name === addEditLocation.name) return;
 
-
-
         if (mapControl.sideBarName === "List Locations" || mapControl.sideBarName === "Location Information") {
             dispatch(sendLocationInformation({
                 name: location.name,

@@ -1,6 +1,8 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Location = sequelize.define('Location', {
+    interface_scale_min: DataTypes.INTEGER,
+    interface_scale_max: DataTypes.INTEGER,
     campaign_id: DataTypes.INTEGER,
     name: DataTypes.STRING,
     show_on_map: DataTypes.BOOLEAN,
@@ -25,6 +27,12 @@ module.exports = (sequelize, DataTypes) => {
     loc_vertex_color: DataTypes.STRING,
     loc_vertex_stroke_color: DataTypes.STRING,
     location_description: DataTypes.STRING,
+    map_scale_start_x: DataTypes.INTEGER,
+    map_scale_start_y: DataTypes.INTEGER,
+    map_scale_end_x: DataTypes.INTEGER,
+    map_scale_end_y: DataTypes.INTEGER,
+    map_scale_measurement: DataTypes.INTEGER,
+    map_scale_measurement_name: DataTypes.STRING,
   }, {});
   Location.associate = function(models) {
 

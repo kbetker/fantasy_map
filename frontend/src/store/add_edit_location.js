@@ -10,6 +10,7 @@ export const loadLocData = (locData) => {
 };
 export const sendLocData = (locData) => async (dispatch) => {
     dispatch(loadLocData(locData));
+    return locData
 };
 
 
