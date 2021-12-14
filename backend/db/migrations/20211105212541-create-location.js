@@ -101,6 +101,38 @@ module.exports = {
         type: Sequelize.STRING(2000),
         allowNull: true,
       },
+      map_scale_start_x:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      map_scale_start_y:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      map_scale_end_x:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      map_scale_end_y:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      map_scale_measurement:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      interface_scale_min:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      interface_scale_max:  {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      map_scale_measurement_name:  {
+        type: Sequelize.STRING(50),
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

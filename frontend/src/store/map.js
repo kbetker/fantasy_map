@@ -60,6 +60,7 @@ export const sendCreateLocation = (newLocation) => async (dispatch) => {
             coord_y: newLocation.coord_y,
             vertex_id: newLocation.vertex_id,
             parent_location_id: Number(newLocation.parent_location_id),
+            //todo - add
         })
     })
     if(locResponse.ok){
@@ -91,7 +92,15 @@ const initialState = {
     show_on_map: true,
     vertex_id: null,
     thumbnail_url: '',
-    location_description: ''
+    location_description: '',
+    map_scale_start_x: null,
+    map_scale_start_y: null,
+    map_scale_end_x: null,
+    map_scale_end_y: null,
+    map_scale_measurement: null,
+    map_scale_measurement_name: "",
+    interface_scale_min: null,
+    interface_scale_max: null,
 }
 
 
@@ -113,6 +122,14 @@ const mapDataReducer = (state = initialState, action) => {
             newState.vertex_id = action.mapData.vertex_id
             newState.thumbnail_url = action.mapData.thumbnail_url
             newState.location_description = action.mapData.location_description
+            newState.map_scale_start_x = action.mapData.map_scale_start_x
+            newState.map_scale_start_y = action.mapData.map_scale_start_y
+            newState.map_scale_end_x = action.mapData.map_scale_end_x
+            newState.map_scale_end_y = action.mapData.map_scale_end_y
+            newState.map_scale_measurement = action.mapData.map_scale_measurement
+            newState.map_scale_measurement_name = action.mapData.map_scale_measurement_name
+            newState.interface_scale_min = action.mapData.interface_scale_min
+            newState.interface_scale_max = action.mapData.interface_scale_max
             return newState
         case CREATE_LOCATION:
             newState = JSON.parse(JSON.stringify(state))

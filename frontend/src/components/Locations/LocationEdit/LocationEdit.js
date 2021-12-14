@@ -11,6 +11,7 @@ function LocationEdit() {
 
     const location = useSelector(state => state.add_edit_location)
     const mapControls = useSelector(state => state.map_controls)
+    const mapData = useSelector(state => state.map_data)
     const dispatch = useDispatch();
     const locForm = useRef()
     const [currentLoc, setCurrentLoc] = useState("")
@@ -165,6 +166,12 @@ function LocationEdit() {
             {colorAttribute === "loc_vertex_color" && <Colors props={{ color: loc_vertex_color, updateColor, updateMapDelay, attribute: "loc_vertex_color", closeColorPicker }} />}
             {colorAttribute === "loc_vertex_stroke_color" && <Colors props={{ color: loc_vertex_stroke_color, updateColor, updateMapDelay, attribute: "loc_vertex_stroke_color", closeColorPicker }} />}
 
+
+            {mapData.id === location.id ?
+                <div className="locationEditForm" ref={locForm}>{mapData.name}</div>
+
+                :
+            <>
             <div className="locationEditForm" ref={locForm}>
                 <h2>Edit Location</h2>
 
@@ -576,7 +583,7 @@ function LocationEdit() {
                 <button className="updateMapButton">Save Changes</button>
             </div>
 
-
+            </>}
         </div>
 
 
