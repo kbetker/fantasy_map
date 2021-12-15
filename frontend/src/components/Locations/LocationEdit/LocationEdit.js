@@ -6,6 +6,7 @@ import { sendLocData } from "../../../store/add_edit_location";
 import Colors from "../../ColorPicker/Colors";
 import { send_color } from "../../../store/add_edit_location";
 import locEdit from "./edit.svg"
+import { sendEditLocation } from "../../../store/map";
 
 function LocationEdit() {
 
@@ -125,6 +126,12 @@ function LocationEdit() {
         loc_vertex_stroke_color: loc_vertex_stroke_color,
     }
 
+    function handleSubmit(){
+    //   let editedData =
+      dispatch(sendEditLocation(payload))
+        // console.log(editedData)
+
+    }
 
 
     // updates afte a second instead of with every change
@@ -580,7 +587,7 @@ function LocationEdit() {
                 >
                     Update Map
                 </button> */}
-                <button className="updateMapButton">Save Changes</button>
+                <button className="updateMapButton" onClick={()=> handleSubmit()}>Save Changes</button>
             </div>
 
             </>}

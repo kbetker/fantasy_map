@@ -1,0 +1,43 @@
+.theLinks{
+    width: 400px;
+    height: 200px;
+    background-color: green;
+    position: relative;
+}
+.baseStyle{
+    position: absolute;
+    opacity: 1;
+    font-size: 18px;
+    transition: all 0.5s;
+}
+
+.order-0{
+    transform: translate(0, 0);
+    opacity: 0;
+}
+
+.order-1{
+    transform: translate(0, 20px);
+    opacity: 0.4;
+}
+
+.order-2{
+    transform: translate(0, 40px);
+    opacity: 1;
+    font-size: 25px;
+}
+
+.order-3{
+    transform: translate(0, 70px);
+    opacity: 0.4;
+}
+
+.order-4{
+    transform: translate(0, 90px);
+    opacity: 0.2;
+}
+
+.order-5{
+    transform: translate(0, 110px);
+    opacity: 0;
+}

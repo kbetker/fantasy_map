@@ -6,6 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Locations from "./components/Locations";
+import Carousel from "./components/Carousel";
 
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
     <Navigation isLoaded={isLoaded} />
     {isLoaded && (
       <Switch>
+         <Route path="/wtfwtf">
+          <Carousel />
+        </Route>
+
         <Route path="/login">
           <LogInForm />
         </Route>
