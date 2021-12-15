@@ -36,6 +36,7 @@ router.put(`/edit/:id`, async(req, res) => {
         name_font_size_max: data.name_font_size_max,
         name_font_family: data.name_font_family,
         loc_vertex_size_min: data.loc_vertex_size_min,
+        loc_vertex_size: data.loc_vertex_size,
         loc_vertex_size_max: data.loc_vertex_size_max,
         loc_vertex_stroke: data.loc_vertex_stroke,
         location_color: data.location_color,
@@ -51,6 +52,14 @@ router.put(`/edit/:id`, async(req, res) => {
         map_scale_end_y: data.map_scale_end_y,
         map_scale_measurement: data.map_scale_measurement,
         map_scale_measurement_name: data.map_scale_measurement_name,
+        map_scale_start_x: data.map_scale_start_x,
+        map_scale_start_y: data.map_scale_start_y,
+        map_scale_end_x: data.map_scale_end_x,
+        map_scale_end_y: data.map_scale_end_y,
+        map_scale_measurement: data.map_scale_measurement,
+        map_scale_measurement_name: data.map_scale_measurement_name,
+        interface_scale_min: Number(data.interface_scale_min),
+        interface_scale_max: data.interface_scale_max,
     })
 
     let vertex = await Vertex.findOne({
@@ -97,8 +106,8 @@ router.post('/new', async (req, res) => {
         loc_vertex_color: "black",
         loc_vertex_stroke_color: "white",
         campaign_id: 1, //todo - should be a variable
-        interface_scale_min: 0.25,
-        interface_scale_max: 1,
+        interface_scale_min: 25,
+        interface_scale_max: 100,
         map_scale_start_x: 0,
         map_scale_start_y: 0,
         map_scale_end_x: 0,

@@ -83,6 +83,7 @@ export const editLocation = (mapData) => {
     };
 };
 export const sendEditLocation = (mapData) => async (dispatch) => {
+    console.log(mapData)
     const response = await csrfFetch(`/api/location/edit/${mapData.id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},

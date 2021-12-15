@@ -109,6 +109,14 @@ const initialState =
     select_vertex: null,
     selected_vertex: { id: null, coord_x: null, coord_y: null },
     id: null,
+    map_scale_start_x: null,
+    map_scale_start_y: null,
+    map_scale_end_x: null,
+    map_scale_end_y: null,
+    map_scale_measurement: null,
+    map_scale_measurement_name: null,
+    interface_scale_min: null,
+    interface_scale_max: null,
 }
 
 

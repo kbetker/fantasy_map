@@ -44,8 +44,16 @@ function LocationEdit() {
     const [loc_vertex_stroke, setLoc_vertex_stroke] = useState(4)
     const [location_color, setLocation_color] = useState("black") // ******
     const [location_stroke_color, setLocation_stroke_color] = useState("white") // ******
-    const [loc_vertex_color, setLoc_vertex_color] = useState()
-    const [loc_vertex_stroke_color, setLoc_vertex_stroke_color] = useState()
+    const [loc_vertex_color, setLoc_vertex_color] = useState("")
+    const [loc_vertex_stroke_color, setLoc_vertex_stroke_color] = useState("")
+    const [map_scale_start_x, setMap_scale_start_x] = useState(0)
+    const [map_scale_start_y, setMap_scale_start_y] = useState(0)
+    const [map_scale_end_x, setMap_scale_end_x] = useState(0)
+    const [map_scale_end_y, setMap_scale_end_y] = useState(0)
+    const [map_scale_measurement, setMap_scale_measurement] = useState(0)
+    const [map_scale_measurement_name, setMap_scale_measurement_name] = useState("")
+    const [interface_scale_min, setInterface_scale_min] = useState(25)
+    const [interface_scale_max, setInterface_scale_max] = useState(100)
 
     const [id, setId] = useState() // ******  NA
 
@@ -59,9 +67,9 @@ function LocationEdit() {
         setCampaign_id(location.campaign_id || "")
         setDiscovered(location.discovered)
         setImage_url(location.image_url || "")
-        setLoc_vertex_size_max(location.loc_vertex_size_max || "")
-        setLoc_vertex_size(location.loc_vertex_size || "")
-        setLoc_vertex_size_min(location.loc_vertex_size_min || "")
+        setLoc_vertex_size_max(location.loc_vertex_size_max || 32)
+        setLoc_vertex_size(location.loc_vertex_size || 8)
+        setLoc_vertex_size_min(location.loc_vertex_size_min || 8)
         setLoc_vertex_stroke(location.loc_vertex_stroke || "")
         setLocation_color(location.location_color || "")
         setLocation_description(location.location_description || "")
@@ -72,14 +80,22 @@ function LocationEdit() {
         setName_font_family(location.name_font_family || "")
         setName_font_size_max(location.name_font_size_max || "")
         setName_font_size(location.name_font_size || "")
-        setName_font_size_min(location.name_font_size_min || "")
+        setName_font_size_min(location.name_font_size_min || 8)
         setName_offset_x(location.name_offset_x || "")
         setName_offset_y(location.name_offset_y || "")
-        setShow_on_map(location.show_on_map)
+        setShow_on_map(location.show_on_map || true)
         setThumbnail_url(location.thumbnail_url || "")
         setVertex_id(location.vertex_id || "")
-        setLoc_vertex_color(location.loc_vertex_color)
+        setLoc_vertex_color(location.loc_vertex_color || "")
         setLoc_vertex_stroke_color(location.loc_vertex_stroke_color)
+        setMap_scale_start_x(location.map_scale_start_x || 0)
+        setMap_scale_start_y(location.map_scale_start_y || 0)
+        setMap_scale_end_x(location.map_scale_end_x || 0)
+        setMap_scale_end_y(location.map_scale_end_y || 0)
+        setMap_scale_measurement(location.map_scale_measurement || 0)
+        setMap_scale_measurement_name(location.map_scale_measurement_name || "Miles")
+        setInterface_scale_min(location.interface_scale_min || 25)
+        setInterface_scale_max(location.interface_scale_max || 100)
 
         // srolls to top when selecting new location
         if (currentLoc === location.name) {
@@ -124,6 +140,14 @@ function LocationEdit() {
         location_stroke_color: location_stroke_color,
         loc_vertex_color: loc_vertex_color,
         loc_vertex_stroke_color: loc_vertex_stroke_color,
+        map_scale_start_x: Number(map_scale_start_x),
+        map_scale_start_y: Number(map_scale_start_y),
+        map_scale_end_x: Number(map_scale_end_x),
+        map_scale_end_y: Number(map_scale_end_y),
+        map_scale_measurement: Number(map_scale_measurement),
+        interface_scale_min: Number(interface_scale_min),
+        interface_scale_max: Number(interface_scale_max),
+        map_scale_measurement_name: map_scale_measurement_name,
     }
 
     function handleSubmit(){
@@ -175,7 +199,38 @@ function LocationEdit() {
 
 
             {mapData.id === location.id ?
-                <div className="locationEditForm" ref={locForm}>{mapData.name}</div>
+                <div className="locationEditForm" ref={locForm}>
+                    <div>{mapData.name}</div>
+
+                    <div className="fontSize">
+                        <div>Map Zoom Minimum:</div>
+                        <input
+                            type="number"
+                            value={interface_scale_min}
+                            id="interface_scale_min"
+                            onChange={(e) => [
+                                setInterface_scale_min(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} /
+                        >
+                    </div>
+
+
+                    <div className="fontSize">
+                        <div>Map Zoom Maximum:</div>
+                        <input
+                            type="number"
+                            value={interface_scale_max}
+                            id="interface_scale_max"
+                            onChange={(e) => [
+                                setInterface_scale_max(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} /
+                        >
+                    </div>
+
+
+                </div>
 
                 :
             <>
@@ -580,6 +635,7 @@ function LocationEdit() {
 
             </div>
 
+                </>}
             <div className="updateMap">
                 {/* <button
                     className="updateMapButton"
@@ -590,7 +646,6 @@ function LocationEdit() {
                 <button className="updateMapButton" onClick={()=> handleSubmit()}>Save Changes</button>
             </div>
 
-            </>}
         </div>
 
 
