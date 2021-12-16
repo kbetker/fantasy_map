@@ -107,8 +107,8 @@ function Locations() {
         <TransformWrapper
             limitToBounds={false}
             initialScale={0.315}
-            maxScale={3}
-            minScale={0.25}
+            maxScale={mapData.interface_scale_max * .01}
+            minScale={mapData.interface_scale_min * .01}
             panning={{ activationKeys: [" "] }}
             onZoomStop={(e) => sendMapData(e)}
             onPanningStop={(e) => sendMapData(e)}

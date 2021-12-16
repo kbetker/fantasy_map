@@ -14,6 +14,7 @@ export const sendLocData = (locData) => async (dispatch) => {
 };
 
 
+
 //==================== send to store if creating or selecting existing vertex =====================\\
 const VERTEX_SELECT = 'location/VERTEX_SELECT';
 export const loadVertexData = (vertexData) => {
@@ -108,6 +109,14 @@ const initialState =
     select_vertex: null,
     selected_vertex: { id: null, coord_x: null, coord_y: null },
     id: null,
+    map_scale_start_x: null,
+    map_scale_start_y: null,
+    map_scale_end_x: null,
+    map_scale_end_y: null,
+    map_scale_measurement: null,
+    map_scale_measurement_name: null,
+    interface_scale_min: null,
+    interface_scale_max: null,
 }
 
 
@@ -116,35 +125,8 @@ const locationReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOCATION_DATA:
             newState = Object.assign({}, state);
-            newState.id = action.locData.id
-            newState.campaign_id = action.locData.campaign_id
-            newState.name = action.locData.name
-            newState.show_on_map = action.locData.show_on_map
-            newState.discovered = action.locData.discovered
-            newState.vertex_id = action.locData.vertex_id
-            newState.image_url = action.locData.image_url
-            newState.thumbnail_url = action.locData.thumbnail_url
-            newState.min_visible_scale = action.locData.min_visible_scale
-            newState.max_visible_scale = action.locData.max_visible_scale
-            newState.name_offset_x = action.locData.name_offset_x
-            newState.name_offset_y = action.locData.name_offset_y
-            newState.name_font_size_min = action.locData.name_font_size_min
-            newState.loc_vertex_size = action.locData.loc_vertex_size
-            newState.name_font_size_max = action.locData.name_font_size_max
-            newState.name_font_family = action.locData.name_font_family
-            newState.loc_vertex_size_min = action.locData.loc_vertex_size_min
-            newState.loc_vertex_size_max = action.locData.loc_vertex_size_max
-            newState.loc_vertex_stroke = action.locData.loc_vertex_stroke
-            newState.location_color = action.locData.location_color
-            newState.location_stroke_color = action.locData.location_stroke_color
-            newState.location_description = action.locData.location_description
-            newState.select_vertex = action.locData.select_vertex
-            newState.selected_vertex = action.locData.selected_vertex
-            newState.name_font_size = action.locData.name_font_size
-            newState.loc_vertex_stroke_color = action.locData.loc_vertex_stroke_color
-            newState.loc_vertex_color = action.locData.loc_vertex_color
+            for (let key in state) { newState[key] = action.locData[key] }
             return newState
-
 
         case VERTEX_SELECT:
             newState = Object.assign({}, state);
@@ -182,3 +164,32 @@ const locationReducer = (state = initialState, action) => {
 
 
 export default locationReducer
+
+
+ // newState.id = action.locData.id
+            // newState.campaign_id = action.locData.campaign_id
+            // newState.name = action.locData.name
+            // newState.show_on_map = action.locData.show_on_map
+            // newState.discovered = action.locData.discovered
+            // newState.vertex_id = action.locData.vertex_id
+            // newState.image_url = action.locData.image_url
+            // newState.thumbnail_url = action.locData.thumbnail_url
+            // newState.min_visible_scale = action.locData.min_visible_scale
+            // newState.max_visible_scale = action.locData.max_visible_scale
+            // newState.name_offset_x = action.locData.name_offset_x
+            // newState.name_offset_y = action.locData.name_offset_y
+            // newState.name_font_size_min = action.locData.name_font_size_min
+            // newState.loc_vertex_size = action.locData.loc_vertex_size
+            // newState.name_font_size_max = action.locData.name_font_size_max
+            // newState.name_font_family = action.locData.name_font_family
+            // newState.loc_vertex_size_min = action.locData.loc_vertex_size_min
+            // newState.loc_vertex_size_max = action.locData.loc_vertex_size_max
+            // newState.loc_vertex_stroke = action.locData.loc_vertex_stroke
+            // newState.location_color = action.locData.location_color
+            // newState.location_stroke_color = action.locData.location_stroke_color
+            // newState.location_description = action.locData.location_description
+            // newState.select_vertex = action.locData.select_vertex
+            // newState.selected_vertex = action.locData.selected_vertex
+            // newState.name_font_size = action.locData.name_font_size
+            // newState.loc_vertex_stroke_color = action.locData.loc_vertex_stroke_color
+            // newState.loc_vertex_color = action.locData.loc_vertex_color

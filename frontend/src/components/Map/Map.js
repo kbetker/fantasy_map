@@ -9,6 +9,7 @@ import { sendXY_coordinates } from "../../store/mapControls"
 import { sendSelectedVertex, sendLocData } from "../../store/add_edit_location"
 import Location_Name from "./Location_Name"
 import Vertex from "./Vertex/Vertex"
+import tempMap from "./swordCoastHD_noNames.jpg"
 
 
 function Map() {
@@ -230,9 +231,17 @@ function Map() {
             </></div>)}
 
 
-            <img
+            {/* <img
                 alt='Map'
                 src={mapData.image_url}
+                className="mapImage"
+                ref={mapImage}
+                onClick={(e) => handleClick(e)}
+            /> */}
+
+            <img
+                alt='Map'
+                src={tempMap}
                 className="mapImage"
                 ref={mapImage}
                 onClick={(e) => handleClick(e)}

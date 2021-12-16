@@ -74,6 +74,36 @@ export const sendCreateLocation = (newLocation) => async (dispatch) => {
 };
 
 
+//====================   Edit Location   =====================\\
+const EDIT_LOCATION = 'location/EDIT_LOCATION';
+export const editLocation = (mapData) => {
+    return {
+        type: EDIT_LOCATION,
+        mapData
+    };
+};
+export const sendEditLocation = (mapData) => async (dispatch) => {
+    console.log(mapData)
+    const response = await csrfFetch(`/api/location/edit/${mapData.id}`, {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(mapData)
+
+    });
+
+    if(response.ok){
+        let data = await response.json()
+        let newObj = Object.assign({}, data.response);
+        newObj["Vertex"] = data.vertex
+        dispatch(editLocation(newObj));
+        return newObj
+    } else {
+        return response
+    }
+
+};
+
+
 
 
 
@@ -111,25 +141,19 @@ const mapDataReducer = (state = initialState, action) => {
     switch (action.type) {
         case LOAD_MAP_DATA:
             newState = JSON.parse(JSON.stringify(state))
-            newState.Roads = action.mapData.Roads
-            newState.campaign_id = action.mapData.campaign_id
-            newState.child_locations = action.mapData.child_locations
-            newState.id = action.mapData.id
-            newState.image_url = action.mapData.image_url
-            newState.name = action.mapData.name
-            newState.parent_locations = action.mapData.parent_locations
-            newState.show_on_map = action.mapData.show_on_map
-            newState.vertex_id = action.mapData.vertex_id
-            newState.thumbnail_url = action.mapData.thumbnail_url
-            newState.location_description = action.mapData.location_description
-            newState.map_scale_start_x = action.mapData.map_scale_start_x
-            newState.map_scale_start_y = action.mapData.map_scale_start_y
-            newState.map_scale_end_x = action.mapData.map_scale_end_x
-            newState.map_scale_end_y = action.mapData.map_scale_end_y
-            newState.map_scale_measurement = action.mapData.map_scale_measurement
-            newState.map_scale_measurement_name = action.mapData.map_scale_measurement_name
-            newState.interface_scale_min = action.mapData.interface_scale_min
-            newState.interface_scale_max = action.mapData.interface_scale_max
+            for (let key in newState) { newState[key] = action.mapData[key] }
+            return newState
+        case EDIT_LOCATION:
+            newState = JSON.parse(JSON.stringify(state))
+            let index = -1
+            for( let i = 0; i < newState.child_locations.length; i++){
+                let loc = newState.child_locations[i]
+                if(loc.id === action.mapData.id){
+                    index = i
+                    break
+                }
+            }
+            newState.child_locations[index] = action.mapData
             return newState
         case CREATE_LOCATION:
             newState = JSON.parse(JSON.stringify(state))
@@ -145,3 +169,25 @@ const mapDataReducer = (state = initialState, action) => {
 
 
 export default mapDataReducer
+
+
+
+// newState.Roads = action.mapData.Roads
+// newState.campaign_id = action.mapData.campaign_id
+// newState.child_locations = action.mapData.child_locations
+// newState.id = action.mapData.id
+// newState.image_url = action.mapData.image_url
+// newState.name = action.mapData.name
+// newState.parent_locations = action.mapData.parent_locations
+// newState.show_on_map = action.mapData.show_on_map
+// newState.vertex_id = action.mapData.vertex_id
+// newState.thumbnail_url = action.mapData.thumbnail_url
+// newState.location_description = action.mapData.location_description
+// newState.map_scale_start_x = action.mapData.map_scale_start_x
+// newState.map_scale_start_y = action.mapData.map_scale_start_y
+// newState.map_scale_end_x = action.mapData.map_scale_end_x
+// newState.map_scale_end_y = action.mapData.map_scale_end_y
+// newState.map_scale_measurement = action.mapData.map_scale_measurement
+// newState.map_scale_measurement_name = action.mapData.map_scale_measurement_name
+// newState.interface_scale_min = action.mapData.interface_scale_min
+// newState.interface_scale_max = action.mapData.interface_scale_max
