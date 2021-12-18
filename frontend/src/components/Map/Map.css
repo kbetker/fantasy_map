@@ -6,7 +6,7 @@
     cursor:grab
 }
 
-.vertex{
+.vertex,.vertexScale{
     position: absolute;
     /* width: 4px; */
     /* height: 4px; */

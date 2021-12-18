@@ -4,9 +4,10 @@ import "./LocationEdit.css"
 import "./RangeStyles.css"
 import { sendLocData } from "../../../store/add_edit_location";
 import Colors from "../../ColorPicker/Colors";
-import { send_color } from "../../../store/add_edit_location";
+import { send_color, sendVertexData } from "../../../store/add_edit_location";
 import locEdit from "./edit.svg"
 import { sendEditLocation } from "../../../store/map";
+
 
 function LocationEdit() {
 
@@ -54,6 +55,7 @@ function LocationEdit() {
     const [map_scale_measurement_name, setMap_scale_measurement_name] = useState("")
     const [interface_scale_min, setInterface_scale_min] = useState(25)
     const [interface_scale_max, setInterface_scale_max] = useState(100)
+    const [selectVertex, setSelectVertex] = useState("")
 
     const [id, setId] = useState() // ******  NA
 
@@ -62,7 +64,7 @@ function LocationEdit() {
 
     useEffect(() => {
         setId(location.id)
-        // setSelect_vertex(location.select_vertex)
+        setSelectVertex(location.select_vertex)
         // setSelected_vertex(location.selected_vertex)
         setCampaign_id(location.campaign_id || "")
         setDiscovered(location.discovered)
@@ -116,6 +118,7 @@ function LocationEdit() {
 
     let payload = {
         id: id,
+        select_vertex: selectVertex,
         name: name,
         campaign_id: campaign_id,
         location_description: location_description,
@@ -148,6 +151,7 @@ function LocationEdit() {
         interface_scale_min: Number(interface_scale_min),
         interface_scale_max: Number(interface_scale_max),
         map_scale_measurement_name: map_scale_measurement_name,
+
     }
 
     function handleSubmit(){
@@ -162,6 +166,12 @@ function LocationEdit() {
     function updateMapDelay(id, value) {
         clearInterval(updateMapTimeOut.current)
         payload[id] = value
+        // setMap_scale_start_x(location.map_scale_start_x)
+        // setMap_scale_start_y(location.map_scale_start_y)
+        // setMap_scale_end_x(location.map_scale_end_x)
+        // setMap_scale_end_y(location.map_scale_end_y)
+        // console.log("here!?!?!?!??")
+
         updateMapTimeOut.current = setTimeout(() => {
             dispatch(sendLocData(payload))
         }, 1000);
@@ -201,6 +211,7 @@ function LocationEdit() {
             {mapData.id === location.id ?
                 <div className="locationEditForm" ref={locForm}>
                     <div>{mapData.name}</div>
+                    <div>Current Scale: {Math.round(mapControls.scale * 100)}</div>
 
                     <div className="fontSize">
                         <div>Map Zoom Minimum:</div>
@@ -211,8 +222,7 @@ function LocationEdit() {
                             onChange={(e) => [
                                 setInterface_scale_min(e.target.value),
                                 updateMapDelay(e.target.id, e.target.value)
-                            ]} /
-                        >
+                            ]} />
                     </div>
 
 
@@ -228,6 +238,35 @@ function LocationEdit() {
                             ]} /
                         >
                     </div>
+
+                    <div className="fontSize">
+                        <div>Map Scale</div>
+                        <button
+                        className={`${location.select_vertex === "startVertex" ? "newLocButtonSelected" : "newLocButton" }`}
+                        onClick={(e)=> [dispatch(sendVertexData("startVertex")), e.target.blur()]}
+                        >
+                            Select Start
+                            </button>
+                       <button
+                       className={`${location.select_vertex === "endVertex" ? "newLocButtonSelected" : "newLocButton"}`}
+                       onClick={(e)=> [dispatch(sendVertexData("endVertex")), e.target.blur()]}
+                       >Select End</button>
+                    </div>
+
+
+                    <div className="fontSize">
+                        <div>Measurement Name</div>
+                        <input
+                            type="input"
+                            value={map_scale_measurement_name}
+                            id="map_scale_measurement_name"
+                            onChange={(e) => [
+                                setMap_scale_measurement_name(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} />
+                    </div>
+
+
 
 
                 </div>
@@ -643,7 +682,7 @@ function LocationEdit() {
                 >
                     Update Map
                 </button> */}
-                <button className="updateMapButton" onClick={()=> handleSubmit()}>Save Changes</button>
+                <button className="updateMapButton" onClick={(e)=> [handleSubmit(), e.target.blur()]}>Save Changes</button>
             </div>
 
         </div>

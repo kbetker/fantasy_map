@@ -53,9 +53,12 @@
 }
 .newLocButtonSelected{
     background-color: rgb(53, 53, 53);
+    border: 1px solid rgb(107, 107, 107);
 }
 .newLocButtonSelected:hover{
-    background-color: rgb(77, 77, 77);
+    background-color: rgb(68, 68, 68);
+    border: 1px solid rgb(204, 204, 204);
+
 }
 .vertexContainer{
     margin: 30px 3px;

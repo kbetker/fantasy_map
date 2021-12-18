@@ -6,15 +6,16 @@ import downArrow from "./downArrow.svg"
 import { sendLocationInformation } from "../../store/mapControls"
 import { sendSidebarName } from "../../store/mapControls"
 import { sendXY_coordinates } from "../../store/mapControls"
-import { sendSelectedVertex, sendLocData } from "../../store/add_edit_location"
+import { sendSelectedVertex, sendLocData, sendStartVertexScale, sendEndVertexScale } from "../../store/add_edit_location"
 import Location_Name from "./Location_Name"
 import Vertex from "./Vertex/Vertex"
-import tempMap from "./swordCoastHD_noNames.jpg"
+import tempMap from "./swTemp.jpg"
 
 
 function Map() {
 
     const mapData = useSelector(state => state.map_data)
+    const mapControls = useSelector(state => state.map_controls)
     const [handsDown, setHandsDown] = useState(false)
     const addEditLocation = useSelector(state => state.add_edit_location)
     const [imageSize, setImageSize] = useState({ imageX: '3000px', imageY: '3000px' })
@@ -57,7 +58,14 @@ function Map() {
         if (handsDown) return;
         let xPos = Math.round(((e.clientX) / mapControl.scale) - (mapControl.positionX / mapControl.scale))
         let yPos = Math.round((e.clientY / mapControl.scale) - ((mapControl.positionY + 50) / mapControl.scale))
-        dispatch(sendXY_coordinates({ coordX: xPos, coordY: yPos }))
+
+        if (addEditLocation.select_vertex === "startVertex") {
+            dispatch(sendStartVertexScale({ coordX: xPos, coordY: yPos }))
+        } else if (addEditLocation.select_vertex === "endVertex") {
+            dispatch(sendEndVertexScale({ coordX: xPos, coordY: yPos }))
+        } else {
+            dispatch(sendXY_coordinates({ coordX: xPos, coordY: yPos }))
+        }
     }
 
 
@@ -222,13 +230,54 @@ function Map() {
                             height: `${6 / mapControl.scale}px`,
                             border: `${2 / mapControl.scale}px solid black`,
                             display: `${showVertices() ? "initial" : "none"}`,
-                            zIndex: addEditLocation === "selectExisting" ? 10 : 4
+                            zIndex: addEditLocation.select_vertex === "selectExisting" ? 10 : 4
 
 
                         }}>
                     </div>
                 )}
             </></div>)}
+
+
+            {(mapControls.sideBarName === "Location Edit" && addEditLocation.id === mapData.id) && <>
+                <div
+                    className="vertexScale"
+                    style={{
+                        left: `${(addEditLocation.select_vertex === "startVertex" || addEditLocation.select_vertex === "endVertex")
+                                ? addEditLocation.map_scale_start_x
+                                : mapData.map_scale_start_x - 3
+
+                            }px`,
+                        top: `${(addEditLocation.select_vertex === "startVertex" || addEditLocation.select_vertex === "endVertex")
+                                ? addEditLocation.map_scale_start_y
+                                : mapData.map_scale_start_y - 3
+
+                            }px`,
+                        backgroundColor: "lime",
+                        width: `${8 / mapControl.scale}px`,
+                        height: `${8 / mapControl.scale}px`,
+                        border: `${3 / mapControl.scale}px solid black`,
+                    }}>
+                </div>
+
+                <div
+                    className="vertexScale"
+                    style={{
+                        left: `${(addEditLocation.select_vertex === "endVertex" || addEditLocation.select_vertex === "startVertex")
+                                ? addEditLocation.map_scale_end_x
+                                : mapData.map_scale_end_x - 3
+                            }px`,
+                        top: `${(addEditLocation.select_vertex === "endVertex" || addEditLocation.select_vertex === "startVertex")
+                                ? addEditLocation.map_scale_end_y
+                                : mapData.map_scale_end_y - 3
+                            }px`,
+                        backgroundColor: "red",
+                        width: `${8 / mapControl.scale}px`,
+                        height: `${8 / mapControl.scale}px`,
+                        border: `${3 / mapControl.scale}px solid black`,
+                    }}>
+                </div>
+            </>}
 
 
             {/* <img

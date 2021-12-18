@@ -1,6 +1,6 @@
 
 // ==================== Handles the scale, position of the map ==================== \\
-const MAP_CONTROLS = 'mapdata/MAP_CONTROLS';
+const MAP_CONTROLS = 'mapControls/MAP_CONTROLS';
 
 export const loadMapControls = (mapData) => {
     return {
@@ -15,7 +15,7 @@ export const sendMapControls = (controlData) => async (dispatch) => {
 
 
 // ==================== Handles the current name of the sidebar tab ==================== \\
-const SIDEBAR_NAME = 'mapdata/SIDEBAR_NAME';
+const SIDEBAR_NAME = 'mapControls/SIDEBAR_NAME';
 
 export const loadSidebarName = (sidebarName) => {
     return {
@@ -30,7 +30,7 @@ export const sendSidebarName = (sidebarName) => async (dispatch) => {
 
 
 // ==================== Handles if the sidebar is expanded ==================== \\
-const SIDEBAR_EXPAND = 'mapdata/SIDEBAR_EXPAND';
+const SIDEBAR_EXPAND = 'mapControls/SIDEBAR_EXPAND';
 
 export const loadSidebarExpand = (sideBarExpand) => {
     return {
@@ -46,7 +46,7 @@ export const sendSidebarExpand = (sidebarExpand) => async (dispatch) => {
 
 
 // ==================== Handles Location Information ==================== \\
-const LOCATION_INFORMATION = 'mapdata/LOCATION_INFORMATION';
+const LOCATION_INFORMATION = 'mapControls/LOCATION_INFORMATION';
 
 export const loadLocationInformation = (locationInformation) => {
     return {
@@ -61,7 +61,7 @@ export const sendLocationInformation = (locationInformation) => async (dispatch)
 
 
 // ==================== Handles X & Y Coord clickin on map ==================== \\
-const XY_COORDINATES = 'mapdata/XY_COORDINATES';
+const XY_COORDINATES = 'mapControls/XY_COORDINATES';
 
 export const loadXY_coordinates = (xy_coordinates) => {
     return {
