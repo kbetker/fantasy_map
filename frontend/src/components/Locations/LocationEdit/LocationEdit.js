@@ -52,12 +52,15 @@ function LocationEdit() {
     const [map_scale_end_x, setMap_scale_end_x] = useState(0)
     const [map_scale_end_y, setMap_scale_end_y] = useState(0)
     const [map_scale_measurement, setMap_scale_measurement] = useState(0)
+    const [map_scale_pixels, setMap_scale_pixels] = useState(0)
     const [map_scale_measurement_name, setMap_scale_measurement_name] = useState("")
     const [interface_scale_min, setInterface_scale_min] = useState(25)
     const [interface_scale_max, setInterface_scale_max] = useState(100)
     const [selectVertex, setSelectVertex] = useState("")
 
     const [id, setId] = useState() // ******  NA
+
+
 
 
 
@@ -95,6 +98,7 @@ function LocationEdit() {
         setMap_scale_end_x(location.map_scale_end_x || 0)
         setMap_scale_end_y(location.map_scale_end_y || 0)
         setMap_scale_measurement(location.map_scale_measurement || 0)
+        setMap_scale_pixels(location.map_scale_pixels || 0)
         setMap_scale_measurement_name(location.map_scale_measurement_name || "Miles")
         setInterface_scale_min(location.interface_scale_min || 25)
         setInterface_scale_max(location.interface_scale_max || 100)
@@ -114,6 +118,9 @@ function LocationEdit() {
 
 
     }, [location])
+
+
+
 
 
     let payload = {
@@ -148,6 +155,7 @@ function LocationEdit() {
         map_scale_end_x: Number(map_scale_end_x),
         map_scale_end_y: Number(map_scale_end_y),
         map_scale_measurement: Number(map_scale_measurement),
+        // map_scale_pixels: Number(map_scale_pixels),
         interface_scale_min: Number(interface_scale_min),
         interface_scale_max: Number(interface_scale_max),
         map_scale_measurement_name: map_scale_measurement_name,
@@ -235,8 +243,7 @@ function LocationEdit() {
                             onChange={(e) => [
                                 setInterface_scale_max(e.target.value),
                                 updateMapDelay(e.target.id, e.target.value)
-                            ]} /
-                        >
+                            ]} />
                     </div>
 
                     <div className="fontSize">
@@ -268,6 +275,18 @@ function LocationEdit() {
 
 
 
+                    <div>Distance in {map_scale_measurement_name}</div>
+                        <input
+                            type="number"
+                            value={map_scale_measurement}
+                            id="map_scale_measurement"
+                            onChange={(e) => [
+                                setMap_scale_measurement(e.target.value),
+                                updateMapDelay(e.target.id, e.target.value)
+                            ]} />
+
+
+                            <div>{map_scale_measurement} {map_scale_measurement_name} = {map_scale_pixels} pixels</div>
 
                 </div>
 

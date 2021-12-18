@@ -143,12 +143,22 @@ const initialState =
     map_scale_measurement_name: null,
     interface_scale_min: null,
     interface_scale_max: null,
+    map_scale_pixes: null,
+}
+
+function measurement(x1,x2,y1,y2){
+    let A = Math.pow(Math.abs(x2-x1), 2)
+    let B = Math.pow(Math.abs(y2-y1), 2)
+    // console.log(A,B, "WTFWTFW")
+    // let C = Math.abs(A+B)
+    return Math.sqrt(A+B)
 
 }
 
 
 const locationReducer = (state = initialState, action) => {
     let newState;
+    let m;
     switch (action.type) {
         case LOCATION_DATA:
             newState = Object.assign({}, state);
@@ -183,11 +193,15 @@ const locationReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             newState.map_scale_start_x = action.startVertexScale.coordX
             newState.map_scale_start_y = action.startVertexScale.coordY
+            m = measurement(action.startVertexScale.coordX, newState.map_scale_end_x, action.startVertexScale.coordY, newState.map_scale_end_y)
+            newState.map_scale_pixels = Math.round(m)
             return newState
         case END_VERTEX_SCALE:
             newState = Object.assign({}, state);
             newState.map_scale_end_x = action.endVertexScale.coordX
             newState.map_scale_end_y = action.endVertexScale.coordY
+            m = measurement(newState.map_scale_start_x, action.endVertexScale.coordX, newState.map_scale_start_y, action.endVertexScale.coordY)
+            newState.map_scale_pixels = Math.round(m)
             return newState
 
 
