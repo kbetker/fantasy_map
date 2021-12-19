@@ -74,7 +74,7 @@
     border: 1px solid black;
     cursor: pointer;
     margin: 5px 0;
-    width: 190px;
+    width: 240px;
     overflow-x: hidden;
     white-space: nowrap;
 }
@@ -87,7 +87,7 @@
     height: 85vh;
     overflow-y: auto;
     box-shadow: 0 0 20px black inset;
-    width: 230px;
+    width: 285px;
     padding: 5px;
     box-sizing: border-box;
     border: 3px solid black;
@@ -107,7 +107,7 @@
 
 .searchInput{
     position: fixed;
-    width: 195px;
+    width: 245px;
     height: 35px;
     background-color: rgb(65, 65, 65);
     outline: none;

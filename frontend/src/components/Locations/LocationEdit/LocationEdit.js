@@ -61,9 +61,11 @@ function LocationEdit() {
     const [id, setId] = useState() // ******  NA
 
 
-
-
-
+    function measurement(x1,x2,y1,y2){
+        let A = Math.pow(Math.abs(x2-x1), 2)
+        let B = Math.pow(Math.abs(y2-y1), 2)
+        return Math.sqrt(A+B)
+    }
 
     useEffect(() => {
         setId(location.id)
@@ -102,7 +104,8 @@ function LocationEdit() {
         setMap_scale_measurement_name(location.map_scale_measurement_name || "Miles")
         setInterface_scale_min(location.interface_scale_min || 25)
         setInterface_scale_max(location.interface_scale_max || 100)
-
+        let m = measurement(location.map_scale_start_x, location.map_scale_end_x, location.map_scale_start_y, location.map_scale_end_y)
+        setMap_scale_pixels(Math.round(m))
         // srolls to top when selecting new location
         if (currentLoc === location.name) {
             return

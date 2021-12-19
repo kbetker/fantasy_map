@@ -149,10 +149,7 @@ const initialState =
 function measurement(x1,x2,y1,y2){
     let A = Math.pow(Math.abs(x2-x1), 2)
     let B = Math.pow(Math.abs(y2-y1), 2)
-    // console.log(A,B, "WTFWTFW")
-    // let C = Math.abs(A+B)
     return Math.sqrt(A+B)
-
 }
 
 

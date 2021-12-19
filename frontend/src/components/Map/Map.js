@@ -39,15 +39,15 @@ function Map() {
         //intermittant bug: TypeError: Cannot read properties of null (reading 'classList')
         window.addEventListener("keydown", (e) => {
             if (e.code === "Space") {
-                mapContainer.current.classList.add("handCursor")
-                mapContainer.current.focus()
+                mapContainer.current?.classList.add("handCursor")
+                mapContainer.current?.focus()
                 setHandsDown(true)
             }
         })
 
         window.addEventListener("keyup", (e) => {
             if (e.code === "Space") {
-                mapContainer.current.classList.remove("handCursor")
+                mapContainer.current?.classList.remove("handCursor")
                 setHandsDown(false)
             }
         })
