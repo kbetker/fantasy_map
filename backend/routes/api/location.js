@@ -19,6 +19,7 @@ router.put(`/edit/:id`, async(req, res) => {
 
 
     let response = await location.update({
+        name: data.name,
         location_description: data.location_description,
         coord_x: data.coord_x,
         coord_y: data.coord_y,
