@@ -160,7 +160,6 @@ function LocationEdit() {
         map_scale_end_x: Number(map_scale_end_x),
         map_scale_end_y: Number(map_scale_end_y),
         map_scale_measurement: Number(map_scale_measurement),
-        // map_scale_pixels: Number(map_scale_pixels),
         interface_scale_min: Number(interface_scale_min),
         interface_scale_max: Number(interface_scale_max),
         map_scale_measurement_name: map_scale_measurement_name,
@@ -214,8 +213,6 @@ function LocationEdit() {
         setColorAttribute("")
     }
 
-
-    // "vertex_stroke_color"
     return (
 
         <div className="locationEditContainer">
