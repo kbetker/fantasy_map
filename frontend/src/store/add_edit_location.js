@@ -16,7 +16,7 @@ export const sendLocData = (locData) => async (dispatch) => {
 
 
 //==================== send to store if creating or selecting existing vertex =====================\\
-const VERTEX_SELECT = 'location/VERTEX_SELECT';
+const VERTEX_SELECT = 'addEditLocation/VERTEX_SELECT';
 export const loadVertexData = (vertexData) => {
     return {
         type: VERTEX_SELECT,
@@ -30,7 +30,7 @@ export const sendVertexData = (vertexData) => async (dispatch) => {
 
 
 //==================== send to store selected vertex =====================\\
-const SELECTED_VERTEX = 'location/SELECTED_VERTEX';
+const SELECTED_VERTEX = 'addEditLocation/SELECTED_VERTEX';
 export const loadSelectedVertex = (selectedVertex) => {
     return {
         type: SELECTED_VERTEX,
@@ -42,11 +42,37 @@ export const sendSelectedVertex = (selectedVertex) => async (dispatch) => {
 };
 
 
+//==================== send to store starting vertex =====================\\
+const START_VERTEX_SCALE = 'addEditLocation/START_VERTEX_SCALE';
+export const loadStartVertexScale = (startVertexScale) => {
+    return {
+        type: START_VERTEX_SCALE,
+        startVertexScale
+    };
+};
+export const sendStartVertexScale = (startVertexScale) => async (dispatch) => {
+    dispatch(loadStartVertexScale(startVertexScale));
+};
+
+
+//==================== send to store selected vertex =====================\\
+const END_VERTEX_SCALE = 'addEditLocation/END_VERTEX_SCALE';
+export const loadEndVertexScale = (endVertexScale) => {
+    return {
+        type: END_VERTEX_SCALE,
+        endVertexScale
+    };
+};
+export const sendEndVertexScale = (endVertexScale) => async (dispatch) => {
+    dispatch(loadEndVertexScale(endVertexScale));
+};
+
+
 //    location_stroke_color
 //==================== Update Color =====================\\
-const LOCATION_COLOR = 'location/LOCATION_COLOR';
-const LOCATION_STROKE_COLOR = 'location/LOCATION_STROKE_COLOR';
-const VERTEX_COLOR = 'location/VERTEX_COLOR';
+const LOCATION_COLOR = 'addEditLocation/LOCATION_COLOR';
+const LOCATION_STROKE_COLOR = 'addEditLocation/LOCATION_STROKE_COLOR';
+const VERTEX_COLOR = 'addEditLocation/VERTEX_COLOR';
 const VERTEX_STROKE_COLOR = 'location/VERTEX_STROKE_COLOR';
 
 
@@ -117,11 +143,19 @@ const initialState =
     map_scale_measurement_name: null,
     interface_scale_min: null,
     interface_scale_max: null,
+    map_scale_pixes: null,
+}
+
+function measurement(x1,x2,y1,y2){
+    let A = Math.pow(Math.abs(x2-x1), 2)
+    let B = Math.pow(Math.abs(y2-y1), 2)
+    return Math.sqrt(A+B)
 }
 
 
 const locationReducer = (state = initialState, action) => {
     let newState;
+    let m;
     switch (action.type) {
         case LOCATION_DATA:
             newState = Object.assign({}, state);
@@ -151,6 +185,20 @@ const locationReducer = (state = initialState, action) => {
         case VERTEX_STROKE_COLOR:
             newState = Object.assign({}, state);
             newState.loc_vertex_stroke_color = action.color
+            return newState
+        case START_VERTEX_SCALE:
+            newState = Object.assign({}, state);
+            newState.map_scale_start_x = action.startVertexScale.coordX
+            newState.map_scale_start_y = action.startVertexScale.coordY
+            m = measurement(action.startVertexScale.coordX, newState.map_scale_end_x, action.startVertexScale.coordY, newState.map_scale_end_y)
+            newState.map_scale_pixels = Math.round(m)
+            return newState
+        case END_VERTEX_SCALE:
+            newState = Object.assign({}, state);
+            newState.map_scale_end_x = action.endVertexScale.coordX
+            newState.map_scale_end_y = action.endVertexScale.coordY
+            m = measurement(newState.map_scale_start_x, action.endVertexScale.coordX, newState.map_scale_start_y, action.endVertexScale.coordY)
+            newState.map_scale_pixels = Math.round(m)
             return newState
 
 

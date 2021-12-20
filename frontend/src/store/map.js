@@ -83,7 +83,6 @@ export const editLocation = (mapData) => {
     };
 };
 export const sendEditLocation = (mapData) => async (dispatch) => {
-    console.log(mapData)
     const response = await csrfFetch(`/api/location/edit/${mapData.id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
@@ -145,6 +144,7 @@ const mapDataReducer = (state = initialState, action) => {
             return newState
         case EDIT_LOCATION:
             newState = JSON.parse(JSON.stringify(state))
+            // updating child locations
             let index = -1
             for( let i = 0; i < newState.child_locations.length; i++){
                 let loc = newState.child_locations[i]
@@ -153,7 +153,19 @@ const mapDataReducer = (state = initialState, action) => {
                     break
                 }
             }
-            newState.child_locations[index] = action.mapData
+            index > 0 && (newState.child_locations[index] = action.mapData)
+            // if there is a change in scale, then update the current location
+            if(action.mapData.map_scale_start_x){
+                newState.map_scale_start_x = action.mapData.map_scale_start_x
+                newState.map_scale_start_y = action.mapData.map_scale_start_y
+                newState.map_scale_end_x = action.mapData.map_scale_end_x
+                newState.map_scale_end_y = action.mapData.map_scale_end_y
+                newState.map_scale_measurement = action.mapData.map_scale_measurement
+                newState.map_scale_measurement_name = action.mapData.map_scale_measurement_name
+                newState.interface_scale_min = action.mapData.interface_scale_min
+                newState.interface_scale_max = action.mapData.interface_scale_max
+            }
+
             return newState
         case CREATE_LOCATION:
             newState = JSON.parse(JSON.stringify(state))

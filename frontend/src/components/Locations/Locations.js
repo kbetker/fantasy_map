@@ -34,6 +34,7 @@ function Locations() {
     const childLocations = mapData?.child_locations
     const parentLocations = mapData?.parent_locations
     const mapControls = useSelector(state => state.map_controls)
+    const location = useSelector(state => state.add_edit_location)
 
     const [searchName, setSearchName] = useState('')
     const sideBar = useRef()
@@ -107,8 +108,16 @@ function Locations() {
         <TransformWrapper
             limitToBounds={false}
             initialScale={0.315}
-            maxScale={mapData.interface_scale_max * .01}
-            minScale={mapData.interface_scale_min * .01}
+            maxScale={
+                location.id === mapData.id ?
+                location.interface_scale_max * .01
+                : mapData.interface_scale_max * .01
+            }
+            minScale={
+                location.id === mapData.id ?
+                location.interface_scale_min * .01
+                : mapData.interface_scale_min * .01
+            }
             panning={{ activationKeys: [" "] }}
             onZoomStop={(e) => sendMapData(e)}
             onPanningStop={(e) => sendMapData(e)}
