@@ -8,6 +8,7 @@ import { send_color, sendVertexData } from "../../../store/add_edit_location";
 import locEdit from "./edit.svg"
 import { sendEditLocation } from "../../../store/map";
 import Saving from "../../Saving/Saving";
+import deleteIcon from "../delete.svg"
 
 function LocationEdit() {
 
@@ -175,12 +176,15 @@ function LocationEdit() {
         //  toDo - handle errors
         setShowSaving(true)
         let editedData = await dispatch(sendEditLocation(payload))
-        if(editedData.errors){
+        if (editedData.errors) {
             alert("error")
         } else {
             setSaved(true)
             resetSaved()
         }
+    }
+
+    async function handleDelete(){
 
     }
 
@@ -677,14 +681,6 @@ function LocationEdit() {
 
                         </div>
 
-
-
-
-
-
-
-
-
                         {image_url ?
                             <img className="locationThumbnail" src={`${image_url}`} alt="Location Thumbnail" />
                             : <img className="locationThumbnail" src="https://www.eduprizeschools.net/wp-content/uploads/2016/06/No_Image_Available.jpg" alt="Not Thumbnail" />
@@ -699,6 +695,12 @@ function LocationEdit() {
                         ></input>
 
 
+
+
+                    <button className="deleteLocation" onClick={(e) => [handleDelete(), e.target.blur()]}>
+                        <img src={deleteIcon} />
+                        <div>Delete Location</div>
+                        </button>
 
                     </div>
 
