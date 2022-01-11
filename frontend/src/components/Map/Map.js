@@ -280,21 +280,21 @@ function Map() {
             </>}
 
 
-            {/* <img
+            <img
                 alt='Map'
                 src={mapData.image_url}
                 className="mapImage"
                 ref={mapImage}
                 onClick={(e) => handleClick(e)}
-            /> */}
+            />
 
-            <img
+            {/* <img
                 alt='Map'
                 src={tempMap}
                 className="mapImage"
                 ref={mapImage}
                 onClick={(e) => handleClick(e)}
-            />
+            /> */}
 
         </div>)
 }

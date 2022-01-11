@@ -31,7 +31,7 @@
     flex-direction: column;
 }
 
-.updateMapButton{
+.updateMapButton,.deleteLocation{
     background-color: rgb(77, 77, 77);
     display: flex;
     align-items: center;
@@ -134,4 +134,12 @@
 .currentScale{
     font-size: 20px;
     font-weight: bolder;
+}
+
+.deleteLocation{
+    background-color: rgb(94, 31, 31);
+}
+
+.deleteLocation:hover{
+    background-color: rgb(133, 43, 43);
 }
