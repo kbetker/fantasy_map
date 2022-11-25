@@ -4,11 +4,14 @@
     background-color: black;
 }
 
+/*
+what was this??? lol
 .transformComponenttransformComponent{
     background-image: url("https://www.otherworldlyincantations.com/wp-content/uploads/Otherworldly-Incantations-Landform-Worldbuilding.jpg");
     background-size: cover;
 
-}
+} */
+
 .tools_map_container{
     display: flex;
     /* position: relative; */
@@ -35,7 +38,7 @@
     background-color: rgb(36, 36, 36);
 }
 
-.navButton{
+/* .navButton{
     width: 40px;
     height: 40px;
     padding: 5px;
@@ -43,12 +46,12 @@
     border-radius: 10px;
     box-sizing: border-box;
     border: 1px solid rgba(255,255,255,0);
-}
+} */
 
-.navButton:hover{
+/* .navButton:hover{
     background-color: rgb(58, 58, 58);
     border: 1px solid rgb(128, 128, 128);
-}
+} */
 
 .sideBar{
     display: flex;

@@ -21,7 +21,7 @@ function App() {
     <Navigation isLoaded={isLoaded} />
     {isLoaded && (
       <Switch>
-         <Route path="/wtfwtf">
+         <Route path="/carousel">
           <Carousel />
         </Route>
 

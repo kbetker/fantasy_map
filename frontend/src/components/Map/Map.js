@@ -137,6 +137,7 @@ function Map() {
             {(mapData.Roads.length > 0 && isLoaded) && <>
                 {mapData.Roads.map(road =>
                     <div key={`key-${road.id}`}>
+                        {console.log(road)}
                         <Roads props={{ "mapData": road, "imageSize": imageSize }} />
                     </div>
                 )}
@@ -282,7 +283,7 @@ function Map() {
 
             <img
                 alt='Map'
-                src={mapData.image_url}
+                src={tempMap}
                 className="mapImage"
                 ref={mapImage}
                 onClick={(e) => handleClick(e)}
